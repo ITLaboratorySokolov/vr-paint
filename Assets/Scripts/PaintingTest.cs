@@ -3,28 +3,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PaintingTest : MonoBehaviour
 {
     public InputActionReference toggleRef = null;
+    public InputActionReference switchRef = null;
     public GameObject spawn;
     public Transform controller;
 
+    bool tracking = false;
+
+    [Header("Line Rendering")]
     public GameObject simpleLine;
     public Transform lineParent;
     internal LineRenderer currLine;
-
-    bool tracking = false;
     List<Vector3> path;
+
+    [Header("Brushes")]
+    public Text brushNameTXT;
+    Brush[] brushes;
+    public int numberOfBrushes = 2;
+    Color selectedColor;
+    int currentBrush;
 
     private void Awake()
     {
+        brushes = new Brush[numberOfBrushes];
+        brushes[0] = new Brush() { Width = 8, Color = Color.red, Texture = null, Name = "Brush01" };
+        brushes[1] = new Brush() { Width = 8, Color = Color.black, Texture = null, Name = "Brush02" };
+
         toggleRef.action.started += ActivatePaint;
+        switchRef.action.started += SwitchBrush;
+    }
+
+    void Start()
+    {
+        
     }
 
     private void OnDestroy()
     {
         toggleRef.action.started -= ActivatePaint;
+        switchRef.action.started -= SwitchBrush;
+    }
+
+    private void SwitchBrush(InputAction.CallbackContext obj)
+    {
+        Debug.Log(currentBrush);
+        currentBrush++;
+        currentBrush = currentBrush % numberOfBrushes; // index of current brush
+        brushNameTXT.text = brushes[currentBrush].Name;
     }
 
     private void ActivatePaint(InputAction.CallbackContext ctx)
@@ -34,7 +63,9 @@ public class PaintingTest : MonoBehaviour
 
         GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
         currLine = o.GetComponent<LineRenderer>();
-        
+        currLine.material.SetColor("_Color", brushes[currentBrush].Color);
+        // currLine.widthCurve = brushes[currentBrush].Width;
+
         currLine.SetPosition(0, controller.position);
         currLine.SetPosition(1, controller.position);
     }
@@ -42,23 +73,6 @@ public class PaintingTest : MonoBehaviour
     private void DisablePaint()
     {
         tracking = false;
-
-        Debug.Log(path.Count);
-    }
-
-    private void Toggle(InputAction.CallbackContext ctx)
-    {
-        Instantiate(spawn, controller.position, controller.rotation);
-
-        bool isActive = !gameObject.activeSelf;
-        // gameObject.SetActive(isActive);
-        Debug.Log("Toggle");
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
     // Update is called once per frame
@@ -71,18 +85,15 @@ public class PaintingTest : MonoBehaviour
 
         if (tracking)
         {
-            path.Add(controller.position);
             currLine.positionCount++;
             currLine.SetPosition(currLine.positionCount - 1, controller.position);
         }
+    }
 
-        if (!tracking && path != null)
-        {
-            for (int i = 1; i < path.Count; i++)
-            {
-                Debug.DrawLine(path[i-1], path[i]);
-            }
-        }
+    public void ColorChange(Color c)
+    {
+        if (brushes != null && brushes[currentBrush] != null) 
+            brushes[currentBrush].Color = c;
     }
 
 }
