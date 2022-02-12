@@ -1077,6 +1077,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Rotation",
+                    "type": "Value",
+                    "id": "4a6f8e48-ae76-463f-9daa-ab794c45c6e7",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Movement",
+                    "type": "Value",
+                    "id": "63fc8f3b-45f4-47e4-9304-3b40ab0573d6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Hold",
                     "type": "Value",
                     "id": "3ecd2300-06c3-45cf-a7b6-7f231eea5f28",
@@ -1098,6 +1116,15 @@
                     "name": "SwitchBrush",
                     "type": "Button",
                     "id": "9998136f-134f-425e-a078-996e4b9514a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchToEraser",
+                    "type": "Button",
+                    "id": "49bdba9b-2daf-4023-bce8-2e6cb008b091",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1146,6 +1173,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchBrush",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d25623a-0660-4d6c-9a52-c29aa923462f",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchToEraser",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6068a86a-fb07-46b6-a2d5-5858925a88bc",
+                    "path": "<XRController>{LeftHand}/{primary2DAxis}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR Usage",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b3a58aa-c0b8-4b1e-91eb-6b01da42e533",
+                    "path": "<XRController>{RightHand}/{primary2DAxis}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR Usage",
+                    "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 957477963526033273}
   - component: {fileID: 957477963526033278}
+  - component: {fileID: 2747496055739927448}
   m_Layer: 0
   m_Name: SimpleLine
-  m_TagString: Untagged
+  m_TagString: line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,7 +85,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.5
+        value: 0.5317459
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -131,3 +132,17 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!64 &2747496055739927448
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957477963526033272}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
