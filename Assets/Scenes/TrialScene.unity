@@ -9072,9 +9072,12 @@ MonoBehaviour:
   paintRef: {fileID: -4472565479911015767, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
   switchRef: {fileID: 7879310009548894679, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
   eraserRef: {fileID: -3681919123041194924, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
-  moveRef: {fileID: 7596212294181904713, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
+  moveRef: {fileID: -2535288218607056299, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
+  rotRef: {fileID: -1623246960981506561, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
+  rig: {fileID: 1060976101}
   canvas: {fileID: 1588199581}
   controller: {fileID: 1232437136}
+  speed: 2
   simpleLine: {fileID: 957477963526033272, guid: f0468cafc1fcd004aba42a39389d468b, type: 3}
   lineParent: {fileID: 393973785}
   numberOfBrushes: 2
