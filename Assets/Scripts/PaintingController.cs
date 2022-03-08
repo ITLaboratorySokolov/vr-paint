@@ -19,6 +19,7 @@ public class PaintingController : MonoBehaviour
     public MenuCanvasController canvas;
     public Transform controller;
     bool paintingOn = false;
+    public Transform hand;
 
     [Header("Controlls")]
     public int speed;
@@ -234,6 +235,8 @@ public class PaintingController : MonoBehaviour
     /// <param name="f"> Width </param>
     public void SetBrushWidth(float f)
     {
+        hand.localScale = new Vector3(0.1f * f, 0.1f * f, 0.1f * f);
+
         if (isEraser)
             return;
 
