@@ -1,19 +1,7 @@
 using UnityEngine;
 
-public class Brush
+public class Brush : IDrawInstrument
 {
-    /// <summary>
-    /// Brush name
-    /// </summary>
-    string name;
-    public string Name { get => name; set => name = value; }
- 
-    /// <summary>
-    /// Brush width
-    /// </summary>
-    float width;
-    public float Width { get => width; set => width = value; }
-    
     /// <summary>
     /// Brush color
     /// </summary>

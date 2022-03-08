@@ -34,6 +34,7 @@ public class PaintingController : MonoBehaviour
     public int numberOfBrushes = 2;
     public Texture2D[] textures;
     Brush[] brushes;
+    Eraser eraser;
     int currentBrush;
 
     /// <summary>
@@ -46,6 +47,8 @@ public class PaintingController : MonoBehaviour
         brushes[0] = new Brush() { Width = 0.05f, Color = Color.red, Texture = textures[0], Name = "Brush01" };
         brushes[1] = new Brush() { Width = 0.05f, Color = Color.black, Texture = textures[1], Name = "Brush02" };
 
+        eraser = new Eraser() { Width = 0.05f, Name = "Eraser" };
+            
         // register actions
         paintRef.action.started += ActivatePaint;
         switchRef.action.started += SwitchBrush;
@@ -97,7 +100,7 @@ public class PaintingController : MonoBehaviour
 
         // display information on canvas
         if (isEraser)
-            canvas.SwitchToEraser();
+            canvas.SwitchToEraser(eraser);
         else
             canvas.SwitchBrushValues(brushes[currentBrush]);
     }
@@ -110,7 +113,9 @@ public class PaintingController : MonoBehaviour
     private void SwitchBrush(InputAction.CallbackContext obj)
     {
         if (isEraser)
+        {
             return;
+        }
 
         currentBrush++;
         currentBrush %= numberOfBrushes;
@@ -127,7 +132,7 @@ public class PaintingController : MonoBehaviour
         // erase
         if (isEraser)
         {
-            Collider[] cs = Physics.OverlapSphere(controller.transform.position, 0.025f);
+            Collider[] cs = Physics.OverlapSphere(controller.transform.position, eraser.Width / 2.0f);
             for (int i = 0; i < cs.Length; i++)
             {
                 if (cs[i].gameObject.tag == "line")
@@ -238,7 +243,10 @@ public class PaintingController : MonoBehaviour
         hand.localScale = new Vector3(0.1f * f, 0.1f * f, 0.1f * f);
 
         if (isEraser)
+        {
+            eraser.Width = f * 0.1f;
             return;
+        }
 
         brushes[currentBrush].Width = f * 0.1f;
     }

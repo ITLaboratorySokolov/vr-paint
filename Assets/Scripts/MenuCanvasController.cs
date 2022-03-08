@@ -30,9 +30,12 @@ public class MenuCanvasController : MonoBehaviour
     /// <summary>
     /// Set brush to eraser
     /// </summary>
-    public void SwitchToEraser()
+    public void SwitchToEraser(Eraser b)
     {
+        // set width
+        widthSlider.value = b.Width / 0.1f;
+
         // set name
-        brushNameDisplayTXT.text = "Eraser";
+        brushNameDisplayTXT.text = b.Name;
     }
 }
