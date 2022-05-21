@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Interface for all painting/drawing instruments
+/// </summary>
 public class IDrawInstrument
 {
     /// <summary>
