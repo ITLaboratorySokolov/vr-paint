@@ -1,0 +1,12 @@
+{
+  "name": "zcu.technologylab.common.unity",
+  "version": "0.3.1",
+  "displayName": "Unity Library For Technology Lab",
+  "description": "This is a package used in technology lab project that contains common scripts used in multiple unity projects",
+  "unity": "2021.2",
+  "author": {
+    "name": "Dominik Poch",
+    "email": "dpoch@students.zcu.cz"
+  },
+  "type": "library"
+}

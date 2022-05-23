@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ZCU.TechnologyLab.Common.Serialization;
+using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties;
 
 // TODO - what if you switch to eraser during painting
 
@@ -15,6 +18,7 @@ public class PaintingController : MonoBehaviour
     public InputActionReference eraserRef = null;
 
     [Header("Game objects")]
+    public ObjectController objController;
     /// <summary> Color palette menu canvas controller </summary>
     public MenuCanvasController canvas;
     /// <summary> Painting hand controller grip </summary>
@@ -50,11 +54,17 @@ public class PaintingController : MonoBehaviour
     /// <summary> Currently active brush </summary>
     int currentBrush;
 
+
+    int lineCounter;
+    MeshSerializer serializer;
+
     /// <summary>
     /// Register actions on object awake, set up brushes
     /// </summary>
     private void Awake()
     {
+        serializer = new MeshSerializer();
+
         // Manually create two brushes
         brushes = new Brush[numberOfBrushes];
         brushes[0] = new Brush() { Width = 0.05f, Color = Color.red, Texture = textures[0], Name = "Brush01" };
@@ -71,6 +81,8 @@ public class PaintingController : MonoBehaviour
         // Display brush values on canvas
         currentBrush = 0;
         canvas.SwitchBrushValues(brushes[currentBrush]);
+
+        lineCounter = 0;
     }
 
     // Update is called once per frame
@@ -132,6 +144,22 @@ public class PaintingController : MonoBehaviour
         canvas.SwitchBrushValues(brushes[currentBrush]);
     }
 
+    public float[] Vec3ToFloats(Vector3[] vecs)
+    {
+        float[] floats = new float[vecs.Length * 3];
+        //Convert each vector to floats
+        int index = 0;
+        for (int i = 0; i < vecs.Length; i++)
+        {
+            floats[index] = vecs[i].x;
+            floats[index+1] = vecs[i].y;
+            floats[index+2] = vecs[i].z;
+            index += 3;
+        }
+
+        return floats;
+    }
+
     /// <summary>
     /// Start painting
     /// - spawn new line and set values according to brush
@@ -146,7 +174,10 @@ public class PaintingController : MonoBehaviour
             for (int i = 0; i < cs.Length; i++)
             {
                 if (cs[i].gameObject.tag == "line")
+                {
+                    objController.DestroyObject(gameObject.name);
                     Destroy(cs[i].gameObject);
+                }
             }
         }
         // Paint
@@ -154,10 +185,22 @@ public class PaintingController : MonoBehaviour
         {
             paintingOn = true;
 
+
             // Instantiate new line
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
 
             // TODO add server connection updater thingy
+            // TODO updating of mesh
+            // TODO for now move to end of editing so you can actually see smth
+            o.name = "Line" + lineCounter;
+            MeshPropertiesManager propsManager = o.GetComponent<MeshPropertiesManager>();
+            propsManager.name = o.name;
+            Mesh mesh = o.GetComponent<MeshFilter>().sharedMesh;
+            Dictionary<string, byte[]> props = serializer.SerializeProperties(Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "triangle");
+            propsManager.SetProperties(props);
+            lineCounter++;
+
+            objController.AddObjectAsync(o);
 
             // Get line renderer
             currLine = o.GetComponent<LineRenderer>();

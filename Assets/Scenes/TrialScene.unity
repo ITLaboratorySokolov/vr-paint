@@ -3388,6 +3388,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 808770918}
+  - component: {fileID: 808770919}
+  - component: {fileID: 808770922}
+  - component: {fileID: 808770921}
+  - component: {fileID: 808770920}
+  - component: {fileID: 808770923}
   m_Layer: 0
   m_Name: ServerConnection
   m_TagString: Untagged
@@ -3410,6 +3415,181 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &808770919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808770917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d94c0ee2d1acb84e819b1b8e4c7d140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  session: {fileID: 808770921}
+  dataSession: {fileID: 808770920}
+  actionStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 808770921}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Connections.Session.SessionClientWrapper,
+          Assembly-CSharp
+        m_MethodName: StartSession
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  actionEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 808770921}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Connections.Session.SessionClientWrapper,
+          Assembly-CSharp
+        m_MethodName: StopSession
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &808770920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808770917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6625498ae7dc04a42a6014747989a169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverUrl: {fileID: 11400000, guid: 95b0b66dae6523e49bd25b768ba71661, type: 2}
+--- !u!114 &808770921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808770917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8ee2ac28cf9574c81e838427d0301b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReconnecting:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  serverUrl: {fileID: 11400000, guid: 95b0b66dae6523e49bd25b768ba71661, type: 2}
+  hub: {fileID: 11400000, guid: 52c22c055b6264f4687cfebb4fa1b804, type: 2}
+--- !u!114 &808770922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808770917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eddf9d3c15cc4740a9cdf9eb3363f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverUrl: {fileID: 11400000, guid: 95b0b66dae6523e49bd25b768ba71661, type: 2}
+--- !u!114 &808770923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808770917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0cae9819769d749b11e1b7a0834f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sessionClient: {fileID: 808770921}
+  dataClient: {fileID: 808770920}
+  OnWorldObjectReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1588199583}
+        m_TargetAssemblyTypeName: ObjectController, Assembly-CSharp
+        m_MethodName: ObjectRecieved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnWorldObjectRemoved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1588199583}
+        m_TargetAssemblyTypeName: ObjectController, Assembly-CSharp
+        m_MethodName: ObjectRemoved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnClearLocalObjects:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1588199583}
+        m_TargetAssemblyTypeName: ObjectController, Assembly-CSharp
+        m_MethodName: ObjectsClear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnReplaceObjects:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1588199583}
+        m_TargetAssemblyTypeName: ObjectController, Assembly-CSharp
+        m_MethodName: ObjectsReplace
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &816487728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7132,6 +7312,7 @@ GameObject:
   - component: {fileID: 1588199580}
   - component: {fileID: 1588199581}
   - component: {fileID: 1588199582}
+  - component: {fileID: 1588199583}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -7171,9 +7352,7 @@ MonoBehaviour:
   paintRef: {fileID: -4472565479911015767, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
   switchRef: {fileID: 7879310009548894679, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
   eraserRef: {fileID: -3681919123041194924, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
-  moveRef: {fileID: -2535288218607056299, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
-  rotRef: {fileID: -1623246960981506561, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
-  rig: {fileID: 1060976101}
+  objController: {fileID: 1588199583}
   canvas: {fileID: 1588199581}
   controller: {fileID: 1232437136}
   hand: {fileID: 693667089}
@@ -7215,6 +7394,19 @@ MonoBehaviour:
   rotRef: {fileID: -1623246960981506561, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
   rig: {fileID: 1060976101}
   speed: 2
+--- !u!114 &1588199583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588199578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f9cdbbffaadae46b75fa047fea64db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wom: {fileID: 808770923}
 --- !u!1001 &1630887578
 PrefabInstance:
   m_ObjectHideFlags: 0

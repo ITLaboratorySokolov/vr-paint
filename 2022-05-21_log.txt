@@ -1,0 +1,41 @@
+Debug: 5/21/2022 10:44:10 PM Starting HubConnection.
+Information: 5/21/2022 10:44:11 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=UodUeXfbn9H7uSwwSi4eHQ'.
+Information: 5/21/2022 10:44:11 PM HttpConnection Started.
+Information: 5/21/2022 10:44:11 PM Using HubProtocol 'messagepack v1'.
+Debug: 5/21/2022 10:44:11 PM Sending Hub Handshake.
+Debug: 5/21/2022 10:44:11 PM Handshake with server complete.
+Debug: 5/21/2022 10:44:11 PM Sending PingMessage message.
+Debug: 5/21/2022 10:44:11 PM Sending PingMessage message completed.
+Debug: 5/21/2022 10:44:11 PM Receive loop starting.
+Information: 5/21/2022 10:44:11 PM HubConnection started.
+Debug: 5/21/2022 10:44:26 PM Sending PingMessage message.
+Debug: 5/21/2022 10:44:26 PM Sending PingMessage message completed.
+Debug: 5/21/2022 10:44:27 PM Processing 3 byte message from server.
+Debug: 5/21/2022 10:44:29 PM Stopping HubConnection.
+Debug: 5/21/2022 10:44:29 PM Terminating receive loop.
+Debug: 5/21/2022 10:44:29 PM Waiting for the receive loop to terminate.
+Information: 5/21/2022 10:44:29 PM Transport is stopping.
+Information: 5/21/2022 10:44:29 PM HttpConnection Disposed.
+Information: 5/21/2022 10:44:29 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 5/21/2022 10:44:29 PM Canceling all outstanding invocations.
+Debug: 5/21/2022 10:44:29 PM Invoking the Closed event handler.
+Debug: 5/21/2022 10:44:29 PM HubConnection stopped.
+Debug: 5/21/2022 10:45:05 PM Starting HubConnection.
+Information: 5/21/2022 10:45:06 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=ePu3tgmn54wLJPJKBziDLQ'.
+Information: 5/21/2022 10:45:06 PM HttpConnection Started.
+Information: 5/21/2022 10:45:06 PM Using HubProtocol 'messagepack v1'.
+Debug: 5/21/2022 10:45:06 PM Sending Hub Handshake.
+Debug: 5/21/2022 10:45:07 PM Handshake with server complete.
+Debug: 5/21/2022 10:45:07 PM Sending PingMessage message.
+Debug: 5/21/2022 10:45:07 PM Sending PingMessage message completed.
+Debug: 5/21/2022 10:45:07 PM Receive loop starting.
+Information: 5/21/2022 10:45:07 PM HubConnection started.
+Debug: 5/21/2022 10:45:15 PM Stopping HubConnection.
+Debug: 5/21/2022 10:45:15 PM Terminating receive loop.
+Debug: 5/21/2022 10:45:15 PM Waiting for the receive loop to terminate.
+Information: 5/21/2022 10:45:15 PM Transport is stopping.
+Information: 5/21/2022 10:45:15 PM HttpConnection Disposed.
+Information: 5/21/2022 10:45:15 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 5/21/2022 10:45:15 PM Canceling all outstanding invocations.
+Debug: 5/21/2022 10:45:15 PM Invoking the Closed event handler.
+Debug: 5/21/2022 10:45:16 PM HubConnection stopped.
