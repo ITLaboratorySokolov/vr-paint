@@ -13,7 +13,7 @@ public class ObjectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -54,5 +54,11 @@ public class ObjectController : MonoBehaviour
         Debug.Log("Add " + obj.name);
         await wom.AddObjectAsync(obj);
 
+    }
+
+    internal async void UpdateProperties(string name)
+    {
+        Debug.Log("Update " + name);
+        await wom.UpdateObjectAsync(name);
     }
 }

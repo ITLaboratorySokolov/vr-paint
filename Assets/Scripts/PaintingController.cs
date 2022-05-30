@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Serialization;
 using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties;
 
@@ -41,6 +43,8 @@ public class PaintingController : MonoBehaviour
     public Transform lineParent;
     /// <summary> Current line </summary>
     internal LineRenderer currLine;
+    /// <summary> Current line game object </summary>
+    internal GameObject currLineObj;
 
     [Header("Brushes")]
     /// <summary> Number of brushes in system </summary>
@@ -55,14 +59,18 @@ public class PaintingController : MonoBehaviour
     int currentBrush;
 
 
+    [Header("Connection")]
+    public ServerConnection server;
     int lineCounter;
     MeshSerializer serializer;
+    bool readyForPaint;
 
     /// <summary>
     /// Register actions on object awake, set up brushes
     /// </summary>
     private void Awake()
     {
+        readyForPaint = false;
         serializer = new MeshSerializer();
 
         // Manually create two brushes
@@ -85,9 +93,66 @@ public class PaintingController : MonoBehaviour
         lineCounter = 0;
     }
 
+    internal void AddServerLine(WorldObjectDto obj)
+    {
+        // Instantiate new line
+        GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
+
+        // Update properties
+        MeshPropertiesManager propsManager2 = o.GetComponent<MeshPropertiesManager>();
+        propsManager2.name = obj.Name;
+        o.name = obj.Name;
+
+        // TODO Texture
+
+        LineRenderer l = o.GetComponent<LineRenderer>();
+
+        var indices = serializer.DeserializeIndices(obj.Properties);
+        var vertices = serializer.DeserializeVertices(obj.Properties);
+        Vector3[] vectors = new Vector3[vertices.Length / 3];
+
+        if (vertices.Length < 9)
+            return;
+
+        Debug.Log(vertices.Length);
+        int index = 0;
+        for (int i = 0; i < vertices.Length; i += 3)
+        {
+            vectors[index] = new Vector3(vertices[i], vertices[i + 1], vertices[i + 2]);
+
+            Debug.Log(vectors[index].x + " " + vectors[index].y + " " + vectors[index].z);
+
+            index++;
+        }
+        propsManager2.SetProperties(obj.Properties);
+
+        MeshCollider meshCollider = l.GetComponent<MeshCollider>();
+        Mesh mesh = new Mesh();
+        mesh.SetVertices(vectors);
+        mesh.SetIndices(indices, MeshTopology.Triangles, 0);
+
+        var mat = o.GetComponent<MeshRenderer>().material;
+        mat.SetColor("_Color", Color.red);
+
+        // currLine.BakeMesh(mesh);
+        meshCollider.sharedMesh = mesh;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (!readyForPaint)
+        {
+            if (server.syncCallDone)
+            {
+                lineCounter = server.serverLines + 1;
+                readyForPaint = true;
+                Debug.Log("Now can start painting! Waiting for Line" + lineCounter);
+            }
+            else
+                return;
+        }
+
         // Stop drawing on released button
         if (paintRef.action.WasReleasedThisFrame())
             DisablePaint();
@@ -185,25 +250,13 @@ public class PaintingController : MonoBehaviour
         {
             paintingOn = true;
 
-
             // Instantiate new line
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
-
-            // TODO add server connection updater thingy
-            // TODO updating of mesh
-            // TODO for now move to end of editing so you can actually see smth
             o.name = "Line" + lineCounter;
-            MeshPropertiesManager propsManager = o.GetComponent<MeshPropertiesManager>();
-            propsManager.name = o.name;
-            Mesh mesh = o.GetComponent<MeshFilter>().sharedMesh;
-            Dictionary<string, byte[]> props = serializer.SerializeProperties(Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "triangle");
-            propsManager.SetProperties(props);
-            lineCounter++;
-
-            objController.AddObjectAsync(o);
 
             // Get line renderer
             currLine = o.GetComponent<LineRenderer>();
+            currLineObj = o;
 
             // Set color
             currLine.material.SetColor("_Color", brushes[currentBrush].Color);
@@ -222,6 +275,19 @@ public class PaintingController : MonoBehaviour
             // Set first 2 positions
             currLine.SetPosition(0, controller.position);
             currLine.SetPosition(1, controller.position);
+
+            /*
+            // Send to server
+            MeshPropertiesManager propsManager = o.GetComponent<MeshPropertiesManager>();
+            propsManager.name = o.name;
+            Mesh mesh = new Mesh();
+            currLine.BakeMesh(mesh);
+            Dictionary<string, byte[]> props = serializer.SerializeProperties(Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "triangle");
+            propsManager.SetProperties(props);
+            lineCounter++;
+
+            objController.AddObjectAsync(o);
+            */
         }
     }
 
@@ -232,6 +298,23 @@ public class PaintingController : MonoBehaviour
     {
         currLine.positionCount++;
         currLine.SetPosition(currLine.positionCount - 1, controller.position);
+
+        /*
+        // Update properties
+        MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
+        Mesh mesh = new Mesh();
+        currLine.BakeMesh(mesh);
+
+        Dictionary<string, byte[]> props = serializer.SerializeProperties(Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "triangle");
+        
+        Debug.Log(mesh.GetIndices(0).Length);
+        Debug.Log(Vec3ToFloats(mesh.vertices).Length);
+
+        propsManager.SetProperties(props);
+
+        // Send update to server
+        objController.UpdateProperties(propsManager.name);
+        */
     }
 
     /// <summary>
@@ -247,8 +330,19 @@ public class PaintingController : MonoBehaviour
 
         MeshCollider meshCollider = currLine.GetComponent<MeshCollider>();
         Mesh mesh = new Mesh();
-        currLine.BakeMesh(mesh, true);
-        meshCollider.sharedMesh = mesh;
+        currLine.BakeMesh(mesh);
+        // meshCollider.sharedMesh = mesh;
+
+        // Send to server
+        MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
+        propsManager.name = currLineObj.name;
+        Dictionary<string, byte[]> props = serializer.SerializeProperties(Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
+        propsManager.SetProperties(props);
+        lineCounter++;
+        objController.AddObjectAsync(currLineObj);
+
+        var mat = currLineObj.GetComponent<MeshRenderer>().material;
+        mat.SetColor("_Color", brushes[currentBrush].Color);
     }
 
     /// <summary>

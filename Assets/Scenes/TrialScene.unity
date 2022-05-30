@@ -3461,6 +3461,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  paintCont: {fileID: 1588199580}
 --- !u!114 &808770920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7363,6 +7364,7 @@ MonoBehaviour:
   textures:
   - {fileID: 0}
   - {fileID: 2800000, guid: e8bb502e89f20d445982020d17d706ff, type: 3}
+  server: {fileID: 808770919}
 --- !u!114 &1588199581
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -41,17 +41,13 @@ public class ServerConnection : MonoBehaviour
     [SerializeField]
     UnityEvent actionEnd = new UnityEvent();
 
-    /// <summary> Bitmap serializer </summary>
-    BitmapSerializer serializer;
     /// <summary> World object DTO for screenshot to be sent to server </summary>
     WorldObjectDto wod;
     /// <summary> Synchronization call has been finished </summary>
-    bool syncCallDone;
-
-    Dictionary<string, byte[]> properties;
-    Texture2D scaled;
-    byte[] data;
-    System.Diagnostics.Stopwatch stopWatch;
+    internal bool syncCallDone;
+    internal int serverLines;
+    [SerializeField]
+    PaintingController paintCont;
 
     /// <summary>
     /// Performes once upon start
@@ -60,7 +56,6 @@ public class ServerConnection : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        serializer = new BitmapSerializer();
         connection = new ServerSessionConnection(session);
         dataConnection = new ServerDataConnection(dataSession);
         //session.StartSession();
@@ -81,17 +76,35 @@ public class ServerConnection : MonoBehaviour
 
     private async void GetObjectsAsync()
     {
-        // TODO find out how many lines are there on server / whats the highest ID
-
         try
         {
             // Get all objects
+            IEnumerable<WorldObjectDto> objs = await dataConnection.GetAllWorldObjectsAsync();
 
             // go through the names and parse
+            foreach (WorldObjectDto obj in objs)
+            {
+                string n = obj.Name;
+                Debug.Log(n);
+
+                serverLines = 0;
+                if (n.StartsWith("Line"))
+                {
+                    string num = n.Substring(4, n.Length - 4);
+                    int numP = 0;
+                    int.TryParse(num, out numP);
+                    if (numP > serverLines)
+                        serverLines = numP;
+
+                    paintCont.AddServerLine(obj);
+                }
+
+            }
         }
-        catch
+        catch (Exception e)
         {
-            Debug.Log("Init sent to server");
+            Debug.LogError("Cannot sync call");
+            Debug.LogError(e.Message);
         }
         syncCallDone = true;
         Debug.Log("Sync call done");
