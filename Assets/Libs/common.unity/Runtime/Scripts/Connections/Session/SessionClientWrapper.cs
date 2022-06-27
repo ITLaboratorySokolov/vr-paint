@@ -26,6 +26,12 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Session
         /// Event called when session is started.
         /// </summary>
         [SerializeField]
+        private UnityEvent OnCreated = new UnityEvent();
+
+        /// <summary>
+        /// Event called when session is started.
+        /// </summary>
+        [SerializeField]
         private UnityEvent OnStarted = new UnityEvent();
 
         /// <summary>
@@ -61,32 +67,28 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Session
         public SessionState SessionState => this.sessionClient.SessionState;
 
         /// <summary>
-        /// Awake method is called when game object is created.
-        /// It initializes the session client.
-        /// </summary>
-        protected abstract void Awake();
-
-        /// <summary>
-        /// Adds event handlers on start.
-        /// </summary>
-        protected virtual void Start()
-        {
-            this.sessionClient.Disconnected += SessionClient_Disconnected;
-            this.sessionClient.Reconnecting += SessionClient_Reconnecting;
-            this.sessionClient.Reconnected += SessionClient_Reconnected;
-        }
-
-        /// <summary>
         /// Removes event handlers.
         /// </summary>
         protected virtual void OnDestroy()
         {
-            this.sessionClient.Disconnected -= SessionClient_Disconnected;
-            this.sessionClient.Reconnecting -= SessionClient_Reconnecting;
-            this.sessionClient.Reconnected -= SessionClient_Reconnected;
+            if(this.sessionClient != null)
+            {
+                this.sessionClient.Disconnected -= SessionClient_Disconnected;
+                this.sessionClient.Reconnecting -= SessionClient_Reconnecting;
+                this.sessionClient.Reconnected -= SessionClient_Reconnected;
+            }
         }
 
-        protected abstract void CreateSession();
+        /// <summary>
+        /// Initializes connection and adds event handlers on start.
+        /// </summary>
+        public virtual void CreateSession()
+        {
+            this.sessionClient.Disconnected += SessionClient_Disconnected;
+            this.sessionClient.Reconnecting += SessionClient_Reconnecting;
+            this.sessionClient.Reconnected += SessionClient_Reconnected;
+            this.OnCreated.Invoke();
+        }
 
         /// <summary>
         /// Starts a session.
@@ -96,14 +98,16 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Session
         {
             try
             {
-                if(this.sessionClient == null)
+                if (this.sessionClient != null)
                 {
-                    this.CreateSession();
+                    await this.StartSessionAsync();
+                    Debug.Log("Session started");
+                    this.OnStarted.Invoke();
                 }
-
-                await this.StartSessionAsync();
-                Debug.Log("Session started");
-                this.OnStarted.Invoke();
+                else
+                {
+                    Debug.Log("Session is not created");
+                }
             }
             catch (Exception ex)
             {
@@ -121,8 +125,14 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Session
         {
             try
             {
-                await this.StopSessionAsync();
-                Debug.Log("Session stopped");
+                if(this.sessionClient != null)
+                {
+                    await this.StopSessionAsync();
+                    Debug.Log("Session stopped");
+                } else
+                {
+                    Debug.Log("Session is not created");
+                }
             }
             catch (Exception ex)
             {
@@ -134,30 +144,62 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Session
         /// <inheritdoc/>
         public Task StartSessionAsync()
         {
+            if(this.sessionClient == null)
+            {
+                Debug.Log("Session is not created");
+                return Task.CompletedTask;
+            }
+
             return this.sessionClient.StartSessionAsync();
         }
 
         /// <inheritdoc/>
         public Task StopSessionAsync()
         {
+            if (this.sessionClient == null)
+            {
+                Debug.Log("Session is not created");
+                return Task.CompletedTask;
+            }
+
             return this.sessionClient.StopSessionAsync();
         }
 
         /// <inheritdoc/>
         public void RegisterCallback<T>(string method, Action<T> callback)
         {
-            this.sessionClient.RegisterCallback(method, callback);
+            if (this.sessionClient == null)
+            {
+                Debug.Log("Session is not created");
+            } else
+            {
+                this.sessionClient.RegisterCallback(method, callback);
+            }
+
         }
 
         /// <inheritdoc/>
         public void UnregisterCallback(string method)
         {
-            this.sessionClient.UnregisterCallback(method);
+            if (this.sessionClient == null)
+            {
+                Debug.Log("Session is not created");
+            }
+            else
+            {
+                this.sessionClient.UnregisterCallback(method);
+            }
         }
 
         /// <inheritdoc/>
         public Task SendMessageAsync<T>(string method, T parameter)
         {
+            if (this.sessionClient == null)
+            {
+                Debug.Log("Session is not created");
+                return Task.CompletedTask;
+            }
+
             return this.sessionClient.SendMessageAsync(method, parameter);
         }
 
@@ -169,7 +211,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Session
         private void SessionClient_Disconnected(object sender, Exception e)
         {
             Debug.Log("Session disconnected");
-            this.Disconnected?.Invoke(this, e);
+            this.Disconnected?.Invoke(sender, e);
             this.OnDisconnected.Invoke();
         }
 
@@ -180,8 +222,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Session
         /// <param name="e">Exception that caused the reconnection.</param>
         private void SessionClient_Reconnecting(object sender, Exception e)
         {
-            Debug.Log("Session disconnected");
-            this.Reconnecting?.Invoke(this, e);
+            Debug.Log("Session reconnecting");
+            this.Reconnecting?.Invoke(sender, e);
             this.OnReconnecting.Invoke();
         }
 
@@ -191,8 +233,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Session
         /// <param name="sender">Sender of the event.</param>
         private void SessionClient_Reconnected(object sender, EventArgs e)
         {
-            Debug.Log("Session disconnected");
-            this.Reconnected?.Invoke(this, e);
+            Debug.Log("Session reconnected");
+            this.Reconnected?.Invoke(sender, e);
             this.OnReconnected.Invoke();
         }
     }

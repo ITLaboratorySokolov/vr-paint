@@ -1,0 +1,224 @@
+Debug: 6/25/2022 1:26:57 PM Starting HubConnection.
+Error: 6/25/2022 1:27:01 PM Failed to start connection. Error getting negotiation response from 'https://localhost:49155/virtualWorldHub'.
+
+System.Net.Http.HttpRequestException: An error occurred while sending the request
+  at System.Net.Http.MonoWebRequestHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x00509] in <06147aa5b56f46dfbf1deab890f870b4>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.Internal.AccessTokenHttpMessageHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x000ff] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.Internal.LoggingHttpMessageHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x00095] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+  at System.Net.Http.HttpClient.SendAsyncWorker (System.Net.Http.HttpRequestMessage request, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken) [0x000e8] in <06147aa5b56f46dfbf1deab890f870b4>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.HttpConnection.NegotiateAsync (System.Uri url, System.Net.Http.HttpClient httpClient, Microsoft.Extensions.Logging.ILogger logger, System.Threading.CancellationToken cancellationToken) [0x00147] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+Debug: 6/25/2022 1:29:10 PM Starting HubConnection.
+Error: 6/25/2022 1:29:14 PM Failed to start connection. Error getting negotiation response from 'https://localhost:49155/virtualWorldHub'.
+
+System.Net.Http.HttpRequestException: An error occurred while sending the request
+  at System.Net.Http.MonoWebRequestHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x00509] in <06147aa5b56f46dfbf1deab890f870b4>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.Internal.AccessTokenHttpMessageHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x000ff] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.Internal.LoggingHttpMessageHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x00095] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+  at System.Net.Http.HttpClient.SendAsyncWorker (System.Net.Http.HttpRequestMessage request, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken) [0x000e8] in <06147aa5b56f46dfbf1deab890f870b4>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.HttpConnection.NegotiateAsync (System.Uri url, System.Net.Http.HttpClient httpClient, Microsoft.Extensions.Logging.ILogger logger, System.Threading.CancellationToken cancellationToken) [0x00147] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+Debug: 6/25/2022 1:33:57 PM Starting HubConnection.
+Information: 6/25/2022 1:33:58 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=w0BFjPjyN7zb95FEhDhVLQ'.
+Information: 6/25/2022 1:33:58 PM HttpConnection Started.
+Information: 6/25/2022 1:33:58 PM Using HubProtocol 'messagepack v1'.
+Debug: 6/25/2022 1:33:58 PM Sending Hub Handshake.
+Debug: 6/25/2022 1:33:58 PM Handshake with server complete.
+Debug: 6/25/2022 1:33:58 PM Sending PingMessage message.
+Debug: 6/25/2022 1:33:58 PM Sending PingMessage message completed.
+Debug: 6/25/2022 1:33:58 PM Receive loop starting.
+Information: 6/25/2022 1:33:58 PM HubConnection started.
+Debug: 6/25/2022 1:34:06 PM Processing 28 byte message from server.
+Warning: 6/25/2022 1:34:06 PM Failed to find handler for 'AddWorldObject' method.
+Error: 6/25/2022 1:34:06 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 6/25/2022 1:34:10 PM Processing 28 byte message from server.
+Warning: 6/25/2022 1:34:10 PM Failed to find handler for 'AddWorldObject' method.
+Error: 6/25/2022 1:34:10 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 6/25/2022 1:34:13 PM Sending PingMessage message.
+Debug: 6/25/2022 1:34:13 PM Sending PingMessage message completed.
+Debug: 6/25/2022 1:34:14 PM Processing 3 byte message from server.
+Debug: 6/25/2022 1:34:16 PM Stopping HubConnection.
+Debug: 6/25/2022 1:34:16 PM Terminating receive loop.
+Debug: 6/25/2022 1:34:16 PM Waiting for the receive loop to terminate.
+Information: 6/25/2022 1:34:16 PM Transport is stopping.
+Information: 6/25/2022 1:34:16 PM HttpConnection Disposed.
+Information: 6/25/2022 1:34:16 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 6/25/2022 1:34:16 PM Canceling all outstanding invocations.
+Debug: 6/25/2022 1:34:16 PM Invoking the Closed event handler.
+Debug: 6/25/2022 1:34:16 PM HubConnection stopped.
+Debug: 6/25/2022 1:34:20 PM Starting HubConnection.
+Information: 6/25/2022 1:34:21 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=feeZSdROc_Fop_5tH997bA'.
+Information: 6/25/2022 1:34:21 PM HttpConnection Started.
+Information: 6/25/2022 1:34:21 PM Using HubProtocol 'messagepack v1'.
+Debug: 6/25/2022 1:34:21 PM Sending Hub Handshake.
+Debug: 6/25/2022 1:34:21 PM Handshake with server complete.
+Debug: 6/25/2022 1:34:21 PM Sending PingMessage message.
+Debug: 6/25/2022 1:34:21 PM Sending PingMessage message completed.
+Debug: 6/25/2022 1:34:21 PM Receive loop starting.
+Information: 6/25/2022 1:34:21 PM HubConnection started.
+Debug: 6/25/2022 1:34:36 PM Sending PingMessage message.
+Debug: 6/25/2022 1:34:36 PM Sending PingMessage message completed.
+Debug: 6/25/2022 1:34:37 PM Processing 3 byte message from server.
+Debug: 6/25/2022 1:34:41 PM Stopping HubConnection.
+Debug: 6/25/2022 1:34:41 PM Terminating receive loop.
+Debug: 6/25/2022 1:34:41 PM Waiting for the receive loop to terminate.
+Information: 6/25/2022 1:34:41 PM Transport is stopping.
+Information: 6/25/2022 1:34:41 PM HttpConnection Disposed.
+Information: 6/25/2022 1:34:41 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 6/25/2022 1:34:41 PM Canceling all outstanding invocations.
+Debug: 6/25/2022 1:34:41 PM Invoking the Closed event handler.
+Debug: 6/25/2022 1:34:41 PM HubConnection stopped.
+Debug: 6/25/2022 1:55:01 PM Starting HubConnection.
+Information: 6/25/2022 1:55:03 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=j7tXShDafbIL5Jk9EiQtmg'.
+Information: 6/25/2022 1:55:03 PM HttpConnection Started.
+Information: 6/25/2022 1:55:04 PM Using HubProtocol 'messagepack v1'.
+Debug: 6/25/2022 1:55:04 PM Sending Hub Handshake.
+Debug: 6/25/2022 1:55:04 PM Handshake with server complete.
+Debug: 6/25/2022 1:55:04 PM Sending PingMessage message.
+Debug: 6/25/2022 1:55:04 PM Sending PingMessage message completed.
+Debug: 6/25/2022 1:55:04 PM Receive loop starting.
+Information: 6/25/2022 1:55:04 PM HubConnection started.
+Debug: 6/25/2022 1:55:19 PM Sending PingMessage message.
+Debug: 6/25/2022 1:55:19 PM Sending PingMessage message completed.
+Debug: 6/25/2022 1:55:19 PM Processing 3 byte message from server.
+Debug: 6/25/2022 1:55:25 PM Processing 28 byte message from server.
+Warning: 6/25/2022 1:55:25 PM Failed to find handler for 'AddWorldObject' method.
+Error: 6/25/2022 1:55:25 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 6/25/2022 1:55:27 PM Processing 28 byte message from server.
+Warning: 6/25/2022 1:55:27 PM Failed to find handler for 'AddWorldObject' method.
+Error: 6/25/2022 1:55:27 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 6/25/2022 1:55:34 PM Sending PingMessage message.
+Debug: 6/25/2022 1:55:34 PM Sending PingMessage message completed.
+Debug: 6/25/2022 1:55:34 PM Processing 3 byte message from server.
+Debug: 6/25/2022 1:55:40 PM Stopping HubConnection.
+Debug: 6/25/2022 1:55:40 PM Terminating receive loop.
+Debug: 6/25/2022 1:55:40 PM Waiting for the receive loop to terminate.
+Information: 6/25/2022 1:55:40 PM Transport is stopping.
+Information: 6/25/2022 1:55:40 PM HttpConnection Disposed.
+Information: 6/25/2022 1:55:40 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 6/25/2022 1:55:40 PM Canceling all outstanding invocations.
+Debug: 6/25/2022 1:55:40 PM Invoking the Closed event handler.
+Debug: 6/25/2022 1:55:40 PM HubConnection stopped.
+Debug: 6/25/2022 2:01:22 PM Starting HubConnection.
+Information: 6/25/2022 2:01:23 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=ZoLiOKHpaz-jgxE2Ytd3tw'.
+Information: 6/25/2022 2:01:23 PM HttpConnection Started.
+Information: 6/25/2022 2:01:23 PM Using HubProtocol 'messagepack v1'.
+Debug: 6/25/2022 2:01:23 PM Sending Hub Handshake.
+Debug: 6/25/2022 2:01:23 PM Handshake with server complete.
+Debug: 6/25/2022 2:01:23 PM Sending PingMessage message.
+Debug: 6/25/2022 2:01:23 PM Sending PingMessage message completed.
+Debug: 6/25/2022 2:01:23 PM Receive loop starting.
+Information: 6/25/2022 2:01:23 PM HubConnection started.
+Debug: 6/25/2022 2:01:31 PM Processing 28 byte message from server.
+Warning: 6/25/2022 2:01:31 PM Failed to find handler for 'AddWorldObject' method.
+Error: 6/25/2022 2:01:31 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 6/25/2022 2:01:34 PM Processing 28 byte message from server.
+Warning: 6/25/2022 2:01:34 PM Failed to find handler for 'AddWorldObject' method.
+Error: 6/25/2022 2:01:34 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 6/25/2022 2:01:38 PM Sending PingMessage message.
+Debug: 6/25/2022 2:01:38 PM Sending PingMessage message completed.
+Debug: 6/25/2022 2:01:39 PM Processing 3 byte message from server.
+Debug: 6/25/2022 2:01:42 PM Stopping HubConnection.
+Debug: 6/25/2022 2:01:42 PM Terminating receive loop.
+Debug: 6/25/2022 2:01:42 PM Waiting for the receive loop to terminate.
+Information: 6/25/2022 2:01:42 PM Transport is stopping.
+Information: 6/25/2022 2:01:42 PM HttpConnection Disposed.
+Information: 6/25/2022 2:01:42 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 6/25/2022 2:01:42 PM Canceling all outstanding invocations.
+Debug: 6/25/2022 2:01:42 PM Invoking the Closed event handler.
+Debug: 6/25/2022 2:01:42 PM HubConnection stopped.
+Debug: 6/25/2022 2:01:46 PM Starting HubConnection.
+Information: 6/25/2022 2:01:46 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=C5kQah3r-1QCxr1OkMMduw'.
+Information: 6/25/2022 2:01:46 PM HttpConnection Started.
+Information: 6/25/2022 2:01:47 PM Using HubProtocol 'messagepack v1'.
+Debug: 6/25/2022 2:01:47 PM Sending Hub Handshake.
+Debug: 6/25/2022 2:01:47 PM Handshake with server complete.
+Debug: 6/25/2022 2:01:47 PM Sending PingMessage message.
+Debug: 6/25/2022 2:01:47 PM Sending PingMessage message completed.
+Debug: 6/25/2022 2:01:47 PM Receive loop starting.
+Information: 6/25/2022 2:01:47 PM HubConnection started.
+Debug: 6/25/2022 2:02:02 PM Processing 3 byte message from server.
+Debug: 6/25/2022 2:02:02 PM Sending PingMessage message.
+Debug: 6/25/2022 2:02:02 PM Sending PingMessage message completed.
+Debug: 6/25/2022 2:02:07 PM Stopping HubConnection.
+Debug: 6/25/2022 2:02:07 PM Terminating receive loop.
+Debug: 6/25/2022 2:02:07 PM Waiting for the receive loop to terminate.
+Information: 6/25/2022 2:02:07 PM Transport is stopping.
+Information: 6/25/2022 2:02:08 PM HttpConnection Disposed.
+Information: 6/25/2022 2:02:08 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 6/25/2022 2:02:08 PM Canceling all outstanding invocations.
+Debug: 6/25/2022 2:02:08 PM Invoking the Closed event handler.
+Debug: 6/25/2022 2:02:08 PM HubConnection stopped.
+Debug: 6/25/2022 2:01:02 PM Starting HubConnection.
+Information: 6/25/2022 2:01:03 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=A5IL8IiU-QgLPV0fJF-KmA'.
+Information: 6/25/2022 2:01:03 PM HttpConnection Started.
+Information: 6/25/2022 2:01:03 PM Using HubProtocol 'messagepack v1'.
+Debug: 6/25/2022 2:01:03 PM Sending Hub Handshake.
+Debug: 6/25/2022 2:01:03 PM Handshake with server complete.
+Debug: 6/25/2022 2:01:03 PM Sending PingMessage message.
+Debug: 6/25/2022 2:01:03 PM Sending PingMessage message completed.
+Debug: 6/25/2022 2:01:03 PM Receive loop starting.
+Information: 6/25/2022 2:01:03 PM HubConnection started.
+Debug: 6/25/2022 2:01:11 PM Processing 28 byte message from server.
+Warning: 6/25/2022 2:01:11 PM Failed to find handler for 'AddWorldObject' method.
+Error: 6/25/2022 2:01:11 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 6/25/2022 2:01:18 PM Sending PingMessage message.
+Debug: 6/25/2022 2:01:18 PM Sending PingMessage message completed.
+Debug: 6/25/2022 2:01:19 PM Processing 3 byte message from server.
+Debug: 6/25/2022 2:01:20 PM Stopping HubConnection.
+Debug: 6/25/2022 2:01:20 PM Terminating receive loop.
+Debug: 6/25/2022 2:01:20 PM Waiting for the receive loop to terminate.
+Information: 6/25/2022 2:01:20 PM Transport is stopping.
+Information: 6/25/2022 2:01:20 PM HttpConnection Disposed.
+Information: 6/25/2022 2:01:20 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 6/25/2022 2:01:20 PM Canceling all outstanding invocations.
+Debug: 6/25/2022 2:01:20 PM Invoking the Closed event handler.
+Debug: 6/25/2022 2:01:20 PM HubConnection stopped.
+Debug: 6/25/2022 2:01:23 PM Starting HubConnection.
+Information: 6/25/2022 2:01:24 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=U9S51reAC-sfqXmQK83LYQ'.
+Information: 6/25/2022 2:01:24 PM HttpConnection Started.
+Information: 6/25/2022 2:01:24 PM Using HubProtocol 'messagepack v1'.
+Debug: 6/25/2022 2:01:24 PM Sending Hub Handshake.
+Debug: 6/25/2022 2:01:24 PM Handshake with server complete.
+Debug: 6/25/2022 2:01:24 PM Sending PingMessage message.
+Debug: 6/25/2022 2:01:24 PM Sending PingMessage message completed.
+Debug: 6/25/2022 2:01:24 PM Receive loop starting.
+Information: 6/25/2022 2:01:24 PM HubConnection started.
+Debug: 6/25/2022 2:01:39 PM Sending PingMessage message.
+Debug: 6/25/2022 2:01:39 PM Sending PingMessage message completed.
+Debug: 6/25/2022 2:01:40 PM Processing 3 byte message from server.
+Debug: 6/25/2022 2:01:52 PM Stopping HubConnection.
+Debug: 6/25/2022 2:01:52 PM Terminating receive loop.
+Debug: 6/25/2022 2:01:52 PM Waiting for the receive loop to terminate.
+Information: 6/25/2022 2:01:52 PM Transport is stopping.
+Information: 6/25/2022 2:01:52 PM HttpConnection Disposed.
+Information: 6/25/2022 2:01:52 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 6/25/2022 2:01:52 PM Canceling all outstanding invocations.
+Debug: 6/25/2022 2:01:52 PM Invoking the Closed event handler.
+Debug: 6/25/2022 2:01:53 PM HubConnection stopped.

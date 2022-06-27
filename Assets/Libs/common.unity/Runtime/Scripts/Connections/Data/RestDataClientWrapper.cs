@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using ZCU.TechnologyLab.Common.Connections.Data;
 using ZCU.TechnologyLab.Common.Unity.AssetVariables;
+using ZCU.TechnologyLab.Common.Unity.Attributes;
 
 namespace ZCU.TechnologyLab.Common.Unity.Connections.Data
 {
@@ -14,10 +16,16 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Data
         /// Url of a server.
         /// </summary>
         [SerializeField]
+        [HelpBox("Server Url has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
         private StringVariable serverUrl;
 
+        private void OnValidate()
+        {
+            Assert.IsNotNull(serverUrl, "Server Url was null.");
+        }
+
         /// <inheritdoc/>
-        protected override void Awake()
+        public override void CreateClient()
         {
             this.dataClient = new RestDataClient(this.serverUrl.Value);
         }

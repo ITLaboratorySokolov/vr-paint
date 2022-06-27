@@ -1,0 +1,18 @@
+{
+    "name": "zcu.technologylab.common.unity.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bc00b5fb1bba4d549bafdc8c4418aa43"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

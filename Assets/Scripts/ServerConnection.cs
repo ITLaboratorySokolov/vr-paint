@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Unity.Connections.Session;
-using ZCU.TechnologyLab.Common.Serialization;
 using ZCU.TechnologyLab.Common.Connections.Session;
 using ZCU.TechnologyLab.Common.Connections;
 using ZCU.TechnologyLab.Common.Unity.Connections.Data;
+using ZCU.TechnologyLab.Common.Unity.WorldObjects;
 
-// TODO retry connection
 // TODO yells on close that screen capture cannot be done outside of playmode!
+// TODO does reconnect work - was reworked
 
 /// <summary>
 /// Class that manages connection to server
@@ -21,19 +21,28 @@ using ZCU.TechnologyLab.Common.Unity.Connections.Data;
 /// </summary>
 public class ServerConnection : MonoBehaviour
 {
-    /// <summary> Countdown to next image send </summary>
-    private double timeToSnapshot;
-
+    [Header("Connection")]
     /// <summary> Connection to server </summary>
     [SerializeField]
     ServerSessionConnection connection;
+    /// <summary> Data connection to server </summary>
     ServerDataConnection dataConnection;
     /// <summary> Session </summary>
     [SerializeField]
     SignalRSessionWrapper session;
+    /// <summary> Data session </summary>
     [SerializeField]
     RestDataClientWrapper dataSession;
+    
+    [Header("World object managers")]
+    /// <summary> World object manager </summary>
+    [SerializeField]
+    WorldObjectManager woManager;
+    /// <summary> Paint controller </summary>
+    [SerializeField]
+    PaintingController paintCont;
 
+    [Header("Actions")]
     /// <summary> Action performed upon Start </summary>
     [SerializeField]
     UnityEvent actionStart = new UnityEvent();
@@ -41,13 +50,21 @@ public class ServerConnection : MonoBehaviour
     [SerializeField]
     UnityEvent actionEnd = new UnityEvent();
 
-    /// <summary> World object DTO for screenshot to be sent to server </summary>
-    WorldObjectDto wod;
     /// <summary> Synchronization call has been finished </summary>
     internal bool syncCallDone;
+    /// <summary> Number of lines already on server </summary>
     internal int serverLines;
+
+    [Header("Hand objects")]
+    /// <summary> Hand displayed when online </summary>
     [SerializeField]
-    PaintingController paintCont;
+    GameObject handOnline;
+    /// <summary> Hand displayed when offline </summary>
+    [SerializeField]
+    GameObject handOffline;
+    /// <summary> Text displayed when offline </summary>
+    [SerializeField]
+    GameObject textOffline;
 
     /// <summary>
     /// Performes once upon start
@@ -56,12 +73,44 @@ public class ServerConnection : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        connection = new ServerSessionConnection(session);
-        dataConnection = new ServerDataConnection(dataSession);
-        //session.StartSession();
         actionStart.Invoke();
 
+        connection = new ServerSessionConnection(session);
+        dataConnection = new ServerDataConnection(dataSession);
+    }
+
+    /// <summary>
+    /// Called when automatic connection to server fails
+    /// - attempts to restart connection to server
+    /// </summary>
+    public void ConnectionFailed()
+    {
+        Debug.Log("Launching restart procedure");
+        StartCoroutine(RestartConnection());
+    }
+
+    /// <summary>
+    /// Restarting procedure
+    /// - creates a minimum 5s delay
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator RestartConnection()
+    {
+        yield return new WaitForSeconds(5);
+        actionStart.Invoke();
+    }
+
+    /// <summary>
+    /// Called when successfully connected to server
+    /// </summary>
+    public void ConnectedToServer()
+    {
+        Debug.Log("Connected to server");
         StartCoroutine(SyncCall());
+
+        textOffline.SetActive(false);
+        handOffline.SetActive(false);
+        handOnline.SetActive(true);
     }
 
     /// <summary>
@@ -74,6 +123,10 @@ public class ServerConnection : MonoBehaviour
         GetObjectsAsync();
     }
 
+    /// <summary>
+    /// Get objects from server
+    /// - filter lines and display them
+    /// </summary>
     private async void GetObjectsAsync()
     {
         try
@@ -81,12 +134,13 @@ public class ServerConnection : MonoBehaviour
             // Get all objects
             IEnumerable<WorldObjectDto> objs = await dataConnection.GetAllWorldObjectsAsync();
 
-            // go through the names and parse
+            // Go through the names and parse
             foreach (WorldObjectDto obj in objs)
             {
                 string n = obj.Name;
                 Debug.Log(n);
 
+                // Filter out lines
                 serverLines = 0;
                 if (n.StartsWith("Line"))
                 {
@@ -111,28 +165,10 @@ public class ServerConnection : MonoBehaviour
     }
 
     /// <summary>
-    /// Process incoming objects from server
+    /// Action called on ending the application
     /// </summary>
-    /// <param name="l"> List of objects </param>
-    private void ProcessObjects(List<WorldObjectDto> l)
-    {
-        // TODO Go through incoming objects and parse names
-
-        bool present = false;
-
-        // Look through l for "FlyKiller"
-        for (int i = 0; i < l.Count; i++)
-            if (l[i].Name == wod.Name)
-                present = true;
-
-        Debug.Log("Present? " + present);
-
-        syncCallDone = true;
-    }
-
     public void OnDestroy()
     {
-        //session.StopSession();
         actionEnd.Invoke();
     }
 }

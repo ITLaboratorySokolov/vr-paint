@@ -29,7 +29,7 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects
         /// Should change be reported?
         /// </summary>
         [SerializeField]
-        private bool reportTransformChangedEvent = false;
+        private bool reportTransformChangedEvent = true;
 
         /// <summary>
         /// Time interval between reports [in miliseconds].
@@ -73,6 +73,7 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects
             if (this.transform.hasChanged && this.reportTransformChangedEvent && this.remainingTime <= 0)
             {
                 this.remainingTime = this.transformChangedEventReportDelay;
+                this.transform.hasChanged = false;
                 this.TransformChanged?.Invoke(this, new TransformChangedEventArgs { Transform = this.transform });
             }
 

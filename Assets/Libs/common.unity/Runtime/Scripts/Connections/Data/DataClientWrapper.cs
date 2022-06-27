@@ -17,11 +17,16 @@ namespace ZCU.TechnologyLab.Common.Unity.Connections.Data
         protected IDataClient dataClient;
 
         /// <summary>
-        /// Awake method is called when game object is created.
-        /// It initializes the data client.
+        /// Initializes the data client.
         /// </summary>
-        protected abstract void Awake();
+        public abstract void CreateClient();
 
+        /// <inheritdoc/>
+        public void AddHeader(string name, string value)
+        {
+            this.dataClient.AddHeader(name, value);
+        }
+             
         /// <inheritdoc/>
         public Task DeleteAsync(string route, CancellationToken cancellationToken = default)
         {

@@ -1,0 +1,1 @@
+VR model dostupný z https://skfb.ly/6QTYV
