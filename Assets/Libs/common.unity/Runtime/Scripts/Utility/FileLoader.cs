@@ -1,11 +1,9 @@
-﻿// using SimpleFileBrowser;
-using System;
+﻿using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
-// using UnityMeshImporter;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties;
+using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers;
 
 namespace ZCU.TechnologyLab.Common.Unity.Utility
 {
@@ -39,6 +37,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Utility
         IEnumerator ShowLoadDialogCoroutine()
         {
             throw new NotImplementedException();
+
             /*
             FileBrowser.SetFilters(false, 
                 new FileBrowser.Filter("Obrázek (*.jpg; *.png)", ".jpg", ".png"),
@@ -125,7 +124,6 @@ namespace ZCU.TechnologyLab.Common.Unity.Utility
         private GameObject ReadMesh(string filePath)
         {
             throw new NotImplementedException();
-
             /*
             GameObject obj = MeshImporter.Load(filePath);
 

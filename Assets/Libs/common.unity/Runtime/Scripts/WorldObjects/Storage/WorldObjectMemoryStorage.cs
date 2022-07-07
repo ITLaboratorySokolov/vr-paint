@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Unity.Utility.Inventory;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties;
+using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers;
 
 namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Storage
 {

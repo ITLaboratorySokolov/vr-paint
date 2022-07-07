@@ -5,7 +5,7 @@ using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Unity.Attributes;
 using ZCU.TechnologyLab.Common.Unity.Connections;
 using ZCU.TechnologyLab.Common.Unity.Utility.Events;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties;
+using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers;
 
 namespace ZCU.TechnologyLab.Common.Unity.WorldObjects
 {

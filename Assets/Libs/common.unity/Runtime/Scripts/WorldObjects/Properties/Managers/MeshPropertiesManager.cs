@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using ZCU.TechnologyLab.Common.Serialization;
+using ZCU.TechnologyLab.Common.Serialization.Mesh;
 using ZCU.TechnologyLab.Common.Unity.Utility;
 using ZCU.TechnologyLab.Common.Unity.Utility.Events;
+using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Serializers;
 
-namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
+namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers
 {
     /// <summary>
     /// The <see cref="MeshPropertiesManager"/> class provides access to properties of a mesh
@@ -45,7 +47,7 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
         /// <summary>
         /// Description of a type of this world object.
         /// </summary>
-        public const string ManagedTypeDescription = "Mesh";
+        private const string ManagedTypeDescription = "Mesh";
 
         /// <summary>
         /// Supported mesh primitives.
@@ -69,12 +71,20 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
         private MeshRenderer meshRenderer;
 
         /// <summary>
-        /// Mesh serializer.
+        /// Mesh serializer factory.
         /// </summary>
-        private MeshSerializer meshSerializer;
+        private MeshSerializerFactory meshSerializerFactory = new MeshSerializerFactory();
+
+        [SerializeField]
+        private List<OptionalProperty> optionalProperties = new List<OptionalProperty>();
 
         /// <inheritdoc/>
         public string ManagedType => ManagedTypeDescription;
+
+        /// <summary>
+        /// Gets list of optional properties.
+        /// </summary>
+        public IList<OptionalProperty> OptionalProperties => this.optionalProperties;
 
         /// <summary>
         /// Initializes mesh filter and mesh renderer.
@@ -92,8 +102,6 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
             {
                 this.meshRenderer.material = new Material(Shader.Find("Diffuse"));
             }
-
-            this.meshSerializer = new MeshSerializer();
         }
 
         /// <summary>
@@ -172,6 +180,7 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
                 Properties = this.GetProperties()
             });
         }
+
         /// <summary>
         /// Sets triangles of a mesh.
         /// 
@@ -200,18 +209,51 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
         /// <inheritdoc/>
         public Dictionary<string, byte[]> GetProperties()
         {
-            return this.meshSerializer.SerializeProperties(PointConverter.Point3DToFloat(this.meshFilter.mesh.vertices), this.meshFilter.mesh.triangles, SupportedPrimitives[0]);
+            var properties = this.meshSerializerFactory.RawMeshSerializer.Serialize(PointConverter.Point3DToFloat(this.meshFilter.mesh.vertices), this.meshFilter.mesh.triangles, SupportedPrimitives[0]);
+            foreach(var optionalProperty in this.optionalProperties)
+            {
+                try
+                {
+                    properties.Add(optionalProperty.GetPropertyName(), optionalProperty.Serialize());
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Unable to serialize optional property: {ex.Message}");
+                }
+            }
+
+            return properties;
         }
 
         /// <inheritdoc/>
         public void SetProperties(Dictionary<string, byte[]> properties)
         {
-            if (this.meshSerializer.SupportPrimitive(properties, SupportedPrimitives))
+            if(this.meshSerializerFactory.IsRawMesh(properties))
             {
-                this.meshFilter.mesh.vertices = PointConverter.FloatToPoint3D(this.meshSerializer.DeserializeVertices(properties));
-                this.meshFilter.mesh.triangles = this.meshSerializer.DeserializeIndices(properties);
-                this.meshFilter.mesh.RecalculateNormals();
-                this.meshFilter.mesh.RecalculateBounds();
+                var meshSerializer = this.meshSerializerFactory.RawMeshSerializer;
+                if (SupportedPrimitives.Contains(meshSerializer.PrimitiveSerializer.Deserialize(properties)))
+                {
+                    this.meshFilter.mesh.vertices = PointConverter.FloatToPoint3D(meshSerializer.VerticesSerializer.Deserialize(properties));
+                    this.meshFilter.mesh.triangles = meshSerializer.IndicesSerializer.Deserialize(properties);
+
+                    this.meshFilter.mesh.RecalculateNormals();
+                    this.meshFilter.mesh.RecalculateBounds();
+
+                    foreach (var optionalProperty in this.optionalProperties)
+                    {
+                        try
+                        {
+                            optionalProperty.Process(properties);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.LogError($"Unable to process optional property: {ex.Message}");
+                        }
+                    }
+                }
+            } else if (this.meshSerializerFactory.IsPlyFile(properties))
+            {
+
             }
         }
     }

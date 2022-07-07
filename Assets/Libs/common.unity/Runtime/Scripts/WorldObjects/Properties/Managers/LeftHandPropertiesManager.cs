@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Unity.Utility.Events;
 
-namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
+namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers
 {
-    public class RightHandPropertiesManager : MonoBehaviour, IPropertiesManager
+    public class LeftHandPropertiesManager : MonoBehaviour, IPropertiesManager
     {
         /// <inheritdoc/>
         public event EventHandler<PropertiesChangedEventArgs> PropertiesChanged;
@@ -13,7 +13,7 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
         /// <summary>
         /// Description of a type of this world object.
         /// </summary>
-        public const string ManagedTypeDescription = "RightHand";
+        private const string ManagedTypeDescription = "LeftHand";
 
         /// <inheritdoc/>
         public string ManagedType => ManagedTypeDescription;

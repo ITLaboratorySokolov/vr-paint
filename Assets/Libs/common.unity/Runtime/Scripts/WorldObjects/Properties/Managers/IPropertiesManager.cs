@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Unity.Utility.Events;
 
-namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
+namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers
 {
     /// <summary>
     /// Inteface that prescribes how properties of a world object should be managed.

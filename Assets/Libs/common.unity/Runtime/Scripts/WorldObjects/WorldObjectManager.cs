@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Unity.Attributes;
 using ZCU.TechnologyLab.Common.Unity.Connections;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties;
+using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers;
 using ZCU.TechnologyLab.Common.Unity.WorldObjects.Storage;
 
 namespace ZCU.TechnologyLab.Common.Unity.WorldObjects

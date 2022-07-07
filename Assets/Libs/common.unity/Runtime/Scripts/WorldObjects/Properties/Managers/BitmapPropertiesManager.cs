@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using ZCU.TechnologyLab.Common.Serialization;
+using ZCU.TechnologyLab.Common.Serialization.Bitmap;
 using ZCU.TechnologyLab.Common.Unity.Utility.Events;
+using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Serializers;
 
-namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
+namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers
 {
     /// <summary>
     /// The <see cref="BitmapPropertiesManager"/> class provides access to properties of an image
@@ -57,7 +58,7 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
         /// <summary>
         /// Description of a type of this world object.
         /// </summary>
-        public const string ManagedTypeDescription = "Bitmap";
+        private const string ManagedTypeDescription = "Bitmap";
 
         /// <summary>
         /// Mesh filter.
@@ -76,12 +77,20 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
         private MeshRenderer meshRenderer;
 
         /// <summary>
-        /// Bitmap serializer.
+        /// Bitmap serializer factory.
         /// </summary>
-        private BitmapSerializer bitmapSerializer;
+        private BitmapSerializerFactory bitmapSerializerFactory = new BitmapSerializerFactory();
+
+        [SerializeField]
+        private List<OptionalProperty> optionalProperties = new List<OptionalProperty>();
 
         /// <inheritdoc/>
         public string ManagedType => ManagedTypeDescription;
+
+        /// <summary>
+        /// Gets list of optional properties.
+        /// </summary>
+        public IList<OptionalProperty> OptionalProperties => this.optionalProperties;
 
         /// <summary>
         /// Initializes texture, mesh filter and mesh renderer.
@@ -108,8 +117,6 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
             {
                 this.meshFilter.mesh = this.GeneratePlane(1, 1);
             }
-
-            this.bitmapSerializer = new BitmapSerializer();
         }
 
         /// <summary>
@@ -164,26 +171,57 @@ namespace ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties
         {
             var texture = (Texture2D)this.meshRenderer.material.mainTexture;
 
-            return this.bitmapSerializer.SerializeRawBitmap(
+            var properties = this.bitmapSerializerFactory.RawBitmapSerializer.Serialize(
                 this.meshRenderer.material.mainTexture.width,
                 this.meshRenderer.material.mainTexture.height, 
                 this.ConvertFormatToString(texture.format),
                 texture.GetRawTextureData());
+
+            foreach(var optionalProperty in this.optionalProperties)
+            {
+                try
+                {
+                    properties.Add(optionalProperty.GetPropertyName(), optionalProperty.Serialize());
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Unable to serialize optional property: {ex.Message}");
+                }
+            }
+
+            return properties;
         }
 
         /// <inheritdoc/>
         public void SetProperties(Dictionary<string, byte[]> properties)
         {
-            var height = this.bitmapSerializer.DeserializeHeight(properties);
-            var width = this.bitmapSerializer.DeserializeWidth(properties);
-            var format = this.bitmapSerializer.DeserializeFormat(properties);
+            if(this.bitmapSerializerFactory.IsRawBitmap(properties))
+            {
+                var rawBitmapSerializer = this.bitmapSerializerFactory.RawBitmapSerializer;
 
-            var texture = (Texture2D)this.meshRenderer.material.mainTexture;
-            texture.Reinitialize(width, height, this.ConvertFormatFromString(format), false);
-            texture.SetPixelData(this.bitmapSerializer.DeserializePixels(properties), 0);
-            texture.Apply();
+                var height = rawBitmapSerializer.HeightSerializer.Deserialize(properties);
+                var width = rawBitmapSerializer.WidthSerializer.Deserialize(properties);
+                var format = rawBitmapSerializer.FormatSerializer.Deserialize(properties);
 
-            this.meshFilter.mesh = GeneratePlane(width, height);
+                var texture = (Texture2D)this.meshRenderer.material.mainTexture;
+                texture.Reinitialize(width, height, this.ConvertFormatFromString(format), false);
+                texture.SetPixelData(rawBitmapSerializer.PixelsSerializer.Deserialize(properties), 0);
+                texture.Apply();
+
+                this.meshFilter.mesh = GeneratePlane(width, height);
+
+                foreach(var optionalProperty in this.optionalProperties)
+                {
+                    try
+                    { 
+                        optionalProperty.Process(properties);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"Unable to process optional property: {ex.Message}");
+                    }
+                }
+            }
         }
 
         /// <summary>

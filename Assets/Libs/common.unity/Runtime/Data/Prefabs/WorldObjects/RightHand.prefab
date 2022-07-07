@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4801730839191110435}
-  - component: {fileID: 9182516031481520266}
   - component: {fileID: -8636328593747280203}
+  - component: {fileID: 5086736540817079680}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Untagged
@@ -34,18 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9182516031481520266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3450956092998041009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30792ca7caf760944baf0496e9c1d98d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-8636328593747280203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +48,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reportTransformChangedEvent: 1
   transformChangedEventReportDelay: 0.1
+--- !u!114 &5086736540817079680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3450956092998041009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf70597230509d24680db4bb839ef6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5933879111169366359
 PrefabInstance:
   m_ObjectHideFlags: 0
