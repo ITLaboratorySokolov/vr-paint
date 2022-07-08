@@ -5,7 +5,7 @@ using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Serialization.Mesh;
 using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers;
 
-// TODO - send texture along with color
+// TODO - updates during painting
 
 /// <summary> Class controlling painting </summary>
 public class PaintingController : MonoBehaviour
@@ -79,6 +79,8 @@ public class PaintingController : MonoBehaviour
     RawMeshSerializer serializer;
     /// <summary> Is application ready for painting  </summary>
     bool readyForPaint;
+
+    float timeToUpdate = 0.25f;
 
     /// <summary>
     /// Register actions on object awake, set up brushes
@@ -245,7 +247,13 @@ public class PaintingController : MonoBehaviour
 
             // Set texture - only if the brush has any, otherwise stays the default of the material
             if (brushes[currentBrush].Texture != null)
+            {
+                Debug.Log("Setting texture");
                 currLine.material.SetTexture("_MainTex", brushes[currentBrush].Texture);
+             
+                // var mat = o.GetComponent<MeshRenderer>().material;
+                // mat.SetTexture("_MainTex", brushes[currentBrush].Texture);
+            }
 
             // Set line width
             AnimationCurve curve = new AnimationCurve();
@@ -258,18 +266,16 @@ public class PaintingController : MonoBehaviour
             currLine.SetPosition(0, controller.position);
             currLine.SetPosition(1, controller.position);
 
-            /* TODO send "empty" line to server
+            // TODO send to server
             // Send to server
-            MeshPropertiesManager propsManager = o.GetComponent<MeshPropertiesManager>();
-            propsManager.name = o.name;
             Mesh mesh = new Mesh();
             currLine.BakeMesh(mesh);
-            Dictionary<string, byte[]> props = serializer.SerializeProperties(Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "triangle");
-            propsManager.SetProperties(props);
-            lineCounter++;
 
-            objController.AddObjectAsync(o);
-            */
+            MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
+            propsManager.name = currLineObj.name;
+            Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
+            propsManager.SetProperties(props);
+            objController.AddObjectAsync(currLineObj);
         }
     }
 
@@ -281,22 +287,23 @@ public class PaintingController : MonoBehaviour
         currLine.positionCount++;
         currLine.SetPosition(currLine.positionCount - 1, controller.position);
 
-        /* TODO update server line
+        // TODO update server line
         // Update properties
-        MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
-        Mesh mesh = new Mesh();
-        currLine.BakeMesh(mesh);
+        timeToUpdate -= Time.deltaTime;
+        if (timeToUpdate <= 0.0001)
+        {
+            timeToUpdate = 0.25f;
 
-        Dictionary<string, byte[]> props = serializer.SerializeProperties(Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "triangle");
-        
-        Debug.Log(mesh.GetIndices(0).Length);
-        Debug.Log(Vec3ToFloats(mesh.vertices).Length);
+            MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
+            Mesh mesh = new Mesh();
+            currLine.BakeMesh(mesh);
 
-        propsManager.SetProperties(props);
+            Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
+            propsManager.SetProperties(props);
 
-        // Send update to server
-        objController.UpdateProperties(propsManager.name);
-        */
+            // Send update to server
+            objController.UpdateProperties(propsManager.name);
+        }
     }
 
     /// <summary>
@@ -305,35 +312,34 @@ public class PaintingController : MonoBehaviour
     private void DisablePaint()
     {
         if (isEraser)
-            return; 
+            return;
 
         paintingOn = false;
         Vector3[] points = new Vector3[currLine.positionCount];
 
-        MeshCollider meshCollider = currLine.GetComponent<MeshCollider>();
-        Mesh mesh = new Mesh();
-        currLine.BakeMesh(mesh);
+        // MeshCollider meshCollider = currLine.GetComponent<MeshCollider>();
+        // Mesh mesh = new Mesh();
+        // currLine.BakeMesh(mesh);
 
+        /*
         // TODO Send to server
         MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
         propsManager.name = currLineObj.name;
-        Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
-
-        // Add color to properties
-        /*
-        Color currC = currLine.material.GetColor("_Color");
-        string currCval = currC.r + ", " + currC.g + ", " + currC.b;
-        byte[] bytes = Encoding.ASCII.GetBytes(currCval);
-        props.Add("Color", bytes);
+        Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle"); 
+        propsManager.SetProperties(props);
         */
 
-        propsManager.SetProperties(props);
-        
-        lineCounter++;
-        objController.AddObjectAsync(currLineObj);
+        timeToUpdate = 0.25f;
+        MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
+        Mesh mesh = new Mesh();
+        currLine.BakeMesh(mesh);
 
-        var mat = currLineObj.GetComponent<MeshRenderer>().material;
-        mat.SetColor("_Color", brushes[currentBrush].Color);
+        Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
+        propsManager.SetProperties(props);
+
+        // Send last update to server
+        objController.UpdateProperties(propsManager.name);
+        lineCounter++;
     }
 
     /// <summary>

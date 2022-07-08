@@ -96,4 +96,33 @@ public static class ConvertorHelper
 
         return floats;
     }
+
+    public static Texture2D texture2D;
+    static RenderTexture currentRT;
+    static RenderTexture renderTexture;
+
+    /// <summary>
+    /// Converts Texture to Texture2D
+    /// </summary>
+    /// <param name="texture"> Source texture </param>
+    /// <returns> Resulting texture </returns>
+    public static Texture2D TextureToTexture2D(Texture texture)
+    {
+        Texture2D texture2D = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
+        // texture2D.Reinitialize(texture.width, texture.height); 
+
+        currentRT = RenderTexture.active;
+        renderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 32);
+        Graphics.Blit(texture, renderTexture);
+
+        RenderTexture.active = renderTexture;
+        texture2D.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        texture2D.Apply();
+
+        RenderTexture.ReleaseTemporary(renderTexture);
+        RenderTexture.active = currentRT;
+
+        UnityEngine.Object.Destroy(currentRT);
+        return texture2D;
+    }
 }

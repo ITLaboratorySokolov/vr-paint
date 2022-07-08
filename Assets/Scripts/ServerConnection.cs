@@ -164,6 +164,16 @@ public class ServerConnection : MonoBehaviour
         Debug.Log("Sync call done");
     }
 
+    public void SendToServer()
+    {
+
+    }
+
+    public void UpdateOnServer()
+    {
+
+    }
+
     /// <summary>
     /// Action called on ending the application
     /// </summary>
