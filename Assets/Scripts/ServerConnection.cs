@@ -10,7 +10,6 @@ using ZCU.TechnologyLab.Common.Connections;
 using ZCU.TechnologyLab.Common.Unity.Connections.Data;
 using ZCU.TechnologyLab.Common.Unity.WorldObjects;
 
-// TODO yells on close that screen capture cannot be done outside of playmode!
 // TODO does reconnect work - was reworked
 
 /// <summary>
@@ -33,7 +32,9 @@ public class ServerConnection : MonoBehaviour
     /// <summary> Data session </summary>
     [SerializeField]
     RestDataClientWrapper dataSession;
-    
+    /// <summary> Synchronization call has been finished </summary>
+    internal bool syncCallDone;
+
     [Header("World object managers")]
     /// <summary> World object manager </summary>
     [SerializeField]
@@ -41,6 +42,8 @@ public class ServerConnection : MonoBehaviour
     /// <summary> Paint controller </summary>
     [SerializeField]
     PaintingController paintCont;
+    /// <summary> Number of lines already on server </summary>
+    internal int serverLines;
 
     [Header("Actions")]
     /// <summary> Action performed upon Start </summary>
@@ -49,11 +52,6 @@ public class ServerConnection : MonoBehaviour
     /// <summary Action performed upon Destroy </summary>
     [SerializeField]
     UnityEvent actionEnd = new UnityEvent();
-
-    /// <summary> Synchronization call has been finished </summary>
-    internal bool syncCallDone;
-    /// <summary> Number of lines already on server </summary>
-    internal int serverLines;
 
     [Header("Hand objects")]
     /// <summary> Hand displayed when online </summary>
@@ -98,6 +96,14 @@ public class ServerConnection : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         actionStart.Invoke();
+    }
+
+    /// <summary>
+    /// Reset connection to server
+    /// </summary>
+    public void ResetConnection()
+    {
+        syncCallDone = false;
     }
 
     /// <summary>
@@ -164,15 +170,7 @@ public class ServerConnection : MonoBehaviour
         Debug.Log("Sync call done");
     }
 
-    public void SendToServer()
-    {
-
-    }
-
-    public void UpdateOnServer()
-    {
-
-    }
+    
 
     /// <summary>
     /// Action called on ending the application

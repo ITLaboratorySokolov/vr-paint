@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using ZCU.TechnologyLab.Common.Unity.AssetVariables;
 
 // TODO path to config file
@@ -20,9 +21,15 @@ public class SetUpScript : MonoBehaviour
     /// <summary> Server url </summary>
     [SerializeField]
     private StringVariable serverUrl;
+    /// <summary> Server connection </summary>
+    [SerializeField]
+    ServerConnection serverConnection;
+    /// <summary> Manual connection reset action reference </summary>
+    [SerializeField]
+    InputActionReference resetAction = null;
 
     /// <summary>
-    /// Set up configuration before application starts
+    /// Set up configuration1before application starts
     /// - read from config min and max recorded depth, horizontal and vertical pan, zoom and server url
     /// </summary>
     private void Awake()
@@ -32,6 +39,13 @@ public class SetUpScript : MonoBehaviour
 
         // Set culture -> doubles are written with decimal dot
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+        ReadConfig();
+
+        resetAction.action.performed += ResetSetUp;
+    }
+
+    private void ReadConfig()
+    {
         if (File.Exists(pathToConfig))
         {
             Debug.Log("Loading config file...");
@@ -43,5 +57,10 @@ public class SetUpScript : MonoBehaviour
         }
     }
 
-
+    public void ResetSetUp(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("Reseting configuration!");
+        ReadConfig();
+        serverConnection.ResetConnection();
+    }
 }

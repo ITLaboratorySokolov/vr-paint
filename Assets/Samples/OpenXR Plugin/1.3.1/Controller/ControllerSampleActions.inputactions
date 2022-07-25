@@ -1129,6 +1129,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ResetConnection",
+                    "type": "Value",
+                    "id": "68415ba1-9efc-4242-9529-f7da1486f12d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1206,6 +1215,17 @@
                     "processors": "",
                     "groups": "XR Usage",
                     "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db282967-886a-4f1a-91e0-664bbf4bedf1",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetConnection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

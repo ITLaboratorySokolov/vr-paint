@@ -25,6 +25,11 @@ public class MenuCanvasController : MonoBehaviour
         // Set current color to picker
         Color c = b.Color;
         String hex = ColorUtility.ToHtmlStringRGB(c);
+
+        Debug.Log(b.Name);
+        Debug.Log(hex);
+        Debug.Log(picker);
+
         picker.FinishTypeHex(hex);
 
         // Set name

@@ -3448,7 +3448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   session: {fileID: 808770921}
   dataSession: {fileID: 808770920}
-  woManager: {fileID: 0}
+  woManager: {fileID: 808770923}
+  paintCont: {fileID: 1588199580}
   actionStart:
     m_PersistentCalls:
       m_Calls:
@@ -3507,7 +3508,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  paintCont: {fileID: 1588199580}
   handOnline: {fileID: 693667088}
   handOffline: {fileID: 912444835}
   textOffline: {fileID: 71958300}
@@ -3577,7 +3577,19 @@ MonoBehaviour:
       m_Calls: []
   OnReconnected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 808770919}
+        m_TargetAssemblyTypeName: ServerConnection, Assembly-CSharp
+        m_MethodName: ConnectedToServer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   serverUrl: {fileID: 11400000, guid: 95b0b66dae6523e49bd25b768ba71661, type: 2}
   hub: {fileID: 11400000, guid: 52c22c055b6264f4687cfebb4fa1b804, type: 2}
 --- !u!114 &808770922
@@ -3593,6 +3605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverUrl: {fileID: 11400000, guid: 95b0b66dae6523e49bd25b768ba71661, type: 2}
+  serverConnection: {fileID: 808770919}
+  resetAction: {fileID: 1580277500351781430, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
 --- !u!114 &808770923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7491,9 +7505,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae438d435a3711439198d9148bf91da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paintRef: {fileID: -4472565479911015767, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
-  switchRef: {fileID: 7879310009548894679, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
-  eraserRef: {fileID: -3681919123041194924, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
+  paintRef: {fileID: 6986180202050166755, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
+  switchRef: {fileID: -8514278639596572500, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
+  eraserRef: {fileID: 6454596279149084813, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
   objController: {fileID: 1588199583}
   canvas: {fileID: 1588199581}
   controller: {fileID: 1232437136}
@@ -7533,8 +7547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2c2011032cf6b448966f918e6b939a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveRef: {fileID: -2535288218607056299, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
-  rotRef: {fileID: -1623246960981506561, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
+  moveRef: {fileID: 7596212294181904713, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
+  rotRef: {fileID: 3396702884570900202, guid: e0ca4504471ca124088e1e2cfe6804ae, type: 3}
   rig: {fileID: 1060976101}
   speed: 2
 --- !u!114 &1588199583
