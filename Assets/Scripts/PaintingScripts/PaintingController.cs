@@ -133,6 +133,14 @@ public class PaintingController : MonoBehaviour
         if (vertices.Length < 9)
             return;
 
+        // TODO Set collider
+        Mesh mesh = new Mesh();
+        mesh.SetVertices(vectors);
+        mesh.SetIndices(indices, MeshTopology.Triangles, 0);
+
+        MeshCollider meshCollider = o.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
+
         propsManager.SetProperties(obj.Properties);
     }
 
@@ -221,9 +229,10 @@ public class PaintingController : MonoBehaviour
             Collider[] cs = Physics.OverlapSphere(controller.transform.position, eraser.Width / 2.0f);
             for (int i = 0; i < cs.Length; i++)
             {
+                string name = cs[i].gameObject.name;
                 if (cs[i].gameObject.tag == "line")
                 {
-                    objController.DestroyObject(gameObject.name);
+                    objController.DestroyObject(name);
                     Destroy(cs[i].gameObject);
                 }
             }
@@ -247,13 +256,7 @@ public class PaintingController : MonoBehaviour
 
             // Set texture - only if the brush has any, otherwise stays the default of the material
             if (brushes[currentBrush].Texture != null)
-            {
-                Debug.Log("Setting texture");
                 currLine.material.SetTexture("_MainTex", brushes[currentBrush].Texture);
-             
-                // var mat = o.GetComponent<MeshRenderer>().material;
-                // mat.SetTexture("_MainTex", brushes[currentBrush].Texture);
-            }
 
             // Set line width
             AnimationCurve curve = new AnimationCurve();
@@ -266,11 +269,11 @@ public class PaintingController : MonoBehaviour
             currLine.SetPosition(0, controller.position);
             currLine.SetPosition(1, controller.position);
 
-            // TODO send to server
             // Send to server
             Mesh mesh = new Mesh();
             currLine.BakeMesh(mesh);
 
+            // Set properties
             MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
             propsManager.name = currLineObj.name;
             Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
@@ -287,7 +290,6 @@ public class PaintingController : MonoBehaviour
         currLine.positionCount++;
         currLine.SetPosition(currLine.positionCount - 1, controller.position);
 
-        // TODO update server line
         // Update properties
         timeToUpdate -= Time.deltaTime;
         if (timeToUpdate <= 0.0001)
@@ -317,22 +319,14 @@ public class PaintingController : MonoBehaviour
         paintingOn = false;
         Vector3[] points = new Vector3[currLine.positionCount];
 
-        // MeshCollider meshCollider = currLine.GetComponent<MeshCollider>();
-        // Mesh mesh = new Mesh();
-        // currLine.BakeMesh(mesh);
-
-        /*
-        // TODO Send to server
-        MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
-        propsManager.name = currLineObj.name;
-        Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle"); 
-        propsManager.SetProperties(props);
-        */
-
         timeToUpdate = 0.25f;
         MeshPropertiesManager propsManager = currLineObj.GetComponent<MeshPropertiesManager>();
         Mesh mesh = new Mesh();
         currLine.BakeMesh(mesh);
+
+        // TODO Set collider
+        MeshCollider meshCollider = currLine.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
 
         Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
         propsManager.SetProperties(props);
