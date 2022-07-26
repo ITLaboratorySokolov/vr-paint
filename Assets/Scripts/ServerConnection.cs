@@ -54,15 +54,17 @@ public class ServerConnection : MonoBehaviour
     UnityEvent actionEnd = new UnityEvent();
 
     [Header("Hand objects")]
+    [SerializeField]
+    bool leftHanded;
     /// <summary> Hand displayed when online </summary>
     [SerializeField]
-    GameObject handOnline;
+    GameObject[] handOnline;
     /// <summary> Hand displayed when offline </summary>
     [SerializeField]
-    GameObject handOffline;
+    GameObject[] handOffline;
     /// <summary> Text displayed when offline </summary>
     [SerializeField]
-    GameObject textOffline;
+    GameObject[] textOffline;
 
     /// <summary>
     /// Performes once upon start
@@ -75,6 +77,24 @@ public class ServerConnection : MonoBehaviour
 
         connection = new ServerSessionConnection(session);
         dataConnection = new ServerDataConnection(dataSession);
+
+        handOnline[0].SetActive(false);
+        handOnline[1].SetActive(false);
+
+        handOffline[0].SetActive(true);
+        handOffline[1].SetActive(true);
+        
+        if (leftHanded)
+        {
+            textOffline[0].SetActive(true);
+            textOffline[1].SetActive(false);
+        }
+        else
+        {
+            textOffline[0].SetActive(false);
+            textOffline[1].SetActive(true);
+        }
+
     }
 
     /// <summary>
@@ -114,9 +134,14 @@ public class ServerConnection : MonoBehaviour
         Debug.Log("Connected to server");
         StartCoroutine(SyncCall());
 
-        textOffline.SetActive(false);
-        handOffline.SetActive(false);
-        handOnline.SetActive(true);
+        textOffline[0].SetActive(false);
+        textOffline[1].SetActive(false);
+
+        handOnline[0].SetActive(true);
+        handOnline[1].SetActive(true);
+
+        handOffline[0].SetActive(false);
+        handOffline[1].SetActive(false);
     }
 
     /// <summary>
@@ -139,6 +164,7 @@ public class ServerConnection : MonoBehaviour
         {
             // Get all objects
             IEnumerable<WorldObjectDto> objs = await dataConnection.GetAllWorldObjectsAsync();
+            List<int> l = new List<int>();
 
             // Go through the names and parse
             foreach (WorldObjectDto obj in objs)
@@ -153,13 +179,16 @@ public class ServerConnection : MonoBehaviour
                     string num = n.Substring(4, n.Length - 4);
                     int numP = 0;
                     int.TryParse(num, out numP);
-                    if (numP > serverLines)
-                        serverLines = numP;
+                    l.Add(numP);
 
                     paintCont.AddServerLine(obj);
                 }
 
             }
+
+            for (int i = 0; i < l.Count; i++)
+                if (l[i] > serverLines)
+                    serverLines = l[i];
         }
         catch (Exception e)
         {

@@ -614,3 +614,557 @@ Information: 7/26/2022 3:13:32 PM WebSocket closed by the server. Close status N
 Debug: 7/26/2022 3:13:32 PM Canceling all outstanding invocations.
 Debug: 7/26/2022 3:13:32 PM Invoking the Closed event handler.
 Debug: 7/26/2022 3:13:32 PM HubConnection stopped.
+Debug: 7/26/2022 3:30:44 PM Starting HubConnection.
+Information: 7/26/2022 3:30:46 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=HaKjJIAY5OBTA0pb_qJWGg'.
+Information: 7/26/2022 3:30:46 PM HttpConnection Started.
+Information: 7/26/2022 3:30:46 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:30:46 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:30:47 PM Handshake with server complete.
+Debug: 7/26/2022 3:30:47 PM Sending PingMessage message.
+Debug: 7/26/2022 3:30:47 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:30:47 PM Receive loop starting.
+Information: 7/26/2022 3:30:47 PM HubConnection started.
+Debug: 7/26/2022 3:31:02 PM Sending PingMessage message.
+Debug: 7/26/2022 3:31:02 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:31:02 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:31:10 PM Processing 28 byte message from server.
+Warning: 7/26/2022 3:31:10 PM Failed to find handler for 'AddWorldObject' method.
+Error: 7/26/2022 3:31:10 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:11 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:31:11 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:11 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:11 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:31:11 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:11 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:11 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:31:11 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:11 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:14 PM Processing 29 byte message from server.
+Warning: 7/26/2022 3:31:14 PM Failed to find handler for 'AddWorldObject' method.
+Error: 7/26/2022 3:31:14 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:14 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:14 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:14 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:14 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:14 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:14 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:15 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:15 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:15 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:17 PM Sending PingMessage message.
+Debug: 7/26/2022 3:31:17 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:31:17 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:31:17 PM Failed to find handler for 'RemoveWorldObject' method.
+Error: 7/26/2022 3:31:17 PM Failed to bind arguments received in invocation '(null)' of 'RemoveWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:18 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:31:21 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:31:21 PM Failed to find handler for 'RemoveWorldObject' method.
+Error: 7/26/2022 3:31:21 PM Failed to bind arguments received in invocation '(null)' of 'RemoveWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:29 PM Processing 29 byte message from server.
+Warning: 7/26/2022 3:31:29 PM Failed to find handler for 'AddWorldObject' method.
+Error: 7/26/2022 3:31:29 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:29 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:29 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:29 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:29 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:29 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:29 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:29 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:29 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:29 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:30 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:30 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:30 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:30 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:30 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:31:30 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:32 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:31:32 PM Failed to find handler for 'RemoveWorldObject' method.
+Error: 7/26/2022 3:31:32 PM Failed to bind arguments received in invocation '(null)' of 'RemoveWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:31:32 PM Sending PingMessage message.
+Debug: 7/26/2022 3:31:32 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:31:33 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:31:43 PM Stopping HubConnection.
+Debug: 7/26/2022 3:31:43 PM Terminating receive loop.
+Debug: 7/26/2022 3:31:43 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 3:31:43 PM Transport is stopping.
+Information: 7/26/2022 3:31:43 PM HttpConnection Disposed.
+Information: 7/26/2022 3:31:43 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 3:31:43 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 3:31:43 PM Invoking the Closed event handler.
+Debug: 7/26/2022 3:31:43 PM HubConnection stopped.
+Debug: 7/26/2022 3:31:46 PM Starting HubConnection.
+Information: 7/26/2022 3:31:47 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=O6QTEv5GlzaQyJ23eGrB6Q'.
+Information: 7/26/2022 3:31:47 PM HttpConnection Started.
+Information: 7/26/2022 3:31:47 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:31:47 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:31:47 PM Handshake with server complete.
+Debug: 7/26/2022 3:31:47 PM Sending PingMessage message.
+Debug: 7/26/2022 3:31:47 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:31:47 PM Receive loop starting.
+Information: 7/26/2022 3:31:47 PM HubConnection started.
+Debug: 7/26/2022 3:32:02 PM Sending PingMessage message.
+Debug: 7/26/2022 3:32:02 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:32:03 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:32:04 PM Stopping HubConnection.
+Debug: 7/26/2022 3:32:04 PM Terminating receive loop.
+Debug: 7/26/2022 3:32:04 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 3:32:04 PM Transport is stopping.
+Information: 7/26/2022 3:32:04 PM HttpConnection Disposed.
+Information: 7/26/2022 3:32:04 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 3:32:04 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 3:32:04 PM Invoking the Closed event handler.
+Debug: 7/26/2022 3:32:04 PM HubConnection stopped.
+Debug: 7/26/2022 3:47:21 PM Starting HubConnection.
+Information: 7/26/2022 3:47:22 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=yHtrhpjgT7qjBJrevxSGgQ'.
+Information: 7/26/2022 3:47:22 PM HttpConnection Started.
+Information: 7/26/2022 3:47:22 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:47:22 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:47:22 PM Handshake with server complete.
+Debug: 7/26/2022 3:47:22 PM Sending PingMessage message.
+Debug: 7/26/2022 3:47:22 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:47:22 PM Receive loop starting.
+Information: 7/26/2022 3:47:22 PM HubConnection started.
+Debug: 7/26/2022 3:47:27 PM Starting HubConnection.
+Information: 7/26/2022 3:47:27 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=2TTJSAUPM-OeAbelgIr5zg'.
+Information: 7/26/2022 3:47:27 PM HttpConnection Started.
+Information: 7/26/2022 3:47:27 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:47:27 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:47:27 PM Handshake with server complete.
+Debug: 7/26/2022 3:47:27 PM Sending PingMessage message.
+Debug: 7/26/2022 3:47:27 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:47:27 PM Receive loop starting.
+Information: 7/26/2022 3:47:27 PM HubConnection started.
+Debug: 7/26/2022 3:47:30 PM Processing 28 byte message from server.
+Debug: 7/26/2022 3:47:30 PM Processing 28 byte message from server.
+Warning: 7/26/2022 3:47:30 PM Failed to find handler for 'AddWorldObject' method.
+Warning: 7/26/2022 3:47:30 PM Failed to find handler for 'AddWorldObject' method.
+Error: 7/26/2022 3:47:30 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Error: 7/26/2022 3:47:30 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:47:30 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:47:30 PM Failed to find handler for 'UpdateWorldObject' method.
+Debug: 7/26/2022 3:47:30 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:47:30 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:47:30 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Error: 7/26/2022 3:47:30 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:47:30 PM Processing 31 byte message from server.
+Debug: 7/26/2022 3:47:30 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:47:30 PM Failed to find handler for 'UpdateWorldObject' method.
+Warning: 7/26/2022 3:47:30 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:47:30 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Error: 7/26/2022 3:47:30 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:47:32 PM Starting HubConnection.
+Information: 7/26/2022 3:47:32 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=l0NfFYOzBo9gYd3t7gyfKw'.
+Information: 7/26/2022 3:47:32 PM HttpConnection Started.
+Information: 7/26/2022 3:47:32 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:47:32 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:47:32 PM Handshake with server complete.
+Debug: 7/26/2022 3:47:32 PM Sending PingMessage message.
+Debug: 7/26/2022 3:47:32 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:47:32 PM Receive loop starting.
+Information: 7/26/2022 3:47:32 PM HubConnection started.
+Debug: 7/26/2022 3:47:36 PM Stopping HubConnection.
+Debug: 7/26/2022 3:47:36 PM Terminating receive loop.
+Debug: 7/26/2022 3:47:36 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 3:47:36 PM Transport is stopping.
+Information: 7/26/2022 3:47:36 PM HttpConnection Disposed.
+Information: 7/26/2022 3:47:36 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 3:47:36 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 3:47:36 PM Invoking the Closed event handler.
+Debug: 7/26/2022 3:47:36 PM HubConnection stopped.
+Debug: 7/26/2022 3:47:37 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:47:37 PM Sending PingMessage message.
+Debug: 7/26/2022 3:47:37 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:47:42 PM Sending PingMessage message.
+Debug: 7/26/2022 3:47:42 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:47:43 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:47:52 PM Sending PingMessage message.
+Debug: 7/26/2022 3:47:52 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:47:53 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:47:57 PM Sending PingMessage message.
+Debug: 7/26/2022 3:47:57 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:47:59 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:48:07 PM Starting HubConnection.
+Information: 7/26/2022 3:48:08 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=WYmXZx3s3mZQVyzBr4XVOw'.
+Information: 7/26/2022 3:48:08 PM HttpConnection Started.
+Information: 7/26/2022 3:48:08 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:48:08 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:48:08 PM Handshake with server complete.
+Debug: 7/26/2022 3:48:08 PM Sending PingMessage message.
+Debug: 7/26/2022 3:48:08 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:48:08 PM Receive loop starting.
+Information: 7/26/2022 3:48:08 PM HubConnection started.
+Debug: 7/26/2022 3:48:22 PM Processing 31 byte message from server.
+Warning: 7/26/2022 3:48:22 PM Failed to find handler for 'RemoveWorldObject' method.
+Error: 7/26/2022 3:48:22 PM Failed to bind arguments received in invocation '(null)' of 'RemoveWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:48:23 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:48:23 PM Sending PingMessage message.
+Debug: 7/26/2022 3:48:23 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:48:38 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:48:38 PM Sending PingMessage message.
+Debug: 7/26/2022 3:48:38 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:48:44 PM Stopping HubConnection.
+Debug: 7/26/2022 3:48:44 PM Terminating receive loop.
+Debug: 7/26/2022 3:48:44 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 3:48:44 PM Transport is stopping.
+Information: 7/26/2022 3:48:44 PM HttpConnection Disposed.
+Information: 7/26/2022 3:48:44 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 3:48:44 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 3:48:44 PM Invoking the Closed event handler.
+Debug: 7/26/2022 3:48:44 PM HubConnection stopped.
+Debug: 7/26/2022 3:49:55 PM Starting HubConnection.
+Information: 7/26/2022 3:49:56 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=WKYk7MMdJIWFrZJeIha68w'.
+Information: 7/26/2022 3:49:56 PM HttpConnection Started.
+Information: 7/26/2022 3:49:56 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:49:56 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:49:56 PM Handshake with server complete.
+Debug: 7/26/2022 3:49:56 PM Sending PingMessage message.
+Debug: 7/26/2022 3:49:56 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:49:56 PM Receive loop starting.
+Information: 7/26/2022 3:49:56 PM HubConnection started.
+Debug: 7/26/2022 3:50:08 PM Stopping HubConnection.
+Debug: 7/26/2022 3:50:08 PM Terminating receive loop.
+Debug: 7/26/2022 3:50:08 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 3:50:08 PM Transport is stopping.
+Information: 7/26/2022 3:50:08 PM HttpConnection Disposed.
+Information: 7/26/2022 3:50:08 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 3:50:08 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 3:50:08 PM Invoking the Closed event handler.
+Debug: 7/26/2022 3:50:09 PM HubConnection stopped.
+Debug: 7/26/2022 3:50:47 PM Starting HubConnection.
+Information: 7/26/2022 3:50:48 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=d8qx1M9H2vWWuGDfWqjePQ'.
+Information: 7/26/2022 3:50:48 PM HttpConnection Started.
+Information: 7/26/2022 3:50:48 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:50:48 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:50:48 PM Handshake with server complete.
+Debug: 7/26/2022 3:50:48 PM Sending PingMessage message.
+Debug: 7/26/2022 3:50:48 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:50:48 PM Receive loop starting.
+Information: 7/26/2022 3:50:48 PM HubConnection started.
+Debug: 7/26/2022 3:51:03 PM Sending PingMessage message.
+Debug: 7/26/2022 3:51:03 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:51:03 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:51:04 PM Stopping HubConnection.
+Debug: 7/26/2022 3:51:04 PM Terminating receive loop.
+Debug: 7/26/2022 3:51:04 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 3:51:04 PM Transport is stopping.
+Information: 7/26/2022 3:51:04 PM HttpConnection Disposed.
+Information: 7/26/2022 3:51:04 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 3:51:04 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 3:51:04 PM Invoking the Closed event handler.
+Debug: 7/26/2022 3:51:04 PM HubConnection stopped.
+Debug: 7/26/2022 3:52:52 PM Starting HubConnection.
+Information: 7/26/2022 3:52:53 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=buuWIGBEgMsdo5dTJUpmng'.
+Information: 7/26/2022 3:52:53 PM HttpConnection Started.
+Information: 7/26/2022 3:52:53 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 3:52:53 PM Sending Hub Handshake.
+Debug: 7/26/2022 3:52:53 PM Handshake with server complete.
+Debug: 7/26/2022 3:52:53 PM Sending PingMessage message.
+Debug: 7/26/2022 3:52:53 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:52:53 PM Receive loop starting.
+Information: 7/26/2022 3:52:53 PM HubConnection started.
+Debug: 7/26/2022 3:53:07 PM Processing 29 byte message from server.
+Warning: 7/26/2022 3:53:07 PM Failed to find handler for 'AddWorldObject' method.
+Error: 7/26/2022 3:53:07 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:53:07 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:53:07 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:53:07 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:53:07 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:53:07 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:53:07 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:53:08 PM Processing 32 byte message from server.
+Warning: 7/26/2022 3:53:08 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 3:53:08 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 3:53:08 PM Sending PingMessage message.
+Debug: 7/26/2022 3:53:08 PM Sending PingMessage message completed.
+Debug: 7/26/2022 3:53:08 PM Processing 3 byte message from server.
+Debug: 7/26/2022 3:53:13 PM Stopping HubConnection.
+Debug: 7/26/2022 3:53:13 PM Terminating receive loop.
+Debug: 7/26/2022 3:53:13 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 3:53:13 PM Transport is stopping.
+Information: 7/26/2022 3:53:13 PM HttpConnection Disposed.
+Information: 7/26/2022 3:53:13 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 3:53:13 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 3:53:13 PM Invoking the Closed event handler.
+Debug: 7/26/2022 3:53:13 PM HubConnection stopped.
+Debug: 7/26/2022 4:16:22 PM Starting HubConnection.
+Information: 7/26/2022 4:16:24 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=rcl8w0ZPMD9E6eBsyhXk_A'.
+Information: 7/26/2022 4:16:24 PM HttpConnection Started.
+Information: 7/26/2022 4:16:24 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 4:16:24 PM Sending Hub Handshake.
+Debug: 7/26/2022 4:16:24 PM Handshake with server complete.
+Debug: 7/26/2022 4:16:24 PM Sending PingMessage message.
+Debug: 7/26/2022 4:16:24 PM Sending PingMessage message completed.
+Debug: 7/26/2022 4:16:24 PM Receive loop starting.
+Information: 7/26/2022 4:16:24 PM HubConnection started.
+Debug: 7/26/2022 4:16:39 PM Processing 3 byte message from server.
+Debug: 7/26/2022 4:16:39 PM Sending PingMessage message.
+Debug: 7/26/2022 4:16:39 PM Sending PingMessage message completed.
+Debug: 7/26/2022 4:16:54 PM Stopping HubConnection.
+Debug: 7/26/2022 4:16:54 PM Terminating receive loop.
+Debug: 7/26/2022 4:16:54 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 4:16:54 PM Transport is stopping.
+Information: 7/26/2022 4:16:55 PM HttpConnection Disposed.
+Information: 7/26/2022 4:16:55 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 4:16:55 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 4:16:55 PM Invoking the Closed event handler.
+Debug: 7/26/2022 4:16:55 PM HubConnection stopped.
+Debug: 7/26/2022 4:17:23 PM Starting HubConnection.
+Information: 7/26/2022 4:17:24 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=482kRb5UCHSD2cERySzW2g'.
+Information: 7/26/2022 4:17:24 PM HttpConnection Started.
+Information: 7/26/2022 4:17:24 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 4:17:24 PM Sending Hub Handshake.
+Debug: 7/26/2022 4:17:25 PM Handshake with server complete.
+Debug: 7/26/2022 4:17:25 PM Sending PingMessage message.
+Debug: 7/26/2022 4:17:25 PM Sending PingMessage message completed.
+Debug: 7/26/2022 4:17:25 PM Receive loop starting.
+Information: 7/26/2022 4:17:25 PM HubConnection started.
+Debug: 7/26/2022 4:17:32 PM Processing 29 byte message from server.
+Warning: 7/26/2022 4:17:32 PM Failed to find handler for 'AddWorldObject' method.
+Error: 7/26/2022 4:17:32 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:32 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:17:32 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 4:17:32 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:32 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:17:32 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 4:17:32 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:32 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:17:32 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 4:17:32 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:33 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:17:33 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 4:17:33 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:33 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:17:33 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 4:17:33 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:40 PM Sending PingMessage message.
+Debug: 7/26/2022 4:17:40 PM Sending PingMessage message completed.
+Debug: 7/26/2022 4:17:40 PM Processing 29 byte message from server.
+Warning: 7/26/2022 4:17:40 PM Failed to find handler for 'AddWorldObject' method.
+Error: 7/26/2022 4:17:40 PM Failed to bind arguments received in invocation '(null)' of 'AddWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:40 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:17:40 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 4:17:40 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:40 PM Processing 3 byte message from server.
+Debug: 7/26/2022 4:17:40 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:17:40 PM Failed to find handler for 'UpdateWorldObject' method.
+Error: 7/26/2022 4:17:40 PM Failed to bind arguments received in invocation '(null)' of 'UpdateWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:17:46 PM Stopping HubConnection.
+Debug: 7/26/2022 4:17:46 PM Terminating receive loop.
+Debug: 7/26/2022 4:17:46 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 4:17:46 PM Transport is stopping.
+Information: 7/26/2022 4:17:46 PM HttpConnection Disposed.
+Information: 7/26/2022 4:17:46 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 4:17:46 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 4:17:46 PM Invoking the Closed event handler.
+Debug: 7/26/2022 4:17:46 PM HubConnection stopped.
+Debug: 7/26/2022 4:17:50 PM Starting HubConnection.
+Information: 7/26/2022 4:17:51 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=YG78MjsGgTzfIAk6mEWYOQ'.
+Information: 7/26/2022 4:17:51 PM HttpConnection Started.
+Information: 7/26/2022 4:17:51 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 4:17:51 PM Sending Hub Handshake.
+Debug: 7/26/2022 4:17:51 PM Handshake with server complete.
+Debug: 7/26/2022 4:17:51 PM Sending PingMessage message.
+Debug: 7/26/2022 4:17:51 PM Sending PingMessage message completed.
+Debug: 7/26/2022 4:17:51 PM Receive loop starting.
+Information: 7/26/2022 4:17:51 PM HubConnection started.
+Debug: 7/26/2022 4:18:03 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:18:03 PM Failed to find handler for 'RemoveWorldObject' method.
+Error: 7/26/2022 4:18:03 PM Failed to bind arguments received in invocation '(null)' of 'RemoveWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:18:04 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:18:04 PM Failed to find handler for 'RemoveWorldObject' method.
+Error: 7/26/2022 4:18:04 PM Failed to bind arguments received in invocation '(null)' of 'RemoveWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:18:06 PM Sending PingMessage message.
+Debug: 7/26/2022 4:18:06 PM Sending PingMessage message completed.
+Debug: 7/26/2022 4:18:06 PM Processing 3 byte message from server.
+Debug: 7/26/2022 4:18:07 PM Processing 32 byte message from server.
+Warning: 7/26/2022 4:18:07 PM Failed to find handler for 'RemoveWorldObject' method.
+Error: 7/26/2022 4:18:07 PM Failed to bind arguments received in invocation '(null)' of 'RemoveWorldObject'.
+
+System.IO.InvalidDataException: Invocation provides 1 argument(s) but target expects 0.
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.BindArguments (MessagePack.MessagePackReader& reader, System.Collections.Generic.IReadOnlyList`1[T] parameterTypes) [0x00036] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+  at Microsoft.AspNetCore.SignalR.Protocol.MessagePackHubProtocolWorker.CreateInvocationMessage (MessagePack.MessagePackReader& reader, Microsoft.AspNetCore.SignalR.IInvocationBinder binder, System.Int32 itemCount) [0x0002f] in <2f64ddba29f44b0c80ff972746b0593f>:0 
+Debug: 7/26/2022 4:18:12 PM Stopping HubConnection.
+Debug: 7/26/2022 4:18:12 PM Terminating receive loop.
+Debug: 7/26/2022 4:18:12 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 4:18:12 PM Transport is stopping.
+Information: 7/26/2022 4:18:12 PM HttpConnection Disposed.
+Information: 7/26/2022 4:18:12 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 4:18:12 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 4:18:12 PM Invoking the Closed event handler.
+Debug: 7/26/2022 4:18:12 PM HubConnection stopped.
+Debug: 7/26/2022 4:18:15 PM Starting HubConnection.
+Information: 7/26/2022 4:18:17 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=vt8wr__6eY6kvCSpYJ3Gfg'.
+Information: 7/26/2022 4:18:17 PM HttpConnection Started.
+Information: 7/26/2022 4:18:17 PM Using HubProtocol 'messagepack v1'.
+Debug: 7/26/2022 4:18:17 PM Sending Hub Handshake.
+Debug: 7/26/2022 4:18:17 PM Handshake with server complete.
+Debug: 7/26/2022 4:18:17 PM Sending PingMessage message.
+Debug: 7/26/2022 4:18:17 PM Sending PingMessage message completed.
+Debug: 7/26/2022 4:18:17 PM Receive loop starting.
+Information: 7/26/2022 4:18:17 PM HubConnection started.
+Debug: 7/26/2022 4:18:25 PM Stopping HubConnection.
+Debug: 7/26/2022 4:18:25 PM Terminating receive loop.
+Debug: 7/26/2022 4:18:25 PM Waiting for the receive loop to terminate.
+Information: 7/26/2022 4:18:25 PM Transport is stopping.
+Information: 7/26/2022 4:18:25 PM HttpConnection Disposed.
+Information: 7/26/2022 4:18:25 PM WebSocket closed by the server. Close status NormalClosure.
+Debug: 7/26/2022 4:18:25 PM Canceling all outstanding invocations.
+Debug: 7/26/2022 4:18:25 PM Invoking the Closed event handler.
+Debug: 7/26/2022 4:18:25 PM HubConnection stopped.

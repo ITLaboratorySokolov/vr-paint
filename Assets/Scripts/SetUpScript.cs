@@ -28,12 +28,45 @@ public class SetUpScript : MonoBehaviour
     [SerializeField]
     InputActionReference resetAction = null;
 
+    [Header("Hand switch")]
+    [SerializeField]
+    bool leftHanded;
+    /// <summary> Hand displayed when online </summary>
+    [SerializeField]
+    GameObject[] handCanvas;
+    [SerializeField]
+    GameObject[] handLaser;
+    [SerializeField]
+    GameObject[] game;
+
     /// <summary>
     /// Set up configuration1before application starts
     /// - read from config min and max recorded depth, horizontal and vertical pan, zoom and server url
     /// </summary>
     private void Awake()
     {
+        if (leftHanded)
+        {
+            handCanvas[0].SetActive(false);
+            handCanvas[1].SetActive(true);
+
+            handLaser[0].SetActive(true);
+            handLaser[1].SetActive(false);
+
+            // TODO needs to swap all references to ServerConnection etc
+            // Instantiate(game[0]);
+        }
+        else
+        {
+            handCanvas[0].SetActive(true);
+            handCanvas[1].SetActive(false);
+
+            handLaser[0].SetActive(false);
+            handLaser[1].SetActive(true);
+
+            // Instantiate(game[1]);
+        }
+
         pathToConfig = "./config.txt"; // Directory.GetCurrentDirectory() + "\\config.txt";
         Debug.Log(pathToConfig);
 
@@ -42,6 +75,11 @@ public class SetUpScript : MonoBehaviour
         ReadConfig();
 
         resetAction.action.performed += ResetSetUp;
+    }
+
+    private void Start()
+    {
+
     }
 
     private void ReadConfig()
