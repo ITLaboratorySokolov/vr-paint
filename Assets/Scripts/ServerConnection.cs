@@ -95,6 +95,18 @@ public class ServerConnection : MonoBehaviour
             textOffline[1].SetActive(true);
         }
 
+        // TODO this exists bc i cannot connect to server in lab
+        textOffline[0].SetActive(false);
+        textOffline[1].SetActive(false);
+        handOnline[0].SetActive(true);
+        handOnline[1].SetActive(true);
+        handOffline[0].SetActive(false);
+        handOffline[1].SetActive(false);
+        syncCallDone = true;
+
+        // TODO + edited controller left hand - grip pressed for picking colours
+        // TODO rotation is weird now -> needs fix to rotate around camera
+
     }
 
     /// <summary>

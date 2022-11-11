@@ -13,6 +13,7 @@ public class MovementController : MonoBehaviour
     [Header("Game objects")]
     /// <summary> Rig </summary>
     public Transform rig;
+    public Transform head;
 
     [Header("Controlls")]
     /// <summary> Speed of movement </summary>
@@ -31,7 +32,7 @@ public class MovementController : MonoBehaviour
     {
         // Compute translation
         Vector2 v = moveRef.action.ReadValue<Vector2>();
-        rig.position += rig.transform.TransformVector(new Vector3(v.x, 0, v.y)) * speed * Time.deltaTime;
+        rig.position += rig.transform.TransformVector(new Vector3(-v.y, 0, v.x)) * speed * Time.deltaTime;
 
         // Compute rotation angle
         Vector2 w = rotRef.action.ReadValue<Vector2>();
@@ -46,7 +47,12 @@ public class MovementController : MonoBehaviour
             angle = Mathf.Deg2Rad * 90;
 
         // Rotate
+        Vector3 h1 = head.transform.position;
         rig.rotation *= Quaternion.AngleAxis(angle * speed, Vector3.up);
+        Vector3 h2 = head.transform.position;
+        Vector3 mov = h2 - h1;
+        rig.position = rig.position - mov;
+
     }
 
 }

@@ -10502,6 +10502,10 @@ PrefabInstance:
       propertyPath: rig
       value: 
       objectReference: {fileID: 1060976101}
+    - target: {fileID: 938269483204663705, guid: a82555f3fed3b754da2560808bb81981, type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 2026058747}
     - target: {fileID: 938269483204663706, guid: a82555f3fed3b754da2560808bb81981, type: 3}
       propertyPath: picker
       value: 

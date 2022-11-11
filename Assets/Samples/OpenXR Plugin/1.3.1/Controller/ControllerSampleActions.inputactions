@@ -1144,7 +1144,7 @@
                 {
                     "name": "",
                     "id": "14e6deb0-4d9f-4627-9551-b5637c90a5bd",
-                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "path": "<XRController>{LeftHand}/thumbstickClicked",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1188,7 +1188,7 @@
                 {
                     "name": "",
                     "id": "2d25623a-0660-4d6c-9a52-c29aa923462f",
-                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "path": "<XRController>{RightHand}/gripPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1199,7 +1199,7 @@
                 {
                     "name": "",
                     "id": "6068a86a-fb07-46b6-a2d5-5858925a88bc",
-                    "path": "<XRController>{LeftHand}/{primary2DAxis}",
+                    "path": "<ViveController>{LeftHand}/trackpad",
                     "interactions": "",
                     "processors": "",
                     "groups": "XR Usage",
@@ -1210,7 +1210,7 @@
                 {
                     "name": "",
                     "id": "0b3a58aa-c0b8-4b1e-91eb-6b01da42e533",
-                    "path": "<XRController>{RightHand}/{primary2DAxis}",
+                    "path": "<ViveController>{RightHand}/trackpad",
                     "interactions": "",
                     "processors": "",
                     "groups": "XR Usage",
