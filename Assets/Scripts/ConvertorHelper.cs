@@ -8,13 +8,13 @@ public static class ConvertorHelper
 {
     /// <summary>
     /// Converts array of Color to array of floats
-    /// - only takes rgb components
+    /// - takes rgba components
     /// </summary>
     /// <param name="colors"> Array of Color </param>
     /// <returns> Array of floats with rgb components from colors </returns>
-    public static float[] Col3ToFloats(Color[] colors)
+    public static float[] Col4ToFloats(Color[] colors)
     {
-        float[] floats = new float[colors.Length * 3];
+        float[] floats = new float[colors.Length * 4];
 
         //Convert each vector to floats
         int index = 0;
@@ -23,7 +23,8 @@ public static class ConvertorHelper
             floats[index] = colors[i].r;
             floats[index + 1] = colors[i].g;
             floats[index + 2] = colors[i].b;
-            index += 3;
+            floats[index + 3] = colors[i].a;
+            index += 4;
         }
 
         return floats;
@@ -32,21 +33,21 @@ public static class ConvertorHelper
 
     /// <summary>
     /// Converts array of floats to array of Color
-    /// - expects only rbg components
+    /// - expects rbga components
     /// </summary>
     /// <param name="cols"> Array of floats </param>
     /// <returns> Array of colors with values from cols </returns>
-    public static Color[] FloatsToCol3(float[] cols)
+    public static Color[] FloatsToCol4(float[] cols)
     {
-        if (cols.Length % 3 != 0)
+        if (cols.Length % 4 != 0)
             throw new InvalidOperationException();
 
-        Color[] colors = new Color[cols.Length / 3];
+        Color[] colors = new Color[cols.Length / 4];
 
         int index = 0;
-        for (int i = 0; i < cols.Length; i += 3)
+        for (int i = 0; i < cols.Length; i += 4)
         {
-            colors[index] = new Color(cols[i], cols[i + 1], cols[i + 2]);
+            colors[index] = new Color(cols[i], cols[i + 1], cols[i + 2], cols[i + 3]);
             index++;
         }
 

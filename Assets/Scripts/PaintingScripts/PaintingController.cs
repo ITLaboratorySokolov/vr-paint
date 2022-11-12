@@ -108,6 +108,28 @@ public class PaintingController : MonoBehaviour
         canvas.SwitchBrushValues(brushes[currentBrush]);
 
         lineCounter = 0;
+
+        /*
+        Debug.Log("Create Line - own curve");
+        GameObject o = Instantiate(simpleLine);
+        LineRenderer lr3 = o.GetComponent<LineRenderer>();
+        AnimationCurve a = new AnimationCurve();
+        a.AddKey(0, 0);
+        a.AddKey(0.5f, 1);
+        a.AddKey(1, 0);
+        lr3.widthCurve = a;
+        WriteKeys(lr3);
+        */
+    }
+
+    private void WriteKeys(LineRenderer lr)
+    {
+        AnimationCurve c = lr.widthCurve;
+        Keyframe[] ks = c.keys;
+        Debug.Log(ks.Length);
+        for (int i = 0; i < ks.Length; i++)
+            Debug.Log(ks[i].time + " " + ks[i].value);
+
     }
 
     /// <summary>
@@ -259,11 +281,18 @@ public class PaintingController : MonoBehaviour
                 currLine.material.SetTexture("_MainTex", brushes[currentBrush].Texture);
 
             // Set line width
-            AnimationCurve curve = new AnimationCurve();
-            curve.AddKey(0.0f, 1);
-            curve.AddKey(1.0f, 1);
+
+            Keyframe[] keys = new Keyframe[3];
+            keys[0] = new Keyframe(0, 0);
+            keys[1] = new Keyframe(0.5f, 1);
+            keys[2] = new Keyframe(1, 0);
+            AnimationCurve curve = new AnimationCurve(keys);
             currLine.widthMultiplier = brushes[currentBrush].Width;
             currLine.widthCurve = curve;
+
+            // TODO tady to je všechno 2 - proè???
+            Debug.Log("New line created");
+            WriteKeys(currLine);
 
             // Set first 2 positions
             currLine.SetPosition(0, controller.position);
@@ -279,6 +308,8 @@ public class PaintingController : MonoBehaviour
             Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
             propsManager.SetProperties(props);
             objController.AddObjectAsync(currLineObj);
+
+            WriteKeys(currLine);
         }
     }
 

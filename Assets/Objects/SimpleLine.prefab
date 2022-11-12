@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3070238215178931407}
   - component: {fileID: 6886810729195340725}
   - component: {fileID: 3222320577624752697}
+  - component: {fileID: -5893794010703145476}
   m_Layer: 0
   m_Name: SimpleLine
   m_TagString: line
@@ -91,14 +92,14 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.5317459
+        time: 0.50680375
+        value: 0.51968503
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -134,7 +135,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 1
-    textureMode: 1
+    textureMode: 2
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 0
@@ -220,6 +221,7 @@ MonoBehaviour:
   - {fileID: 4926642131021110633}
   - {fileID: 6886810729195340725}
   - {fileID: 3222320577624752697}
+  - {fileID: -5893794010703145476}
 --- !u!114 &4926642131021110633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,3 +271,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texSizeProperty: {fileID: 6886810729195340725}
+--- !u!114 &-5893794010703145476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957477963526033272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c170bd7b952a1304da9fbd8d740db090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

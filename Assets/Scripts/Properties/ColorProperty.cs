@@ -54,7 +54,7 @@ public class ColorProperty : OptionalProperty
         // Get color
         LineRenderer currLine = GetComponent<LineRenderer>();
         Color currC = currLine.material.GetColor("_Color");
-        float[] color = ConvertorHelper.Col3ToFloats(new Color[]{ currC });
+        float[] color = ConvertorHelper.Col4ToFloats(new Color[]{ currC });
         
         // Serialize color
         ArraySerializer<float> rgbSerializer = new ArraySerializer<float>(propertyName, sizeof(float));

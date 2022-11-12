@@ -57,6 +57,10 @@ Shader "Unlit/UnlitColorTexture"
                 fixed4 col = tex2D(_MainTex, i.uv);
                 // multiply by color
                 col = col * _Color;
+
+                if (col.a < 0.1)
+                    discard;
+
                 return col;
             }
 

@@ -38,7 +38,7 @@ public class TextureProperty : OptionalProperty
         // Deserialize
         ArraySerializer<float> rgbSerializer = new ArraySerializer<float>(propertyName, sizeof(float));
         float[] data = rgbSerializer.Deserialize(properties);
-        Color[] pixs = ConvertorHelper.FloatsToCol3(data);
+        Color[] pixs = ConvertorHelper.FloatsToCol4(data);
 
         // Set to texture, width and height from TextureSizeProperty
         Texture2D tex = new Texture2D(texSizeProperty.width, texSizeProperty.height);
@@ -73,7 +73,7 @@ public class TextureProperty : OptionalProperty
             // Convert to Texture2D and get pixels
             tex2D = ConvertorHelper.TextureToTexture2D(tex);
             Color[] pixs = tex2D.GetPixels();
-            data = ConvertorHelper.Col3ToFloats(pixs);
+            data = ConvertorHelper.Col4ToFloats(pixs);
         }
 
         // Serialize
