@@ -67,6 +67,9 @@ public class PaintingController : MonoBehaviour
     Eraser eraser;
     /// <summary> Currently active brush </summary>
     int currentBrush;
+    /// <summary> Texture controller </summary>
+    [SerializeField]
+    TextureController txCont;
 
 
     [Header("Connection")]
@@ -264,6 +267,7 @@ public class PaintingController : MonoBehaviour
         else
         {
             paintingOn = true;
+            txCont.StartGenerating();
 
             // Instantiate new line
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
@@ -277,15 +281,18 @@ public class PaintingController : MonoBehaviour
             currLine.material.SetColor("_Color", brushes[currentBrush].Color);
 
             // Set texture - only if the brush has any, otherwise stays the default of the material
-            if (brushes[currentBrush].Texture != null)
-                currLine.material.SetTexture("_MainTex", brushes[currentBrush].Texture);
+            // TODO setting texture from txCont
+            // if (brushes[currentBrush].Texture != null)
+            //    currLine.material.SetTexture("_MainTex", brushes[currentBrush].Texture);
+            currLine.material.SetTexture("_MainTex", txCont.generatedTexture);
+
 
             // Set line width
 
             Keyframe[] keys = new Keyframe[3];
-            keys[0] = new Keyframe(0, 0);
+            keys[0] = new Keyframe(0.1f, 0.2f);
             keys[1] = new Keyframe(0.5f, 1);
-            keys[2] = new Keyframe(1, 0);
+            keys[2] = new Keyframe(0.9f, 0.2f);
             AnimationCurve curve = new AnimationCurve(keys);
             currLine.widthMultiplier = brushes[currentBrush].Width;
             currLine.widthCurve = curve;
@@ -320,6 +327,7 @@ public class PaintingController : MonoBehaviour
     {
         currLine.positionCount++;
         currLine.SetPosition(currLine.positionCount - 1, controller.position);
+        currLine.material.SetTexture("_MainTex", txCont.generatedTexture);
 
         // Update properties
         timeToUpdate -= Time.deltaTime;
@@ -347,6 +355,7 @@ public class PaintingController : MonoBehaviour
         if (isEraser)
             return;
 
+        txCont.StopGenerating();
         paintingOn = false;
         Vector3[] points = new Vector3[currLine.positionCount];
 
