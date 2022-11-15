@@ -6,19 +6,18 @@ using UnityEngine;
 public class TextureController : MonoBehaviour
 {
     public float timeStep = 5;
+    public int expandStep = 10;
+
     private float currTime;
     private float updates = 0;
     private bool generate;
 
-    public SpriteRenderer spriteRenderer;
     public Texture2D generatedTexture;
 
     // Start is called before the first frame update
     void Start()
     {
-        Texture2D newTex = new Texture2D(1, 50);
-        Sprite newsprite = Sprite.Create(newTex, new Rect(0.0f, 0.0f, newTex.width, newTex.height), new Vector2(0.5f, 0.5f), 100.0f);
-        spriteRenderer.sprite = newsprite;
+
     }
 
     // Update is called once per frame
@@ -42,6 +41,16 @@ public class TextureController : MonoBehaviour
         currTime = timeStep;
         generate = true;
         generatedTexture = new Texture2D(1, 50);
+
+        var texPix = generatedTexture.GetPixels();
+        Color c = new Color(updates / 255.0f, 1, 1 - updates / 255.0f, 1);
+
+        for (int i = 0; i < texPix.Length; i++)
+        {
+            texPix[i] = c;
+        }
+        generatedTexture.SetPixels(texPix);
+        generatedTexture.Apply();
     }
 
     public void StopGenerating()
@@ -51,9 +60,7 @@ public class TextureController : MonoBehaviour
 
     private void ExpandTexture()
     {
-        int expandStep = 10;
-
-        Texture2D oldTex = spriteRenderer.sprite.texture;
+        Texture2D oldTex = generatedTexture; // spriteRenderer.sprite.texture;
         Texture2D newTex = new Texture2D(oldTex.width + expandStep, oldTex.height);
 
         var oldTexPix = oldTex.GetPixels();
@@ -73,12 +80,9 @@ public class TextureController : MonoBehaviour
         newTex.SetPixels(newTexPix.ToArray());
         newTex.Apply();
 
-        Sprite newsprite = Sprite.Create(newTex, new Rect(0.0f, 0.0f, newTex.width, newTex.height), new Vector2(0.5f, 0.5f), 100.0f);
-        spriteRenderer.sprite = newsprite;
-
         generatedTexture = newTex;
 
-        updates += 10;
+        updates += 50;
         updates = updates % 255;
     }
 }

@@ -22,9 +22,10 @@ public class ObjectController : MonoBehaviour
         
     }
 
-    public void ObjectRecieved()
+    public Task<IEnumerable<GameObject>> ObjectRecieve()
     {
-        Debug.Log("Recieve");
+        Debug.Log("Recieve all");
+        return wom.LoadServerContentAsync();
     }
 
     public void ObjectRemoved()

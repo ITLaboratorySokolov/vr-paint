@@ -13,17 +13,17 @@ public class PaintingController : MonoBehaviour
     [Header("Action input references")]
     /// <summary> Painting action </summary>
     [SerializeField]
-    InputActionReference paintRef = null;
+    internal InputActionReference paintRef = null;
     /// <summary> Switch brush action </summary>
     [SerializeField]
-    InputActionReference switchRef = null;
+    internal InputActionReference switchRef = null;
     /// <summary> Switch to eraser action </summary>
     [SerializeField]
-    InputActionReference eraserRef = null;
+    internal InputActionReference eraserRef = null;
 
     [Header("Game objects")]
     [SerializeField]
-    ObjectController objController;
+    public ObjectController objController;
     /// <summary> Color palette menu canvas controller </summary>
     [SerializeField]
     MenuCanvasController canvas;
@@ -100,16 +100,12 @@ public class PaintingController : MonoBehaviour
 
         // Create eraser
         eraser = new Eraser() { Width = 0.05f, Name = "Eraser" };
-            
-        // Register actions
-        paintRef.action.started += ActivatePaint;
-        switchRef.action.started += SwitchBrush;
-        eraserRef.action.started += ToggleEraser;
 
         // Display brush values on canvas
         currentBrush = 0;
         canvas.SwitchBrushValues(brushes[currentBrush]);
 
+        RegisterActions();
         lineCounter = 0;
 
         /*
@@ -125,6 +121,14 @@ public class PaintingController : MonoBehaviour
         */
     }
 
+    public void RegisterActions()
+    {
+        // Register actions
+        paintRef.action.started += ActivatePaint;
+        switchRef.action.started += SwitchBrush;
+        eraserRef.action.started += ToggleEraser;
+    }
+
     private void WriteKeys(LineRenderer lr)
     {
         AnimationCurve c = lr.widthCurve;
@@ -135,6 +139,7 @@ public class PaintingController : MonoBehaviour
 
     }
 
+    /*
     /// <summary>
     /// Insert a line from server into the scene
     /// </summary>
@@ -167,6 +172,19 @@ public class PaintingController : MonoBehaviour
         meshCollider.sharedMesh = mesh;
 
         propsManager.SetProperties(obj.Properties);
+    }
+    */
+
+    internal void AddServerLine(GameObject o)
+    {
+        o.transform.SetParent(lineParent);
+        
+        // Set collider
+        MeshFilter viewedModelFilter = (MeshFilter)o.GetComponent("MeshFilter");
+        Mesh mesh = viewedModelFilter.mesh;
+
+        MeshCollider meshCollider = o.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
     }
 
     /// <summary>
@@ -315,8 +333,6 @@ public class PaintingController : MonoBehaviour
             Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
             propsManager.SetProperties(props);
             objController.AddObjectAsync(currLineObj);
-
-            WriteKeys(currLine);
         }
     }
 

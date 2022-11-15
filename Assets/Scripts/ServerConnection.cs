@@ -9,6 +9,8 @@ using ZCU.TechnologyLab.Common.Connections.Session;
 using ZCU.TechnologyLab.Common.Connections;
 using ZCU.TechnologyLab.Common.Unity.Connections.Data;
 using ZCU.TechnologyLab.Common.Unity.WorldObjects;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.InputSystem;
 
 // TODO does reconnect work - was reworked
 
@@ -59,12 +61,31 @@ public class ServerConnection : MonoBehaviour
     /// <summary> Hand displayed when online </summary>
     [SerializeField]
     GameObject[] handOnline;
+
+    [SerializeField]
+    GameObject[] handAim;
+
     /// <summary> Hand displayed when offline </summary>
     [SerializeField]
     GameObject[] handOffline;
     /// <summary> Text displayed when offline </summary>
     [SerializeField]
     GameObject[] textOffline;
+
+    [SerializeField]
+    InputActionReference[] paintRef;
+
+    [SerializeField]
+    InputActionReference[] switchRef;
+
+    [SerializeField]
+    InputActionReference[] eraseRef;
+
+    [SerializeField]
+    InputActionProperty[] handRotRef;
+
+    [SerializeField]
+    InputActionProperty[] handPosRef;
 
     /// <summary>
     /// Performes once upon start
@@ -83,17 +104,36 @@ public class ServerConnection : MonoBehaviour
 
         handOffline[0].SetActive(true);
         handOffline[1].SetActive(true);
-        
+
         if (leftHanded)
         {
             textOffline[0].SetActive(true);
             textOffline[1].SetActive(false);
+
+            /*
+            paintCont.paintRef = paintRef[0];
+            paintCont.switchRef = switchRef[0];
+            paintCont.eraserRef = eraseRef[0];
+            handAim[0].GetComponent<TrackedPoseDriver>().positionInput = handPosRef[0];
+            handAim[0].GetComponent<TrackedPoseDriver>().rotationInput = handRotRef[0];
+            */
         }
         else
         {
             textOffline[0].SetActive(false);
             textOffline[1].SetActive(true);
+
+            /*
+            paintCont.paintRef = paintRef[1];
+            paintCont.switchRef = switchRef[1];
+            paintCont.eraserRef = eraseRef[1];
+            handAim[1].GetComponent<TrackedPoseDriver>().positionInput = handPosRef[1];
+            handAim[1].GetComponent<TrackedPoseDriver>().rotationInput = handRotRef[1];
+            */
         }
+
+        // paintCont.RegisterActions();
+        // canvas control??
 
     }
 
@@ -163,6 +203,34 @@ public class ServerConnection : MonoBehaviour
         try
         {
             // Get all objects
+            IEnumerable<GameObject> gmobjs = await paintCont.objController.ObjectRecieve();
+            List<int> l = new List<int>();
+
+            foreach (GameObject obj in gmobjs)
+            {
+                string n = obj.name;
+                Debug.Log(n);
+
+                // Filter out lines
+                serverLines = 0;
+                if (n.StartsWith("Line"))
+                {
+                    string num = n.Substring(4, n.Length - 4);
+                    int numP = 0;
+                    int.TryParse(num, out numP);
+                    l.Add(numP);
+
+                    paintCont.AddServerLine(obj);
+                }
+
+            }
+
+            for (int i = 0; i < l.Count; i++)
+                if (l[i] > serverLines)
+                    serverLines = l[i];
+
+
+            /*
             IEnumerable<WorldObjectDto> objs = await dataConnection.GetAllWorldObjectsAsync();
             List<int> l = new List<int>();
 
@@ -189,6 +257,8 @@ public class ServerConnection : MonoBehaviour
             for (int i = 0; i < l.Count; i++)
                 if (l[i] > serverLines)
                     serverLines = l[i];
+
+            */
         }
         catch (Exception e)
         {
