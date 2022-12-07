@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Serialization.Mesh;
 using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers;
 

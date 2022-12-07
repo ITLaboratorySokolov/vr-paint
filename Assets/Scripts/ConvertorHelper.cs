@@ -7,6 +7,22 @@ using UnityEngine;
 public static class ConvertorHelper
 {
     /// <summary>
+    /// Elongate array by add number of members, does not initialize the new members
+    /// </summary>
+    /// <typeparam name="T"> Type </typeparam>
+    /// <param name="array"> Array </param>
+    /// <param name="add"> Number of members to add </param>
+    /// <returns> New, longer array </returns>
+    public static T[] ElongateArray<T>(T[] array, int add)
+    {
+        T[] newArr = new T[array.Length + add];
+        for (int i = 0; i < array.Length; i++)
+            newArr[i] = array[i];
+
+        return newArr;
+    }
+
+    /// <summary>
     /// Converts array of Color to array of floats
     /// - takes rgba components
     /// </summary>

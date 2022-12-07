@@ -41,6 +41,7 @@ public class TextureController : MonoBehaviour
         currTime = timeStep;
         generate = true;
         generatedTexture = new Texture2D(1, 50);
+        updates = 0;
 
         var texPix = generatedTexture.GetPixels();
         Color c = new Color(updates / 255.0f, 1, 1 - updates / 255.0f, 1);
