@@ -51,6 +51,8 @@ public class PaintController : MonoBehaviour
 
     TriangleStrip currentLineStrip;
     TriangleStripGenerator stripGenerator;
+    float startPaintTime;
+    float currPaintTime;
 
     [Header("Brushes")]
     /// <summary> Number of brushes in system </summary>
@@ -71,10 +73,19 @@ public class PaintController : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        // Create width modifiers
+        double xStep = 1.0 / 5.0;
+        float[] yValues = new float[5 + 1];
+        for (int i = 0; i < 5 + 1; i++)
+        {
+            double  xValue = i * xStep;
+            yValues[i] = (Mathf.Sin((float) (xValue * 2 * Mathf.PI)) + 1) / 2.0f;
+        }
+
         // Manually create two brushes
         brushes = new Brush[numberOfBrushes];
-        brushes[0] = new Brush() { Width = 0.05f, Color = Color.red, Texture = textures[0], Name = "Brush01" };
-        brushes[1] = new Brush() { Width = 0.05f, Color = Color.black, Texture = textures[1], Name = "Brush02" };
+        brushes[0] = new Brush() { Width = 0.05f, Color = Color.red, Texture = textures[0], Name = "Brush01", TimePerIter = 5, WidthModifier = yValues };
+        brushes[1] = new Brush() { Width = 0.05f, Color = Color.black, Texture = textures[1], Name = "Brush02", TimePerIter = 10, WidthModifier = yValues };
 
         // Create eraser
         eraser = new Eraser() { Width = 0.05f, Name = "Eraser" };
@@ -229,47 +240,13 @@ public class PaintController : MonoBehaviour
         else
         {
             paintingOn = true;
+            startPaintTime = Time.time;
 
             // TODO create a new mesh
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
             currentLineStrip = new TriangleStrip(controllerGrip.position);
             o.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
             currLineObj = o;
-
-
-            /*
-            // Instantiate new line
-            GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
-            o.name = "Line" + lineCounter;
-
-            // Get line renderer
-            currLine = o.GetComponent<LineRenderer>();
-            currLineObj = o;
-
-            // Set color
-            currLine.material.SetColor("_Color", brushes[currentBrush].Color);
-
-            // Set texture - only if the brush has any, otherwise stays the default of the material
-
-            // Set line width
-            Keyframe[] keys = new Keyframe[3];
-            keys[0] = new Keyframe(0.1f, 0.2f);
-            keys[1] = new Keyframe(0.5f, 1);
-            keys[2] = new Keyframe(0.9f, 0.2f);
-            AnimationCurve curve = new AnimationCurve(keys);
-            currLine.widthMultiplier = brushes[currentBrush].Width;
-            currLine.widthCurve = curve;
-
-            Debug.Log("New line created");
-
-            // Set first 2 positions
-            currLine.SetPosition(0, controllerGrip.position);
-            currLine.SetPosition(1, controllerGrip.position);
-
-            // Send to server
-            Mesh mesh = new Mesh();
-            currLine.BakeMesh(mesh);
-            */
         }
     }
 
@@ -278,10 +255,30 @@ public class PaintController : MonoBehaviour
     /// </summary>
     private void Paint()
     {
-        // currLine.positionCount++;
-        // currLine.SetPosition(currLine.positionCount - 1, controllerGrip.position);
+        // Get width
+        currPaintTime = Time.time;
+        Brush b = brushes[currentBrush];
+        int modLen = b.WidthModifier.Length;
+        float widthModifier = b.WidthModifier[0];
+        
+        if (modLen != 1)
+        {
+            float timestep = b.TimePerIter / (modLen - 1);
+            float paintTime = (currPaintTime - startPaintTime) % b.TimePerIter;
+            
+            int startIn = (int)(paintTime / timestep);
+            int endIn = startIn + 1;
+            if (endIn == modLen)
+                widthModifier = b.WidthModifier[modLen - 1];
+            else
+            {
+                float t = paintTime - (timestep * startIn);
+                widthModifier = Mathf.Lerp(b.WidthModifier[startIn], b.WidthModifier[endIn], t);
+            }
+        }
 
-        stripGenerator.AddPointToLine(controllerGrip.position, brushes[currentBrush].Width, controllerGrip.forward.normalized, currentLineStrip);
+        // Generate next part of the triangle strip
+        stripGenerator.AddPointToLine(controllerGrip.position, b.Width * widthModifier, controllerGrip.up.normalized, currentLineStrip);
         currLineObj.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
         currLineObj.GetComponent<MeshCollider>().sharedMesh = currentLineStrip.mesh;
 
@@ -298,21 +295,6 @@ public class PaintController : MonoBehaviour
             return;
 
         paintingOn = false;
-
-        /*
-        Vector3[] points = new Vector3[currLine.positionCount];
-
-        // TODO set collider
-        // TODO stop generating mesh
-
-        Mesh mesh = new Mesh();
-        currLine.BakeMesh(mesh);
-
-        MeshCollider meshCollider = currLine.GetComponent<MeshCollider>();
-        meshCollider.sharedMesh = mesh;
-
-        lineCounter++;
-        */
     }
 
     // -------------------------------------------------------------------------------------------------------------------------

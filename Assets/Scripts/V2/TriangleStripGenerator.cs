@@ -24,9 +24,6 @@ public class TriangleStripGenerator
         Vector3 p1 = newPoint + width / 2 * orientation;
         Vector3 p2 = newPoint - width / 2 * orientation;
 
-        Debug.Log(strip.mesh.vertices.Length);
-        Debug.Log(newVertices.Length);
-
         newVertices[strip.mesh.vertices.Length] = p1;
         newVertices[strip.mesh.vertices.Length + 1] = p2;
 

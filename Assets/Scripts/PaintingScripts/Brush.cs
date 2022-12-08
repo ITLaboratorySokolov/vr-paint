@@ -22,4 +22,13 @@ public class Brush : IDrawInstrument
     /// </summary>
     AnimationCurve widthCurve;
     public AnimationCurve WidthCurve { get => widthCurve; set => widthCurve = value; }
+
+    /// <summary> Width modifiers, values 0-1 - percentage of width at constant timesteps </summary>
+    float[] widthModifier;
+    public float[] WidthModifier { get => widthModifier; set => widthModifier = value; }
+
+    /// <summary> Time per one iteration of width </summary>
+    float timePerIter;
+    public float TimePerIter { get => timePerIter; set => timePerIter = value; }
+
 }
