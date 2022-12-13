@@ -2168,7 +2168,7 @@ MonoBehaviour:
   lineParent: {fileID: 99790056}
   numberOfBrushes: 2
   textures:
-  - {fileID: 0}
+  - {fileID: 2800000, guid: ffeaa3c8ea0bb5d49858c9cf1e45384f, type: 3}
   - {fileID: 0}
 --- !u!1 &1696451519
 GameObject:
@@ -3127,5 +3127,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleTriangleStrip
       objectReference: {fileID: 0}
+    - target: {fileID: 1773564353571307423, guid: 863f2e34bddde4c4da7e22b1d21491c5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 863f2e34bddde4c4da7e22b1d21491c5, type: 3}
+--- !u!1 &1773564354126295929 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1773564353571307423, guid: 863f2e34bddde4c4da7e22b1d21491c5, type: 3}
+  m_PrefabInstance: {fileID: 1773564354126295928}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1773564354126295930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773564354126295929}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf2acc2fa8acee4cb2319c391ead871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeStep: 5
+  expandStep: 10
+  generatedTexture: {fileID: 0}

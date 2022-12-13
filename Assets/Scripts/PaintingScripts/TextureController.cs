@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class TextureController : MonoBehaviour
@@ -17,7 +18,38 @@ public class TextureController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GenerateSimpleGradient(6);
+    }
 
+    private void GenerateSimpleGradient(int len)
+    {
+        Texture2D tx = new Texture2D(len, 20, TextureFormat.RGB24, false);
+        
+        var texPix = tx.GetPixels();
+
+        int updates = 0;
+        Color c = new Color(updates / 255.0f, 1, 1 - updates / 255.0f, 1);
+        for (int i = 0; i < len; i++)
+        {
+            for (int j = 0; j < tx.height; j++)
+            {
+                texPix[j * tx.width + i] = c;
+            }
+            c = new Color(updates / 255.0f, 1, 1 - updates / 255.0f, 1);
+            updates += 20;
+            updates %= 255; 
+        }
+        
+        tx.SetPixels(texPix);
+        tx.Apply();
+
+        byte[] bytes = tx.EncodeToPNG();
+        var dirPath = Application.dataPath + "/";
+        if (!Directory.Exists(dirPath))
+        {
+            Directory.CreateDirectory(dirPath);
+        }
+        File.WriteAllBytes(dirPath + "SimpleGradient" + len + ".png", bytes);
     }
 
     // Update is called once per frame

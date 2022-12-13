@@ -242,10 +242,14 @@ public class PaintController : MonoBehaviour
             paintingOn = true;
             startPaintTime = Time.time;
 
-            // TODO create a new mesh
+            // create a new mesh
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
             currentLineStrip = new TriangleStrip(controllerGrip.position);
             o.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
+
+            o.GetComponent<Renderer>().material.SetTexture("_MainTex", brushes[currentBrush].Texture);
+            o.GetComponent<Renderer>().material.SetColor("_Color", brushes[currentBrush].Color);
+
             currLineObj = o;
         }
     }
@@ -260,25 +264,35 @@ public class PaintController : MonoBehaviour
         Brush b = brushes[currentBrush];
         int modLen = b.WidthModifier.Length;
         float widthModifier = b.WidthModifier[0];
-        
+        int startIn = 0;
+        int endIn = 0;
+        float t = 0;
+
         if (modLen != 1)
         {
             float timestep = b.TimePerIter / (modLen - 1);
             float paintTime = (currPaintTime - startPaintTime) % b.TimePerIter;
             
-            int startIn = (int)(paintTime / timestep);
-            int endIn = startIn + 1;
+            startIn = (int)(paintTime / timestep);
+            endIn = startIn + 1;
             if (endIn == modLen)
                 widthModifier = b.WidthModifier[modLen - 1];
             else
             {
-                float t = paintTime - (timestep * startIn);
+                // TODO shouldnt i divide by timestep?? to get "percentage" how far it is
+                t = paintTime - (timestep * startIn);
                 widthModifier = Mathf.Lerp(b.WidthModifier[startIn], b.WidthModifier[endIn], t);
             }
         }
 
+        // Get UVs
+        float v = 0.5f;
+        float uSt = startIn / (modLen - 1);
+        float uEn = endIn / (modLen - 1);
+        float u = Mathf.Lerp(uSt, uEn, t);
+
         // Generate next part of the triangle strip
-        stripGenerator.AddPointToLine(controllerGrip.position, b.Width * widthModifier, controllerGrip.up.normalized, currentLineStrip);
+        stripGenerator.AddPointToLine(controllerGrip.position, b.Width * widthModifier, controllerGrip.up.normalized, currentLineStrip, u, v);
         currLineObj.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
         currLineObj.GetComponent<MeshCollider>().sharedMesh = currentLineStrip.mesh;
 

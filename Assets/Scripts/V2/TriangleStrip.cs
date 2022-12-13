@@ -15,8 +15,7 @@ public class TriangleStrip
         mesh = new Mesh();
         mesh.vertices = new Vector3[] { startPos };
         mesh.triangles = new int[] { };
-
+        mesh.uv = new Vector2[] { new Vector2(0, 0.4f) };
     }
     
-
 }
