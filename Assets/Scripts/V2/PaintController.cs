@@ -62,11 +62,12 @@ public class PaintController : MonoBehaviour
     [SerializeField]
     Texture2D[] textures;
     /// <summary> Brushes </summary>
-    Brush[] brushes;
+    internal Brush[] brushes;
     /// <summary> Eraser </summary>
     Eraser eraser;
     /// <summary> Currently active brush </summary>
     int currentBrush;
+    Dictionary<string, Brush> brushDictionary;
 
     /// <summary>
     /// Awake - called once before Start
@@ -86,6 +87,10 @@ public class PaintController : MonoBehaviour
         brushes = new Brush[numberOfBrushes];
         brushes[0] = new Brush() { Width = 0.05f, Color = Color.red, Texture = textures[0], Name = "Brush01", TimePerIter = 5, WidthModifier = yValues };
         brushes[1] = new Brush() { Width = 0.05f, Color = Color.black, Texture = textures[1], Name = "Brush02", TimePerIter = 10, WidthModifier = yValues };
+
+        brushDictionary = new Dictionary<string, Brush>();
+        brushDictionary.Add(brushes[0].Name, brushes[0]);
+        brushDictionary.Add(brushes[1].Name, brushes[1]);
 
         // Create eraser
         eraser = new Eraser() { Width = 0.05f, Name = "Eraser" };
@@ -268,7 +273,7 @@ public class PaintController : MonoBehaviour
         int endIn = 0;
         float t = 0;
 
-        if (modLen != 1)
+        if (modLen > 1)
         {
             float timestep = b.TimePerIter / (modLen - 1);
             float paintTime = (currPaintTime - startPaintTime) % b.TimePerIter;
@@ -280,15 +285,20 @@ public class PaintController : MonoBehaviour
             else
             {
                 // TODO shouldnt i divide by timestep?? to get "percentage" how far it is
-                t = paintTime - (timestep * startIn);
+                t = (paintTime % timestep) / timestep; // (paintTime - (timestep * startIn));
                 widthModifier = Mathf.Lerp(b.WidthModifier[startIn], b.WidthModifier[endIn], t);
             }
         }
 
         // Get UVs
         float v = 0.5f;
-        float uSt = startIn / (modLen - 1);
-        float uEn = endIn / (modLen - 1);
+        float uSt = 0;
+        float uEn = 0;
+        if (modLen > 1)
+        {
+            uSt = startIn / (float)(modLen - 1);
+            uEn = endIn / (float)(modLen - 1);
+        }
         float u = Mathf.Lerp(uSt, uEn, t);
 
         // Generate next part of the triangle strip
@@ -362,6 +372,29 @@ public class PaintController : MonoBehaviour
     public void TogglePaintingEnabled(bool val)
     {
         paintingEnabled = val;
+    }
+
+    public void AddBrushes(List<Brush> addBrushes)
+    {
+        List<Brush> uniques = new List<Brush>();
+        for (int i = 0; i < addBrushes.Count; i++)
+        {
+            if (!brushDictionary.ContainsKey(addBrushes[i].Name))
+                uniques.Add(addBrushes[i]);
+        }
+
+        Brush[] newBrushSet = new Brush[brushes.Length + uniques.Count];
+        for (int i = 0; i < brushes.Length; i++)
+            newBrushSet[i] = brushes[i];
+
+        for (int i = 0; i < uniques.Count; i++)
+        {
+            newBrushSet[brushes.Length + i] = uniques[i];
+            brushDictionary.Add(uniques[i].Name, uniques[i]);
+        }
+
+        brushes = newBrushSet;
+        numberOfBrushes = newBrushSet.Length;
     }
 
 }

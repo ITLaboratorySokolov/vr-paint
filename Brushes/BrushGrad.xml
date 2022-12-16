@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Brush xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>BrushGrad</Name>
+  <Width>0.05</Width>
+  <Color>
+    <r>1</r>
+    <g>1</g>
+    <b>1</b>
+    <a>1</a>
+  </Color>
+  <WidthModifier>
+    <float>0.001</float>
+    <float>0.588785231</float>
+    <float>0.9520565</float>
+    <float>0.952056468</float>
+    <float>0.5887852</float>
+    <float>0.00100008748</float>
+  </WidthModifier>
+  <TimePerIter>5</TimePerIter>
+</Brush>
