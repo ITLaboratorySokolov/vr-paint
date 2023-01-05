@@ -1,0 +1,39 @@
+Debug: 12/20/2022 12:44:22 PM Starting HubConnection.
+Error: 12/20/2022 12:44:26 PM Failed to start connection. Error getting negotiation response from 'https://localhost:49155/virtualWorldHub'.
+
+System.Net.Http.HttpRequestException: An error occurred while sending the request
+  at System.Net.Http.MonoWebRequestHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x00509] in <06147aa5b56f46dfbf1deab890f870b4>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.Internal.AccessTokenHttpMessageHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x000ff] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.Internal.LoggingHttpMessageHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x00095] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+  at System.Net.Http.HttpClient.SendAsyncWorker (System.Net.Http.HttpRequestMessage request, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken) [0x000e8] in <06147aa5b56f46dfbf1deab890f870b4>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.HttpConnection.NegotiateAsync (System.Uri url, System.Net.Http.HttpClient httpClient, Microsoft.Extensions.Logging.ILogger logger, System.Threading.CancellationToken cancellationToken) [0x00147] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+Debug: 12/20/2022 12:44:31 PM Starting HubConnection.
+Error: 12/20/2022 12:44:36 PM Failed to start connection. Error getting negotiation response from 'https://localhost:49155/virtualWorldHub'.
+
+System.Net.Http.HttpRequestException: An error occurred while sending the request
+  at System.Net.Http.MonoWebRequestHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x00509] in <06147aa5b56f46dfbf1deab890f870b4>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.Internal.AccessTokenHttpMessageHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x000ff] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.Internal.LoggingHttpMessageHandler.SendAsync (System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) [0x00095] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+  at System.Net.Http.HttpClient.SendAsyncWorker (System.Net.Http.HttpRequestMessage request, System.Net.Http.HttpCompletionOption completionOption, System.Threading.CancellationToken cancellationToken) [0x000e8] in <06147aa5b56f46dfbf1deab890f870b4>:0 
+  at Microsoft.AspNetCore.Http.Connections.Client.HttpConnection.NegotiateAsync (System.Uri url, System.Net.Http.HttpClient httpClient, Microsoft.Extensions.Logging.ILogger logger, System.Threading.CancellationToken cancellationToken) [0x00147] in <aab75bd23cf0495fa556f9fd878cdf1f>:0 
+Debug: 12/20/2022 12:45:09 PM Starting HubConnection.
+Information: 12/20/2022 12:45:10 PM Starting transport. Transfer mode: Binary. Url: 'wss://localhost:49153/virtualWorldHub?id=CdtqQhpvueJG0w0o9KnySw'.
+Information: 12/20/2022 12:45:10 PM HttpConnection Started.
+Information: 12/20/2022 12:45:10 PM Using HubProtocol 'messagepack v1'.
+Debug: 12/20/2022 12:45:10 PM Sending Hub Handshake.
+Debug: 12/20/2022 12:45:10 PM Handshake with server complete.
+Debug: 12/20/2022 12:45:10 PM Sending PingMessage message.
+Debug: 12/20/2022 12:45:10 PM Sending PingMessage message completed.
+Debug: 12/20/2022 12:45:10 PM Receive loop starting.
+Information: 12/20/2022 12:45:10 PM HubConnection started.
+Debug: 12/20/2022 12:45:10 PM Processing 38 byte message from server.
+Information: 12/20/2022 12:45:10 PM WebSocket closed by the server. Close status NormalClosure.
+Error: 12/20/2022 12:45:10 PM Received close message with an error: Connection closed with an error.
+Information: 12/20/2022 12:45:10 PM Transport is stopping.
+Information: 12/20/2022 12:45:10 PM HttpConnection Disposed.
+Debug: 12/20/2022 12:45:10 PM Canceling all outstanding invocations.
+Error: 12/20/2022 12:45:10 PM Connection is shutting down due to an error.
+
+Microsoft.AspNetCore.SignalR.HubException: The server closed the connection with the following error: Connection closed with an error.
+
+Debug: 12/20/2022 12:45:10 PM Invoking the Closed event handler.

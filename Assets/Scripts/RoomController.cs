@@ -13,6 +13,8 @@ public class RoomController : MonoBehaviour
 
     [SerializeField]
     GameObject walkableGround;
+    [SerializeField]
+    GameObject displayGround;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +49,7 @@ public class RoomController : MonoBehaviour
         Vector3 center = roomCenter.position;
 
         walkableGround.transform.position = center;
+        displayGround.transform.position = new Vector3(center.x, center.y - 0.05f, center.z);
         wallCollisionProcessor.MoveWallPosition(center);
     }
 }

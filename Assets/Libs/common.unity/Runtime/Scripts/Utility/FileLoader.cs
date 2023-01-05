@@ -33,12 +33,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Utility
         }
 
         /// <summary>
+        /// UNSUPPORTED
         /// Opens a file dialog and waits for user input. Loaded file is then parsed and object is added to an active world space.
         /// </summary>
         /// <returns>An enumerator.</returns>
         IEnumerator ShowLoadDialogCoroutine()
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
 
             /*
             FileBrowser.SetFilters(false, 
@@ -119,13 +120,14 @@ namespace ZCU.TechnologyLab.Common.Unity.Utility
         }
 
         /// <summary>
+        /// UNSUPPORTED
         /// Creates a mesh world object from a file.
         /// </summary>
         /// <param name="filePath">Path of the file.</param>
         /// <returns></returns>
         private GameObject ReadMesh(string filePath)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
 
             /*
             GameObject obj = MeshImporter.Load(filePath);

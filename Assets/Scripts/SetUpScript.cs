@@ -28,9 +28,11 @@ public class SetUpScript : MonoBehaviour
     [SerializeField]
     InputActionReference resetAction = null;
 
-    [Header("Hand switch")]
+    [Header("Room configuration")]
     [SerializeField]
-    bool leftHanded;
+    RoomController roomController;
+
+    [Header("Hands")]
     /// <summary> Hand displayed when online </summary>
     [SerializeField]
     GameObject[] handCanvas;
@@ -45,36 +47,15 @@ public class SetUpScript : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (leftHanded)
-        {
-            handCanvas[0].SetActive(false);
-            handCanvas[1].SetActive(true);
-
-            handLaser[0].SetActive(true);
-            handLaser[1].SetActive(false);
-
-            // TODO needs to swap all references to ServerConnection etc
-            // Instantiate(game[0]);
-        }
-        else
-        {
-            handCanvas[0].SetActive(true);
-            handCanvas[1].SetActive(false);
-
-            handLaser[0].SetActive(false);
-            handLaser[1].SetActive(true);
-
-            // Instantiate(game[1]);
-        }
-
-        pathToConfig = "./config.txt"; // Directory.GetCurrentDirectory() + "\\config.txt";
+        pathToConfig = Application.dataPath + "/../config.txt"; // Directory.GetCurrentDirectory() + "\\config.txt";
         Debug.Log(pathToConfig);
 
         // Set culture -> doubles are written with decimal dot
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         ReadConfig();
 
-        resetAction.action.performed += ResetSetUp;
+        if (resetAction != null)
+            resetAction.action.performed += ResetSetUp;
     }
 
     private void Start()
@@ -90,7 +71,22 @@ public class SetUpScript : MonoBehaviour
             string[] lines = File.ReadAllLines(pathToConfig);
             if (lines.Length >= 1)
             {
+                // server URL
                 serverUrl.Value = lines[0].Trim();
+
+                Debug.Log("Server URL: " + serverUrl.Value);
+            }
+
+            if (lines.Length >= 2)
+            {
+                // Size of room
+                var size = lines[1].Trim().Split(",");
+                float x, z;
+                float.TryParse(size[0].Trim(), out x);
+                float.TryParse(size[1].Trim(), out z);
+                roomController.SetRoomSize(x, z);
+
+                Debug.Log("Room size: " + x + " x " + z);
             }
         }
     }

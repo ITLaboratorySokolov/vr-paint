@@ -30,7 +30,7 @@ public class WallCollisionDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collision enter");
+        //Debug.Log("Collision enter");
         GameObject r = wcp.HandleCollision(this.transform, other.transform, keepCoords);
         if (r != null)
             reaction = r;
