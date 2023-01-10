@@ -17,19 +17,17 @@ public class BrushImportController : MonoBehaviour
         li = new LineImporter();
 
         ReloadBrushes();
-
-
     }
 
     public void ReloadBrushes()
     {
+        Debug.Log("Loading brushes...");
+
         string path = Application.dataPath + "/../Brushes";
         List<Brush> bList = new List<Brush>();
 
         if (Directory.Exists(path))
         {
-            Debug.Log(path);
-
             // for all files in folder
             foreach (string fileName in Directory.GetFiles(path))
             {

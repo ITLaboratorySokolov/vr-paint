@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Serialization.Properties;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Serializers;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Serializers;
 
 /// <summary>
 /// Custom property processing the color of the drawn line
-/// Needs to be applied after LineRendererProperty
 /// </summary>
 public class ColorProperty : OptionalProperty
 {
@@ -37,11 +36,8 @@ public class ColorProperty : OptionalProperty
         Color colorRGB = new Color(color[0], color[1], color[2]);
 
         // Set color to mesh renderer
-        LineRenderer l = GetComponent<LineRenderer>();
-        l.material.SetColor("_Color", colorRGB);
-
-        // var mat = GetComponent<MeshRenderer>().material;
-        // mat.SetColor("_Color", colorRGB);
+        var mat = GetComponent<MeshRenderer>().material;
+        mat.SetColor("_Color", colorRGB);
     }
 
     /// <summary>
@@ -52,8 +48,8 @@ public class ColorProperty : OptionalProperty
     public override byte[] Serialize()
     {
         // Get color
-        LineRenderer currLine = GetComponent<LineRenderer>();
-        Color currC = currLine.material.GetColor("_Color");
+        var mat = GetComponent<MeshRenderer>().material;
+        Color currC = mat.GetColor("_Color");
         float[] color = ConvertorHelper.Col4ToFloats(new Color[]{ currC });
         
         // Serialize color

@@ -1,0 +1,22 @@
+{
+    "name": "ZCU.TechnologyLab.Common.Unity.Editor.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bc00b5fb1bba4d549bafdc8c4418aa43",
+        "GUID:3e3f25f7452631d479c9f20f65dfe3a9"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

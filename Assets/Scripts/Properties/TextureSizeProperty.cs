@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Serialization.Properties;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Serializers;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Serializers;
 
 /// <summary>
 /// Custom property processing the texture size of the texture set for the drawn line
@@ -62,8 +62,7 @@ public class TextureSizeProperty : OptionalProperty
     public override byte[] Serialize()
     {
         // Get texture
-        LineRenderer currLine = GetComponent<LineRenderer>();
-        Texture tex = currLine.material.GetTexture("_MainTex");
+        Texture tex = GetComponent<MeshRenderer>().material.GetTexture("_MainTex");
 
         // If texture is not set, values are by default left as -1
         int[] data = new int[] { -1, -1 };

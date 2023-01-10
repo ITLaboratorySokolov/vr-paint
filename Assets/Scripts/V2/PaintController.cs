@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,6 +70,15 @@ public class PaintController : MonoBehaviour
     int currentBrush;
     Dictionary<string, Brush> brushDictionary;
 
+    [Header("ServerConnection")]
+    /// <summary> Server connection controller </summary>
+    [SerializeField]
+    ServerConectionController serverCont;
+    /// <summary> Time until next update </summary>
+    float timeToUpdate;
+    /// <summary> Is application ready for user input </summary>
+    bool inputEnabled;
+
     /// <summary>
     /// Awake - called once before Start
     /// </summary>
@@ -103,6 +113,7 @@ public class PaintController : MonoBehaviour
         stripGenerator = new TriangleStripGenerator();
 
         paintingEnabled = true;
+        timeToUpdate = 0.25f;
     }
 
     /// <summary>
@@ -142,9 +153,14 @@ public class PaintController : MonoBehaviour
         //Your Function You Want to Call
         Transform t = GetChildWithTag(controllerGrip.transform, "hand");
         handObj = t;
-        Debug.Log(t.name);
     }
 
+    /// <summary>
+    /// Get all children with given tag
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="tag"></param>
+    /// <returns></returns>
     private Transform GetChildWithTag(Transform t, string tag)
     {
         foreach (Transform tr in t)
@@ -152,7 +168,8 @@ public class PaintController : MonoBehaviour
             if (tr.tag == tag)
                 return tr;
 
-            if (tr.transform.childCount != 0) {
+            if (tr.transform.childCount != 0)
+            {
                 Transform ct = GetChildWithTag(tr, tag);
                 if (ct != null)
                     return ct;
@@ -167,7 +184,7 @@ public class PaintController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!paintingEnabled)
+        if (!paintingEnabled || !inputEnabled)
             return;
 
         // Stop drawing on released painting button
@@ -224,7 +241,7 @@ public class PaintController : MonoBehaviour
     /// <param name="ctx"> Callback context </param>
     private void ActivatePaintButton(InputAction.CallbackContext ctx)
     {
-        if (!paintingEnabled)
+        if (!paintingEnabled || !inputEnabled)
             return;
 
         // Erase objects
@@ -236,7 +253,8 @@ public class PaintController : MonoBehaviour
                 string name = cs[i].gameObject.name;
                 if (cs[i].gameObject.tag == "line")
                 {
-                    Destroy(cs[i].gameObject);
+                    serverCont.DestroyObjectOnServer(name, cs[i].gameObject);
+                    // Destroy(cs[i].gameObject);
                 }
             }
         }
@@ -249,6 +267,7 @@ public class PaintController : MonoBehaviour
 
             // create a new mesh
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
+            o.name = "Line" + lineCounter;
             currentLineStrip = new TriangleStrip(controllerGrip.position);
             o.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
 
@@ -256,6 +275,8 @@ public class PaintController : MonoBehaviour
             o.GetComponent<Renderer>().material.SetColor("_Color", brushes[currentBrush].Color);
 
             currLineObj = o;
+
+            serverCont.SendTriangleStripToServer(o);
         }
     }
 
@@ -307,7 +328,12 @@ public class PaintController : MonoBehaviour
         currLineObj.GetComponent<MeshCollider>().sharedMesh = currentLineStrip.mesh;
 
         // Update properties
-
+        timeToUpdate -= Time.deltaTime;
+        if (timeToUpdate <= 0.0001)
+        {
+            timeToUpdate = 0.25f;
+            serverCont.UpdateTriangleStripOnServer(currLineObj);
+        }
     }
 
     /// <summary>
@@ -319,6 +345,9 @@ public class PaintController : MonoBehaviour
             return;
 
         paintingOn = false;
+        timeToUpdate = 0.25f;
+        serverCont.UpdateTriangleStripOnServer(currLineObj);
+        lineCounter++;
     }
 
     // -------------------------------------------------------------------------------------------------------------------------
@@ -343,8 +372,6 @@ public class PaintController : MonoBehaviour
     /// <param name="f"> Width </param>
     public void SetBrushWidth(float f)
     {
-        Debug.Log("Setting brush width " + f);
-
         // Limit on how small can a brush be
         if (f <= 0.1)
             f = 0.1f;
@@ -374,6 +401,10 @@ public class PaintController : MonoBehaviour
         paintingEnabled = val;
     }
 
+    /// <summary>
+    /// Add brushes to dictionary of availible brushes
+    /// </summary>
+    /// <param name="addBrushes"> List of new brushes </param>
     public void AddBrushes(List<Brush> addBrushes)
     {
         List<Brush> uniques = new List<Brush>();
@@ -396,5 +427,38 @@ public class PaintController : MonoBehaviour
         brushes = newBrushSet;
         numberOfBrushes = newBrushSet.Length;
     }
+
+    /// <summary>
+    /// Add line from server
+    /// - set its mesh collider
+    /// </summary>
+    /// <param name="o"> Server line </param>
+    internal void AddServerLine(GameObject o)
+    {
+        // Set collider
+        MeshFilter viewedModelFilter = (MeshFilter)o.GetComponent("MeshFilter");
+        Mesh mesh = viewedModelFilter.mesh;
+
+        MeshCollider meshCollider = o.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
+    }
+
+    /// <summary>
+    /// Set if application is ready for user input
+    /// </summary>
+    /// <param name="value"> True if ready, false if not </param>
+    /// <param name="serverLines"> Highest number of line on server </param>
+    public void ToggleReadyForInput(bool value, int serverLines = 0)
+    {
+        inputEnabled = value;
+        if (inputEnabled)
+        {
+            lineCounter = serverLines + 1;
+            Debug.Log("Now can start painting! Waiting for Line" + lineCounter);
+        }
+        else
+            Debug.Log("Painting turned off");
+    }
+
 
 }

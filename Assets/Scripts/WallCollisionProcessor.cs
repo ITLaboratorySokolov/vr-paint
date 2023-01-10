@@ -31,25 +31,41 @@ public class WallCollisionProcessor : MonoBehaviour
 
     }
 
-    public void SetWallPosition(float wX, float wZ)
+    public void SetBorderWall(float wX, float wZ)
     {
-        // move walls to be wX/2 and wZ/2
-        for (int i = 0; i < borderWalls.Length; i++)
+
+        for (int i = 0; i < 2; i++)
         {
-            Vector3 f = borderWalls[i].transform.forward;
-            Vector3 size = borderWalls[i].GetComponent<BoxCollider>().size; 
+            // set wall size
+            Vector3 size = borderWalls[i].GetComponent<BoxCollider>().size;
             borderWalls[i].GetComponent<BoxCollider>().size = new Vector3(wX, size.y, size.z);
 
-            if (borderWalls[i].transform.rotation.eulerAngles.y % 180 == 0)
-            {
-                Vector3 oldP = borderWalls[i].transform.position;
-                borderWalls[i].transform.position = new Vector3(oldP.x, oldP.y, (-f.z) * wZ/2.0f);
-            }
-            else
-            {
-                Vector3 oldP = borderWalls[i].transform.position;
-                borderWalls[i].transform.position = new Vector3((-f.x) * wX/2.0f, oldP.y, oldP.z);
-            }
+            CorrectPosition(borderWalls[i].transform, wX, wZ);
+        }
+
+        for (int i = 2; i < 4; i++)
+        {
+            // set wall size
+            Vector3 size = borderWalls[i].GetComponent<BoxCollider>().size;
+            borderWalls[i].GetComponent<BoxCollider>().size = new Vector3(wZ, size.y, size.z);
+
+            CorrectPosition(borderWalls[i].transform, wX, wZ);
+        }
+    }
+
+    private void CorrectPosition(Transform wallTF, float wX, float wZ)
+    {
+        // move walls to be wX/2 and wZ/2
+        Vector3 f = wallTF.forward;
+        if (wallTF.rotation.eulerAngles.y % 180 == 0)
+        {
+            Vector3 oldP = wallTF.position;
+            wallTF.position = new Vector3(oldP.x, oldP.y, (-f.z) * wZ / 2.0f);
+        }
+        else
+        {
+            Vector3 oldP = wallTF.position;
+            wallTF.position = new Vector3((-f.x) * wX / 2.0f, oldP.y, oldP.z);
         }
     }
 

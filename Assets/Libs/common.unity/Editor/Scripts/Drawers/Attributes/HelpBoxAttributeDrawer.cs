@@ -1,7 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-using ZCU.TechnologyLab.Common.Unity.Attributes;
+using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
 
 namespace ZCU.TechnologyLab.Common.Unity.Editor.Drawers.Attributes
 {

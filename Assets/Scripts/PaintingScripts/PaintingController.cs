@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using ZCU.TechnologyLab.Common.Serialization.Mesh;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Managers;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
 
 // TODO - updates during painting
 
@@ -274,8 +274,7 @@ public class PaintingController : MonoBehaviour
                 string name = cs[i].gameObject.name;
                 if (cs[i].gameObject.tag == "line")
                 {
-                    objController.DestroyObject(name);
-                    Destroy(cs[i].gameObject);
+                    objController.DestroyObject(name, cs[i].gameObject);
                 }
             }
         }

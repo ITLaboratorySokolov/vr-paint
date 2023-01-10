@@ -31,7 +31,7 @@ public class RoomController : MonoBehaviour
     public void SetRoomSize(float wX, float wZ)
     {
         // set position of walls
-        wallCollisionProcessor.SetWallPosition(wX, wZ);
+        wallCollisionProcessor.SetBorderWall(wX, wZ);
 
         // set size of teleportation area
         float currentSizeX = walkableGround.GetComponent<Renderer>().bounds.size.x;

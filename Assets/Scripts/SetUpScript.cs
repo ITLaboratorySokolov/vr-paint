@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using ZCU.TechnologyLab.Common.Unity.AssetVariables;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 
 // TODO path to config file
 
@@ -73,8 +73,6 @@ public class SetUpScript : MonoBehaviour
             {
                 // server URL
                 serverUrl.Value = lines[0].Trim();
-
-                Debug.Log("Server URL: " + serverUrl.Value);
             }
 
             if (lines.Length >= 2)
@@ -85,8 +83,6 @@ public class SetUpScript : MonoBehaviour
                 float.TryParse(size[0].Trim(), out x);
                 float.TryParse(size[1].Trim(), out z);
                 roomController.SetRoomSize(x, z);
-
-                Debug.Log("Room size: " + x + " x " + z);
             }
         }
     }

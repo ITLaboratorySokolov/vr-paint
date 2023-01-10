@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Serialization.Properties;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.Serializers;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Serializers;
 
 /// <summary>
 /// Custom property processing the texture set for the drawn line
@@ -47,11 +47,8 @@ public class TextureProperty : OptionalProperty
         tex.Apply();
 
         // Set texture
-        LineRenderer currLine = GetComponent<LineRenderer>(); 
-        currLine.material.SetTexture("_MainTex", tex);
-
-        // var mat = GetComponent<MeshRenderer>().material;
-        // mat.SetTexture("_MainTex", tex);
+        Material mat = GetComponent<MeshRenderer>().material;
+        mat.SetTexture("_MainTex", tex);
     }
 
     /// <summary>
@@ -62,8 +59,7 @@ public class TextureProperty : OptionalProperty
     public override byte[] Serialize()
     {
         // Get texture
-        LineRenderer currLine = GetComponent<LineRenderer>(); 
-        Texture tex = currLine.material.GetTexture("_MainTex");
+        Texture tex = GetComponent<MeshRenderer>().material.GetTexture("_MainTex");
         Texture2D tex2D = null;
 
         // If no texture is set, send only 0 - it will not be processed anyways since width and height will be set as -1

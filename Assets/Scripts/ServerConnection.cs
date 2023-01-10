@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
-using ZCU.TechnologyLab.Common.Unity.Connections.Session;
-using ZCU.TechnologyLab.Common.Connections.Session;
-using ZCU.TechnologyLab.Common.Connections;
-using ZCU.TechnologyLab.Common.Unity.Connections.Data;
-using ZCU.TechnologyLab.Common.Unity.WorldObjects;
-using UnityEngine.InputSystem.XR;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Data;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects;
 using UnityEngine.InputSystem;
+using ZCU.TechnologyLab.Common.Connections.Client.Session;
 
 // TODO does reconnect work - was reworked
 
@@ -24,10 +21,10 @@ public class ServerConnection : MonoBehaviour
 {
     [Header("Connection")]
     /// <summary> Connection to server </summary>
-    [SerializeField]
-    ServerSessionConnection connection;
+    // [SerializeField]
+    // SignalRSessionWrapper connection; //  ServerSessionConnection
     /// <summary> Data connection to server </summary>
-    ServerDataConnection dataConnection;
+    // DataClientWrapper dataConnection; // ServerDataConnection 
     /// <summary> Session </summary>
     [SerializeField]
     SignalRSessionWrapper session;
@@ -96,8 +93,8 @@ public class ServerConnection : MonoBehaviour
     {
         actionStart.Invoke();
 
-        connection = new ServerSessionConnection(session);
-        dataConnection = new ServerDataConnection(dataSession);
+        // connection = new SignalRSessionWrapper(); // session
+        // dataConnection = new RestDataClientWrapper(); // dataSession
 
         handOnline[0].SetActive(false);
         handOnline[1].SetActive(false);
@@ -190,7 +187,7 @@ public class ServerConnection : MonoBehaviour
     /// <returns> IEnumerator </returns>
     IEnumerator SyncCall()
     {
-        yield return new WaitUntil(() => session.SessionState == SessionState.Connected);
+        yield return new WaitUntil(() => session.State == SessionState.Connected);
         GetObjectsAsync();
     }
 
