@@ -35,6 +35,8 @@ public class ColorProperty : OptionalProperty
         float[] color = rgbSerializer.Deserialize(properties);
         Color colorRGB = new Color(color[0], color[1], color[2]);
 
+        Debug.Log(colorRGB);
+
         // Set color to mesh renderer
         var mat = GetComponent<MeshRenderer>().material;
         mat.SetColor("_Color", colorRGB);

@@ -574,7 +574,6 @@ GameObject:
   - component: {fileID: 2881176198254013175}
   - component: {fileID: 6493510973198994902}
   - component: {fileID: 1067517352778656863}
-  - component: {fileID: 7920241836224329642}
   m_Layer: 11
   m_Name: DisplayGround
   m_TagString: Untagged
@@ -661,19 +660,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &7920241836224329642
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7307781011794227693}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 10, y: 0.5028197, z: 10}
-  m_Center: {x: 0, y: -0.24859014, z: 0}
 --- !u!1 &8589134099442442423
 GameObject:
   m_ObjectHideFlags: 0

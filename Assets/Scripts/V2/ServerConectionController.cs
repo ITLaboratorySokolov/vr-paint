@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using ZCU.TechnologyLab.Common.Connections.Client.Session;
 using ZCU.TechnologyLab.Common.Serialization.Mesh;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server;
@@ -31,6 +32,9 @@ public class ServerConectionController : MonoBehaviour
     internal bool syncCallDone;
     /// <summary> Highest number of line on server </summary>
     int serverLines;
+    /// <summary> Name of client </summary>
+    [SerializeField]
+    private StringVariable clientName;
 
     [Header("Actions")]
     /// <summary> Action performed upon Start </summary>
@@ -124,12 +128,21 @@ public class ServerConectionController : MonoBehaviour
                 // Filter out lines
                 if (n.StartsWith("Line"))
                 {
-                    string num = n.Substring(4, n.Length - 4);
+                    string num = n.Substring(5, n.Length - 5);
                     int numP = 0;
                     int.TryParse(num, out numP);
-                    l.Add(numP);
 
+                    // if the lane was drawn by this client
+                    string cName = n.Substring(4, 1);
+                    if (cName.Equals(clientName.Value))
+                        l.Add(numP);
+                 
                     paintCont.AddServerLine(obj);
+                }
+                else
+                {
+                    // objCont.RemoveObjectFromLocal(n);
+                    // Debug.Log("Removing " + n);
                 }
 
             }

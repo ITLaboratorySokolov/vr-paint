@@ -40,7 +40,7 @@ public class ServerConnection : MonoBehaviour
     WorldObjectManager woManager;
     /// <summary> Paint controller </summary>
     [SerializeField]
-    PaintingController paintCont;
+    PaintController paintCont;
     /// <summary> Number of lines already on server </summary>
     internal int serverLines;
 
@@ -200,7 +200,7 @@ public class ServerConnection : MonoBehaviour
         try
         {
             // Get all objects
-            IEnumerable<GameObject> gmobjs = await paintCont.objController.ObjectRecieve();
+            IEnumerable<GameObject> gmobjs = new List<GameObject>(); // await objController.ObjectRecieve();
             List<int> l = new List<int>();
 
             foreach (GameObject obj in gmobjs)

@@ -1,5 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1149913779381918625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4656315751901945202}
+  - component: {fileID: 4927815503718212771}
+  m_Layer: 0
+  m_Name: ServerEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4656315751901945202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149913779381918625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7695670928496514462}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4927815503718212771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149913779381918625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9262e9a5f67ed484aae69dda373b2ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverSessionAdapter: {fileID: 7695670928186095700}
+  serverDataAdapter: {fileID: 7695670928076981951}
+  worldObjectStorage: {fileID: 7695670928076981937}
+  worldObjectEventsHandler: {fileID: 7695670928076981950}
+  worldObjectAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  worldObjectRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+  worldObjectUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  worldObjectPropertiesUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  worldObjectTransformed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7695670928076981948
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +340,7 @@ Transform:
   m_Children:
   - {fileID: 7695670928186095696}
   - {fileID: 7695670928076981949}
+  - {fileID: 4656315751901945202}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -295,6 +359,7 @@ MonoBehaviour:
   paintCont: {fileID: 0}
   objCont: {fileID: 0}
   session: {fileID: 7695670928186095697}
+  clientName: {fileID: 11400000, guid: 592712d5dc52b2c4ea8518578f314efa, type: 2}
   actionStart:
     m_PersistentCalls:
       m_Calls:

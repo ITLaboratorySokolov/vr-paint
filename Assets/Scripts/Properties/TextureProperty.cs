@@ -15,6 +15,8 @@ public class TextureProperty : OptionalProperty
     /// <summary> Texture size property used for this game object </summary>
     [SerializeField]
     TextureSizeProperty texSizeProperty;
+    [SerializeField]
+    string textureName = "_MainTex";
 
     /// <summary>
     /// Getter for property name
@@ -48,7 +50,7 @@ public class TextureProperty : OptionalProperty
 
         // Set texture
         Material mat = GetComponent<MeshRenderer>().material;
-        mat.SetTexture("_MainTex", tex);
+        mat.SetTexture(textureName, tex);
     }
 
     /// <summary>
@@ -59,7 +61,7 @@ public class TextureProperty : OptionalProperty
     public override byte[] Serialize()
     {
         // Get texture
-        Texture tex = GetComponent<MeshRenderer>().material.GetTexture("_MainTex");
+        Texture tex = GetComponent<MeshRenderer>().material.GetTexture(textureName);
         Texture2D tex2D = null;
 
         // If no texture is set, send only 0 - it will not be processed anyways since width and height will be set as -1

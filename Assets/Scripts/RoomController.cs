@@ -19,7 +19,7 @@ public class RoomController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CenterRoom();
+        // CenterRoom();
     }
 
     // Update is called once per frame

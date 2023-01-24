@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 
 public class PaintController : MonoBehaviour
 {
@@ -78,6 +79,9 @@ public class PaintController : MonoBehaviour
     float timeToUpdate;
     /// <summary> Is application ready for user input </summary>
     bool inputEnabled;
+    /// <summary> Name of client </summary>
+    [SerializeField]
+    private StringVariable clientName;
 
     /// <summary>
     /// Awake - called once before Start
@@ -144,9 +148,10 @@ public class PaintController : MonoBehaviour
 
         // TODO late start 2s late, but i do not like this. what about computer speed
         // how can i better reach hand object
-        StartCoroutine(LateStart(2));
+        // StartCoroutine(LateStart(2));
     }
 
+    /*
     IEnumerator LateStart(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
@@ -154,6 +159,7 @@ public class PaintController : MonoBehaviour
         Transform t = GetChildWithTag(controllerGrip.transform, "hand");
         handObj = t;
     }
+    */
 
     /// <summary>
     /// Get all children with given tag
@@ -253,6 +259,7 @@ public class PaintController : MonoBehaviour
                 string name = cs[i].gameObject.name;
                 if (cs[i].gameObject.tag == "line")
                 {
+                    // TODO funguje to?
                     serverCont.DestroyObjectOnServer(name, cs[i].gameObject);
                     // Destroy(cs[i].gameObject);
                 }
@@ -267,9 +274,12 @@ public class PaintController : MonoBehaviour
 
             // create a new mesh
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
-            o.name = "Line" + lineCounter;
+            o.name = "Line" + clientName.Value + lineCounter;
             currentLineStrip = new TriangleStrip(controllerGrip.position);
             o.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
+            
+            o.GetComponent<MeshCollider>().enabled = true;
+            Debug.Log("Set colliders");
 
             o.GetComponent<Renderer>().material.SetTexture("_MainTex", brushes[currentBrush].Texture);
             o.GetComponent<Renderer>().material.SetColor("_Color", brushes[currentBrush].Color);
@@ -312,7 +322,6 @@ public class PaintController : MonoBehaviour
         }
 
         // Get UVs
-        float v = 0.5f;
         float uSt = 0;
         float uEn = 0;
         if (modLen > 1)
@@ -322,8 +331,11 @@ public class PaintController : MonoBehaviour
         }
         float u = Mathf.Lerp(uSt, uEn, t);
 
+        // so there is no mesh with points in the same space
+        widthModifier = Mathf.Max(0.001f, widthModifier);
+
         // Generate next part of the triangle strip
-        stripGenerator.AddPointToLine(controllerGrip.position, b.Width * widthModifier, controllerGrip.up.normalized, currentLineStrip, u, v);
+        stripGenerator.AddPointToLine(controllerGrip.position, b.Width * widthModifier, controllerGrip.up.normalized, currentLineStrip, u);
         currLineObj.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
         currLineObj.GetComponent<MeshCollider>().sharedMesh = currentLineStrip.mesh;
 
@@ -454,7 +466,7 @@ public class PaintController : MonoBehaviour
         if (inputEnabled)
         {
             lineCounter = serverLines + 1;
-            Debug.Log("Now can start painting! Waiting for Line" + lineCounter);
+            Debug.Log("Now can start painting! Waiting for Line" + clientName.Value + lineCounter);
         }
         else
             Debug.Log("Painting turned off");

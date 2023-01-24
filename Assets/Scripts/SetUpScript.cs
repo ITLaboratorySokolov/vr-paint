@@ -21,9 +21,12 @@ public class SetUpScript : MonoBehaviour
     /// <summary> Server url </summary>
     [SerializeField]
     private StringVariable serverUrl;
+    /// <summary> Name of client </summary>
+    [SerializeField]
+    private StringVariable clientName;
     /// <summary> Server connection </summary>
     [SerializeField]
-    ServerConnection serverConnection;
+    ServerConectionController serverConnection;
     /// <summary> Manual connection reset action reference </summary>
     [SerializeField]
     InputActionReference resetAction = null;
@@ -31,15 +34,6 @@ public class SetUpScript : MonoBehaviour
     [Header("Room configuration")]
     [SerializeField]
     RoomController roomController;
-
-    [Header("Hands")]
-    /// <summary> Hand displayed when online </summary>
-    [SerializeField]
-    GameObject[] handCanvas;
-    [SerializeField]
-    GameObject[] handLaser;
-    [SerializeField]
-    GameObject[] game;
 
     /// <summary>
     /// Set up configuration1before application starts
@@ -69,16 +63,17 @@ public class SetUpScript : MonoBehaviour
         {
             Debug.Log("Loading config file...");
             string[] lines = File.ReadAllLines(pathToConfig);
-            if (lines.Length >= 1)
-            {
-                // server URL
-                serverUrl.Value = lines[0].Trim();
-            }
-
             if (lines.Length >= 2)
             {
+                // server URL
+                clientName.Value = lines[0].Trim().Substring(0, 1);
+                serverUrl.Value = lines[1].Trim();
+            }
+
+            if (lines.Length >= 3)
+            {
                 // Size of room
-                var size = lines[1].Trim().Split(",");
+                var size = lines[2].Trim().Split(",");
                 float x, z;
                 float.TryParse(size[0].Trim(), out x);
                 float.TryParse(size[1].Trim(), out z);
