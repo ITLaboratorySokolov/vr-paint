@@ -62,53 +62,22 @@ public class UpdatePropertiesHandler : MonoBehaviour
         else
         {
             mr.material = generalMaterial;
+            mr.material.SetColor("_Color", c);
+            if (t != null)
+                mr.material.SetTexture("_MainTex", t);
         }
+
     }
 
     public void StartPosition()
     {
-        GameObject ground = GameObject.Find("Ground");
-        if (ground != null)
-        {
-            float height = ground.transform.position.y;
-            if (transform.position.y < height)
-                transform.position = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
-        }
 
-        transform.position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
-        newPos = transform.position;
-        newRot = transform.rotation;
-
-        timeUntilUpdate -= Time.deltaTime;
-
-        if (newPos != lastPos && newRot != lastRot && timeUntilUpdate < 0.1f)
-        {
-            UpdateServerTransform();
-        }
-    }
-
-    private async void UpdateServerTransform()
-    {
-        if (objCont != null && serverConnection != null && serverConnection.syncCallDone)
-        {
-            bool val = await objCont.ContainsObject(name);
-            if (val)
-            {
-                transform.hasChanged = false;
-
-                objCont.UpdateProperties(this.name);
-                timeUntilUpdate = 1;
-                lastRot = newRot;
-                lastPos = newPos;
-            }
-        }
-    }
-
-    
+        
+    }   
 
 }

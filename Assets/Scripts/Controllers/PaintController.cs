@@ -145,21 +145,7 @@ public class PaintController : MonoBehaviour
     private void Start()
     {
         canvas.SwitchBrushValues(brushes[currentBrush]);
-
-        // TODO late start 2s late, but i do not like this. what about computer speed
-        // how can i better reach hand object
-        // StartCoroutine(LateStart(2));
     }
-
-    /*
-    IEnumerator LateStart(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        //Your Function You Want to Call
-        Transform t = GetChildWithTag(controllerGrip.transform, "hand");
-        handObj = t;
-    }
-    */
 
     /// <summary>
     /// Get all children with given tag
@@ -344,7 +330,7 @@ public class PaintController : MonoBehaviour
         if (timeToUpdate <= 0.0001)
         {
             timeToUpdate = 0.25f;
-            serverCont.UpdateTriangleStripOnServer(currLineObj);
+            // serverCont.UpdateTriangleStripOnServer(currLineObj);
         }
     }
 

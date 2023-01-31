@@ -75,7 +75,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 return worldObject;
             }
 
-            throw new ArgumentException("Unsupported object type");
+            return null;
+            //throw new ArgumentException("Unsupported object type");
         }
     }
 }

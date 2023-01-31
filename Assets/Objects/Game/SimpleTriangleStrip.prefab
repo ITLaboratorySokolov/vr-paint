@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3784930599081579959}
   - component: {fileID: 4791958200800349882}
   - component: {fileID: 5424951427113220558}
+  - component: {fileID: 4296300026115504995}
   - component: {fileID: -631276641258837462}
   - component: {fileID: 3939423569817376751}
   - component: {fileID: 4718225067063273834}
@@ -147,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   optionalProperties:
   - {fileID: 5424951427113220558}
+  - {fileID: 4296300026115504995}
   - {fileID: -631276641258837462}
   - {fileID: 3939423569817376751}
   - {fileID: 4718225067063273834}
@@ -194,6 +196,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b712ad6069a1ec34db1167ee41f9b1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4296300026115504995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773564353571307423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5a787ddb8882647a4f37ac1d8e493c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textureName: _MainTex
 --- !u!114 &-631276641258837462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texSizeProperty: {fileID: 5424951427113220558}
+  texFormatProperty: {fileID: 4296300026115504995}
   textureName: _MainTex
 --- !u!114 &3939423569817376751
 MonoBehaviour:

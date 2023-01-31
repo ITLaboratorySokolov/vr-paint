@@ -10,7 +10,7 @@ using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Serializ
 public class UVProperty : OptionalProperty
 {
     /// <summary> Property name </summary>
-    string propertyName = "UVindices";
+    string propertyName = "UV";
 
     /// <summary>
     /// Getter for property name

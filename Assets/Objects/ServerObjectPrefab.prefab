@@ -19,9 +19,11 @@ GameObject:
   - component: {fileID: 3636451904438298842}
   - component: {fileID: 476049909321704166}
   - component: {fileID: 3309025961797577739}
+  - component: {fileID: 1117705545611690377}
   - component: {fileID: 4001556055028762082}
   - component: {fileID: -8742696934938988691}
   - component: {fileID: 6376350579584854226}
+  - component: {fileID: 8326284314937354278}
   m_Layer: 0
   m_Name: ServerObjectPrefab
   m_TagString: Untagged
@@ -105,7 +107,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0, y: 0, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!64 &8820254482816043734
 MeshCollider:
@@ -118,7 +120,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!135 &-4751802170383463930
@@ -132,7 +134,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.00001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2729817109905243161
 MonoBehaviour:
@@ -150,8 +152,8 @@ MonoBehaviour:
   serverConnection: {fileID: 0}
   texProp: {fileID: 4001556055028762082}
   lineMaterial: {fileID: 2100000, guid: be43344bf2e17d84280b0187eac0242a, type: 2}
-  boxMaterial: {fileID: 2100000, guid: 7ba840b382e52e8448b03edb04165c42, type: 2}
-  generalMaterial: {fileID: 0}
+  boxMaterial: {fileID: 2100000, guid: 62115cc7e61e4164c8a9868eadbdfa7d, type: 2}
+  generalMaterial: {fileID: 2100000, guid: 62115cc7e61e4164c8a9868eadbdfa7d, type: 2}
 --- !u!114 &-4644933111016800190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +172,7 @@ MonoBehaviour:
   - {fileID: -8742696934938988691}
   - {fileID: 6376350579584854226}
   - {fileID: 3309025961797577739}
+  - {fileID: 1117705545611690377}
   - {fileID: 4001556055028762082}
 --- !u!114 &3636451904438298842
 MonoBehaviour:
@@ -213,6 +216,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b712ad6069a1ec34db1167ee41f9b1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1117705545611690377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381866689056338526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5a787ddb8882647a4f37ac1d8e493c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textureName: _MainTex
 --- !u!114 &4001556055028762082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texSizeProperty: {fileID: 3309025961797577739}
+  texFormatProperty: {fileID: 1117705545611690377}
   textureName: _MainTex
 --- !u!114 &-8742696934938988691
 MonoBehaviour:
@@ -251,3 +268,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf6608d97a52e24788999bf62ac46dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8326284314937354278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381866689056338526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26249aae85772544ba5651c4dc990fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reportTransformChangedEvent: 1
+  transformChangedEventReportDelay: 0.25

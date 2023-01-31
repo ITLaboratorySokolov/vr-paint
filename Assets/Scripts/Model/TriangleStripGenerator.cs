@@ -57,8 +57,8 @@ public class TriangleStripGenerator
         }
 
         strip.mesh.vertices = newVertices;
-        strip.mesh.triangles = newTriangles;
         strip.mesh.uv = newUVs;
+        strip.mesh.triangles = newTriangles;
 
         return strip;
     }

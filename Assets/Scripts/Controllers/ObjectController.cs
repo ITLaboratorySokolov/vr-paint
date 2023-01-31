@@ -18,7 +18,7 @@ public class ObjectController : MonoBehaviour
         return woManager.LoadServerContentAsync();
     }
 
-    public async void ObjectRemoved(string name)
+    public async Task ObjectRemoved(string name)
     {
         Debug.Log("Remove");
         await woManager.RemoveObjectAsync(name);
@@ -39,7 +39,7 @@ public class ObjectController : MonoBehaviour
             Destroy(o);
     }
 
-    public async void DestroyObject(string name, GameObject obj)
+    public async Task DestroyObject(string name, GameObject obj)
     {
         Debug.Log("Destroy " + name);
         await woManager.RemoveObjectAsync(name);
@@ -47,14 +47,14 @@ public class ObjectController : MonoBehaviour
         Debug.Log("Destroyed " + name);
     }
 
-    public async void AddObjectAsync(GameObject obj)
+    public async Task AddObjectAsync(GameObject obj)
     {
         Debug.Log("Add " + obj.name);
         await woManager.AddObjectAsync(obj);
 
     }
 
-    public async void UpdateProperties(string name)
+    public async Task UpdateProperties(string name)
     {
         Debug.Log("Update " + name);
         await woManager.UpdateObjectAsync(name);
@@ -76,7 +76,7 @@ public class ObjectController : MonoBehaviour
         return ret;
     }
 
-    public async void RefreshObject(string name)
+    public async Task RefreshObject(string name)
     {
         await dataAdapter.GetAllWorldObjectsAsync();
         //var d = await dataAdapter.GetWorldObjectAsync(name);

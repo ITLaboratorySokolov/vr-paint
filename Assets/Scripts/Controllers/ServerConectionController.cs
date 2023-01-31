@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using ZCU.TechnologyLab.Common.Connections.Client.Session;
@@ -9,6 +10,7 @@ using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
 
 public class ServerConectionController : MonoBehaviour
@@ -28,6 +30,10 @@ public class ServerConectionController : MonoBehaviour
     /// <summary> Session </summary>
     [SerializeField]
     SignalRSessionWrapper session;
+
+    WorldObjectManager wom;
+
+
     /// <summary> Synchronization call has been finished </summary>
     internal bool syncCallDone;
     /// <summary> Highest number of line on server </summary>
@@ -62,10 +68,27 @@ public class ServerConectionController : MonoBehaviour
         StartCoroutine(RestartConnection());
     }
 
-    public void ConnectionLost()
+    public void OnDisconnected()
+    {
+        paintCont.ToggleReadyForInput(false);
+        objCont.ObjectsClear();
+        Debug.Log("Disconnected - Launching restart procedure");
+        StartCoroutine(RestartConnection());
+    }
+
+    public void OnReconnecting()
     {
         Debug.Log("Lost connection");
         paintCont.ToggleReadyForInput(false);
+    }
+
+    public void OnReconnected()
+    {
+        Debug.Log("Regained connection");
+        paintCont.ToggleReadyForInput(true);
+        // TODO tady by se mìly stáhnout updaty ze serveru
+        objCont.ObjectsClear();
+        StartCoroutine(SyncCall());
     }
 
     /// <summary>
@@ -103,15 +126,29 @@ public class ServerConectionController : MonoBehaviour
     IEnumerator SyncCall()
     {
         yield return new WaitUntil(() => session.State == SessionState.Connected);
-        GetObjectsAsync();
+
+
+        
+        var res = GetObjectsAsync();
+
+        while (!res.IsCompleted)
+            yield return null;
+
+        if (res.Result)
+            Debug.Log("Sync call completed");
+        else 
+            Debug.Log("Sync call unsuccessfull");
+
     }
 
     /// <summary>
     /// Get objects from server
     /// - filter lines and display them
     /// </summary>
-    private async void GetObjectsAsync()
+    private async Task<bool> GetObjectsAsync()
     {
+        bool res = true;
+
         try
         {
             // Get all objects
@@ -139,12 +176,7 @@ public class ServerConectionController : MonoBehaviour
                  
                     paintCont.AddServerLine(obj);
                 }
-                else
-                {
-                    // objCont.RemoveObjectFromLocal(n);
-                    // Debug.Log("Removing " + n);
-                }
-
+             
             }
 
             serverLines = -1;
@@ -155,13 +187,13 @@ public class ServerConectionController : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Cannot sync call");
             Debug.LogError(e.Message);
+            res = false;
         }
 
         syncCallDone = true;
-        Debug.Log("Sync call done");
         paintCont.ToggleReadyForInput(true, serverLines);
+        return res;
     }
 
     /// <summary>
@@ -181,14 +213,24 @@ public class ServerConectionController : MonoBehaviour
     internal void SendTriangleStripToServer(GameObject obj)
     {
         // Set properties
-        Mesh mesh = obj.GetComponent<MeshFilter>().mesh;
         MeshPropertiesManager propsManager = obj.GetComponent<MeshPropertiesManager>();
+        Mesh mesh = obj.GetComponent<MeshFilter>().mesh;
         propsManager.name = obj.name;
 
         // TODO this doesnt send UVS?
         Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle", "_MainTex", ConvertorHelper.Vec2ToFloats(mesh.uv));
         propsManager.SetProperties(props);
-        objCont.AddObjectAsync(obj);
+        propsManager.SetMesh(mesh);
+
+        StartCoroutine(AddObjectCoroutine(obj));
+    }
+
+    IEnumerator AddObjectCoroutine(GameObject obj)
+    {
+        var t = objCont.AddObjectAsync(obj);
+        while (!t.IsCompleted)
+            yield return null;
+
     }
 
     /// <summary>
@@ -202,19 +244,27 @@ public class ServerConectionController : MonoBehaviour
 
         Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle", "_MainTex", ConvertorHelper.Vec2ToFloats(mesh.uv));
         // Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
+        propsManager.SetMesh(mesh);
         propsManager.SetProperties(props);
-
-        // TODO do i need to do this?
-        objCont.UpdateProperties(propsManager.name);
     }
+
 
     /// <summary>
     /// Remove object from server and scene
     /// </summary>
     /// <param name="name"> Object name </param>
     /// <param name="obj"> Game object </param>
-    internal void  DestroyObjectOnServer(string name, GameObject obj)
+    internal void DestroyObjectOnServer(string name, GameObject obj)
     {
-        objCont.DestroyObject(name, obj);
+        StartCoroutine(DestroyObjectCoroutine(name, obj));
+
     }
+
+    IEnumerator DestroyObjectCoroutine(string name, GameObject obj)
+    {
+        var t = objCont.DestroyObject(name, obj);
+        while (!t.IsCompleted)
+            yield return null;
+    }
+
 }

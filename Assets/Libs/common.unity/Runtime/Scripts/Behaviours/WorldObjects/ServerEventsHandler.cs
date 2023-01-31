@@ -57,9 +57,14 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
             Assert.IsNotNull(this.worldObjectStorage, "World Object Storage was null.");
         }
 
+        private void Start()
+        {
+            this.AssignConnectionEvents();
+        }
+
         private void OnDestroy()
         {
-            if(this.serverSessionAdapter != null)
+            if (this.serverSessionAdapter != null)
             {
                 this.serverSessionAdapter.WorldObjectAdded -= this.SessionConnection_WorldObjectAdded;
                 this.serverSessionAdapter.WorldObjectRemoved -= this.SessionConnection_WorldObjectRemoved;
@@ -107,13 +112,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Remove world object");
                 Debug.Log($"Name: {worldObjectName}");
 
-                if(this.worldObjectStorage.Remove(worldObjectName, out GameObject worldObject))
+                if (this.worldObjectStorage.Remove(worldObjectName, out GameObject worldObject))
                 {
-                    if(this.worldObjectEventsHandler != null)
+                    if (this.worldObjectEventsHandler != null)
                     {
                         this.worldObjectEventsHandler.RemoveEventHandlers(worldObject);
                     }
-                    
+
                     this.worldObjectRemoved.Invoke(worldObject);
                     GameObject.Destroy(worldObject);
                 }
@@ -162,7 +167,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
 
                     IPropertiesManager propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
                     propertiesManager.SetProperties(propertiesDto.Properties);
-                    
+
                     this.worldObjectPropertiesUpdated.Invoke(worldObject);
                 }
             }

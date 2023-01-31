@@ -4,7 +4,7 @@ using ZCU.TechnologyLab.Common.Serialization.Properties;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Serializers;
 
 /// <summary>
-/// Custom property processing the texture size of the texture set for the drawn line
+/// Custom property processing the texture size of the texture
 /// Needs to be applied before TextureProperty
 /// </summary>
 public class TextureSizeProperty : OptionalProperty
@@ -52,6 +52,9 @@ public class TextureSizeProperty : OptionalProperty
         // Save width and height
         width = data[0];
         height = data[1];
+
+        Debug.Log(width + " " + height);
+
     }
 
     /// <summary>

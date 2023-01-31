@@ -235,7 +235,17 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
                 var meshSerializer = this.meshSerializerFactory.RawMeshSerializer;
                 if (SupportedPrimitives.Contains(meshSerializer.PrimitiveSerializer.Deserialize(properties)))
                 {
-                    this.meshFilter.mesh.vertices = PointConverter.FloatToPoint3D(meshSerializer.VerticesSerializer.Deserialize(properties));
+
+                    // TODO tady sem to předělal!
+                    var points = PointConverter.FloatToPoint3D(meshSerializer.VerticesSerializer.Deserialize(properties));
+
+                    int maxPointsIn16 = 65535;
+                    if (points.Length > maxPointsIn16)
+                    {
+                        this.meshFilter.mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+                    }
+
+                    this.meshFilter.mesh.vertices = points;
                     this.meshFilter.mesh.triangles = meshSerializer.IndicesSerializer.Deserialize(properties);
 
                     this.meshFilter.mesh.RecalculateNormals();
@@ -250,6 +260,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
                         catch (Exception ex)
                         {
                             Debug.LogError($"Unable to process optional property: {ex.Message}");
+                            Debug.LogError(optionalProperty.GetPropertyName());
                         }
                     }
                 }

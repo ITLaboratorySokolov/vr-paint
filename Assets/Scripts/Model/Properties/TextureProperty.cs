@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using ZCU.TechnologyLab.Common.Serialization.Properties;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Serializers;
 
 /// <summary>
@@ -15,6 +14,12 @@ public class TextureProperty : OptionalProperty
     /// <summary> Texture size property used for this game object </summary>
     [SerializeField]
     TextureSizeProperty texSizeProperty;
+
+    /// <summary> Texture format property for this game object </summary>
+    [SerializeField]
+    TextureFormatProperty texFormatProperty;
+
+    /// <summary> Name of texture </summary>
     [SerializeField]
     string textureName = "_MainTex";
 
@@ -37,16 +42,12 @@ public class TextureProperty : OptionalProperty
         if (!properties.ContainsKey(propertyName) || texSizeProperty.width <= 0 || texSizeProperty.height <= 0)
             return;
 
-        // Deserialize
-        ArraySerializer<float> rgbSerializer = new ArraySerializer<float>(propertyName, sizeof(float));
-        float[] data = rgbSerializer.Deserialize(properties);
-        Color[] pixs = ConvertorHelper.FloatsToCol4(data);
-
         // Set to texture, width and height from TextureSizeProperty
-        Texture2D tex = new Texture2D(texSizeProperty.width, texSizeProperty.height);
-        tex.SetPixels(pixs);
-        tex.anisoLevel = 16;
+        Texture2D tex = new Texture2D(texSizeProperty.width, texSizeProperty.height, texFormatProperty.texFormat, false);
+        tex.SetPixelData(properties[propertyName], 0);
         tex.Apply();
+
+        Debug.Log("TexSet");
 
         // Set texture
         Material mat = GetComponent<MeshRenderer>().material;
@@ -65,21 +66,16 @@ public class TextureProperty : OptionalProperty
         Texture2D tex2D = null;
 
         // If no texture is set, send only 0 - it will not be processed anyways since width and height will be set as -1
-        float[] data = new float[] { 0 };
+        byte[] data = new byte[] { 0 };
         if (tex != null)
         {
-            // Convert to Texture2D and get pixels
+            // Convert to Texture2D and get pixel data
             tex2D = ConvertorHelper.TextureToTexture2D(tex);
-            Color[] pixs = tex2D.GetPixels();
-            data = ConvertorHelper.Col4ToFloats(pixs);
+            data = tex2D.GetPixelData<byte>(0).ToArray();
         }
 
-        // Serialize
-        ArraySerializer<float> rgbSerializer = new ArraySerializer<float>(propertyName, sizeof(float));
-        byte[] serialized = rgbSerializer.Serialize(data);
-
         Destroy(tex2D);
-        return serialized;
+        return data;
     }
 
 }

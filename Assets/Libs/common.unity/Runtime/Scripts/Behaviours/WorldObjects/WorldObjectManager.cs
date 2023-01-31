@@ -163,7 +163,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
             foreach (var worldObjectDto in allObjects)
             {
                 GameObject worldObject = WorldObjectUtils.AddObject(this.worldObjectEventsHandler, this.worldObjectStorage, worldObjectDto);
-                worldObjects.Add(worldObject);
+                if (worldObject != null)
+                    worldObjects.Add(worldObject);
             }
 
             return worldObjects;
