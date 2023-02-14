@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class UpdatePropertiesHandler : MonoBehaviour
+public class InputPropertiesHandler : MonoBehaviour
 {
     float timeUntilUpdate;
 

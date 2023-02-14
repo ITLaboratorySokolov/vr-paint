@@ -34,6 +34,8 @@ public class SetUpScript : MonoBehaviour
     [Header("Room configuration")]
     [SerializeField]
     RoomController roomController;
+    [SerializeField]
+    Vec2FVariable roomSize;
 
     /// <summary>
     /// Set up configuration1before application starts
@@ -46,15 +48,11 @@ public class SetUpScript : MonoBehaviour
 
         // Set culture -> doubles are written with decimal dot
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-        ReadConfig();
+        // ReadConfig();
+        roomController.SetRoomSize(roomSize.Value.x, roomSize.Value.y);
 
         if (resetAction != null)
             resetAction.action.performed += ResetSetUp;
-    }
-
-    private void Start()
-    {
-
     }
 
     private void ReadConfig()
@@ -66,7 +64,7 @@ public class SetUpScript : MonoBehaviour
             if (lines.Length >= 2)
             {
                 // server URL
-                clientName.Value = lines[0].Trim().Substring(0, 1);
+                clientName.Value = lines[0].Trim();
                 serverUrl.Value = lines[1].Trim();
             }
 

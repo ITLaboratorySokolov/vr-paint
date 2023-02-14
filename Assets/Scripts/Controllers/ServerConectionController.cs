@@ -21,6 +21,8 @@ public class ServerConectionController : MonoBehaviour
     PaintController paintCont;
     [SerializeField]
     ObjectController objCont;
+    [SerializeField]
+    RigController rigSpawner;
 
     [Header("Serializers")]
     /// <summary> Mesh serializer </summary>
@@ -127,12 +129,37 @@ public class ServerConectionController : MonoBehaviour
     {
         yield return new WaitUntil(() => session.State == SessionState.Connected);
 
-
-        
         var res = GetObjectsAsync();
 
         while (!res.IsCompleted)
             yield return null;
+
+        // teï chci poslat ruce na server
+        // pokud tam sou tak??
+        var tr = rigSpawner.SpawnRig();
+
+        while (!tr.IsCompleted)
+            yield return null;
+
+        // set rig movement controlls
+
+        // left hand
+        var lhr = GameObject.Find("LeftHand Controller");
+        var lhs = GameObject.Find(rigSpawner.handLNM);
+        var mc = lhs.AddComponent<MoveController>();
+        mc.parent = lhr.transform;
+
+        // right hand
+        var rhr = GameObject.Find("RightHand Controller");
+        var rhs = GameObject.Find(rigSpawner.handRNM);
+        mc = rhs.AddComponent<MoveController>();
+        mc.parent = rhr.transform;
+
+        // head
+        var hr = GameObject.Find("Main Camera");
+        var hs = GameObject.Find(rigSpawner.headNM);
+        mc = hs.AddComponent<MoveController>();
+        mc.parent = hr.transform;
 
         if (res.Result)
             Debug.Log("Sync call completed");
@@ -165,12 +192,13 @@ public class ServerConectionController : MonoBehaviour
                 // Filter out lines
                 if (n.StartsWith("Line"))
                 {
-                    string num = n.Substring(5, n.Length - 5);
+                    int nmlen = ("Line" + clientName.Value).Length;
+                    string num = n.Substring(nmlen);
                     int numP = 0;
                     int.TryParse(num, out numP);
 
                     // if the lane was drawn by this client
-                    string cName = n.Substring(4, 1);
+                    string cName = n.Substring(4, n.Length - num.Length);
                     if (cName.Equals(clientName.Value))
                         l.Add(numP);
                  

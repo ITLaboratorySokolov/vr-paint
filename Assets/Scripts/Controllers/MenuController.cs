@@ -13,6 +13,9 @@ public class MenuController : MonoBehaviour
     /// <summary> Width slider </summary>
     public Slider widthSlider;
 
+    [Header("Scripts")]
+    public LanguageController langController;
+
     /// <summary>
     /// Set brush values to display currently selected brush
     /// </summary>
@@ -44,4 +47,8 @@ public class MenuController : MonoBehaviour
         brushNameDisplayTXT.text = b.Name;
     }
 
+    public void SwitchLanguage()
+    {
+        langController.SwapLanguage();
+    }
 }
