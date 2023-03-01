@@ -24,42 +24,66 @@ public class RigController : MonoBehaviour
     [SerializeField]
     ObjectController objCont;
 
-    [SerializeField]
-    StringVariable clientName;
-
     internal string handLNM;
     internal string handRNM;
     internal string headNM;
 
+    GameObject lHandObj;
+    GameObject rHandObj;
+    GameObject headObj;
+
     // Start is called before the first frame update
     void Start()
     {
-        
-
-
+        // spawn rig components
+        SpawnRig();
+        SwapColor(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-
-    public async Task SpawnRig()
+    public void SwapColor(bool connected)
     {
-        handLNM = "HandL_" + clientName.Value;
-        handRNM = "HandR_" + clientName.Value;
-        headNM = "Head_" + clientName.Value;
+        if (lHandObj == null)
+            lHandObj = GameObject.Find(handLNM);
+        if (rHandObj == null)
+            rHandObj = GameObject.Find(handRNM);
 
-        await SpawnRigComponent(lhand, lhandRig, handLNM);
-        await SpawnRigComponent(rhand, rhandRig, handRNM);
-        await SpawnRigComponent(head, headRig, headNM);
+        Material lMat = lHandObj.GetComponent<MeshRenderer>().material;
+        Material rMat = rHandObj.GetComponent<MeshRenderer>().material;
 
-        Debug.Log("Spawned rig");
+        if (connected)
+        {
+            lMat.color = Color.green;
+            rMat.color = Color.green;
+        }
+        else
+        {
+            lMat.color = Color.red;
+            rMat.color = Color.red;
+        }
+
+        Debug.Log("Swapped color");
     }
 
-    private async Task SpawnRigComponent(GameObject prefab, Transform tfParent, string name)
+    public void SpawnRig()
+    {
+        // spawn to default position?
+        handLNM = "HandL_" + objCont.clientName.Value;
+        handRNM = "HandR_" + objCont.clientName.Value;
+        headNM = "Head_" + objCont.clientName.Value;
+
+        // left hand
+        lHandObj = SpawnRigComponent(lhand, lhandRig, handLNM);
+        rHandObj = SpawnRigComponent(rhand, rhandRig, handRNM);
+        headObj = SpawnRigComponent(head, headRig, headNM);
+    }
+
+    private GameObject SpawnRigComponent(GameObject prefab, Transform tfParent, string name)
     {
         GameObject o = Instantiate(prefab, tfParent.position, tfParent.rotation, tfParent);
         var uph = o.GetComponent<InputPropertiesHandler>();
@@ -68,16 +92,53 @@ public class RigController : MonoBehaviour
 
         Debug.Log("Spawning " + name);
 
+        Mesh mesh = o.GetComponent<MeshFilter>().mesh;
+        mesh.SetTriangles(mesh.triangles, 0);
+        mesh.subMeshCount = 1;
+
+        MeshRenderer meshRend = o.GetComponent<MeshRenderer>();
+        Material[] mats = new Material[] { meshRend.material };
+        meshRend.materials = mats;
+
+        return o;
+    }
+
+    public async Task AddRigToServer()
+    {
+        handLNM = "HandL_" + objCont.clientName.Value;
+        handRNM = "HandR_" + objCont.clientName.Value;
+        headNM = "Head_" + objCont.clientName.Value;
+
+        // left hand
+        bool res = await SendRigComponent(lHandObj);
+        res = await SendRigComponent(rHandObj);
+        res = await SendRigComponent(headObj);
+
+        Debug.Log("Spawned");
+    }
+
+    private async Task<bool> SendRigComponent(GameObject rigComponent)
+    {
         // send/update to server
-        bool val = await objCont.ContainsObject(name);
+        bool val = await objCont.ContainsObject(rigComponent.name);
         if (val)
         {
-            Destroy(o);
+            Destroy(rigComponent);
             // await objCont.DestroyObject(name);
+            return false;
         }
         else
         {
-            await objCont.AddObjectAsync(o);
+            await objCont.AddObjectAsync(rigComponent);
+            return true;
         }
+    }
+
+    internal void SetBrushScale(Vector3 scale)
+    {
+        if (rHandObj == null)
+            rHandObj = GameObject.Find(handRNM);
+
+        rHandObj.transform.localScale = scale;
     }
 }

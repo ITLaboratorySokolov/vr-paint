@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Storage;
@@ -11,6 +12,7 @@ public class ObjectController : MonoBehaviour
     public WorldObjectManager woManager;
     public WorldObjectMemoryStorage woMemoryStorage;
     public ServerDataAdapterWrapper dataAdapter;
+    public StringVariable clientName;
 
     public Task<IEnumerable<GameObject>> ObjectRecieve()
     {

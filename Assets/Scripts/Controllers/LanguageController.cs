@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,12 +12,26 @@ public class LanguageController : MonoBehaviour
     Text brushNMTXT;
     [SerializeField()]
     Text widthTXT;
+    [SerializeField()]
+    TMP_Text quitTXT;
 
     [Header("Buttons")]
     [SerializeField()]
     Button refreshBT;
     [SerializeField()]
     Button langBT;
+    [SerializeField()]
+    Button yesBT;
+    [SerializeField()]
+    Button noBT;
+
+    [Header("Controls")]
+    [SerializeField()]
+    GameObject controlsCZ;
+    [SerializeField()]
+    GameObject controlsEN;
+    [SerializeField()]
+    Button controlsBT;
 
     [Header("Language")]
     internal string lang;
@@ -28,6 +43,15 @@ public class LanguageController : MonoBehaviour
     string widthEN = "Width";
     string refreshCZ = "Reload brushes";
     string refreshEN = "Naèíst štetce";
+    string contCZ = "Ovládání";
+    string contEN = "Controls";
+
+    string quitCZ = "Ukonèit aplikaci?";
+    string quitEN = "Do you want to quit?";
+    string yesCZ = "Ano";
+    string yesEN = "Yes";
+    string noCZ = "Ne";
+    string noEN = "No";
 
     string langCZ = "EN";
     string langEN = "CZ";
@@ -37,6 +61,7 @@ public class LanguageController : MonoBehaviour
     {
         lang = "CZ";
         SetLabels();
+        SetControls();
     }
 
     /// <summary>
@@ -50,6 +75,21 @@ public class LanguageController : MonoBehaviour
             lang = "CZ";
 
         SetLabels();
+        SetControls();
+    }
+
+    private void SetControls()
+    {
+        if (lang == "CZ")
+        {
+            controlsCZ.SetActive(true);
+            controlsEN.SetActive(false);
+        }
+        else if (lang == "EN")
+        {
+            controlsEN.SetActive(true);
+            controlsCZ.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -61,18 +101,26 @@ public class LanguageController : MonoBehaviour
         {
             brushNMTXT.text = brushCZ;
             widthTXT.text = widthCZ;
+            quitTXT.text = quitCZ;
 
             refreshBT.GetComponentInChildren<TMP_Text>().text = refreshCZ;
             langBT.GetComponentInChildren<TMP_Text>().text = langCZ;
+            controlsBT.GetComponentInChildren<TMP_Text>().text = contCZ;
+            yesBT.GetComponentInChildren<TMP_Text>().text = yesCZ;
+            noBT.GetComponentInChildren<TMP_Text>().text = noCZ;
         }
 
         else if (langCZ == "EN")
         {
             brushNMTXT.text = brushEN;
             widthTXT.text = widthEN;
+            quitTXT.text = quitEN;
 
             refreshBT.GetComponentInChildren<TMP_Text>().text = refreshEN;
             langBT.GetComponentInChildren<TMP_Text>().text = langEN;
+            controlsBT.GetComponentInChildren<TMP_Text>().text = contEN;
+            yesBT.GetComponentInChildren<TMP_Text>().text = yesEN;
+            noBT.GetComponentInChildren<TMP_Text>().text = noEN;
         }
     }
 }

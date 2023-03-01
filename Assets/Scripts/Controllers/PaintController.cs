@@ -27,7 +27,7 @@ public class PaintController : MonoBehaviour
     Transform controllerGrip;
     /// <summary> Painting hand object </summary>
     [SerializeField]
-    Transform handObj;
+    RigController rigCont;
 
     [Header("Controlls")]
     /// <summary> Is user currently painting </summary>
@@ -374,19 +374,20 @@ public class PaintController : MonoBehaviour
         if (f <= 0.1)
             f = 0.1f;
 
-        // Resize to be smaller
-        if (handObj != null)
-            handObj.localScale = new Vector3(0.1f * f, 0.1f * f, 0.1f * f);
+        // Resize
+        Vector3 scale = new Vector3(0.1f * f, 0.1f * f, 0.1f * f);
+        rigCont.SetBrushScale(scale);
 
         // Set eraser
         if (isEraser)
         {
             eraser.Width = f * 0.1f;
-            return;
         }
-
         // Set brush
-        brushes[currentBrush].Width = f * 0.1f;
+        else
+        {
+            brushes[currentBrush].Width = f * 0.1f;
+        }
     }
 
     /// <summary>

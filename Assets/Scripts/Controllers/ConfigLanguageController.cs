@@ -35,6 +35,12 @@ public class ConfigLanguageController : MonoBehaviour
     [SerializeField()]
     Button playBT;
 
+    [Header("Controls")]
+    [SerializeField()]
+    GameObject controlsCZ;
+    [SerializeField()]
+    GameObject controlsEN;
+
     [Header("Input fields")]
     [SerializeField()]
     TMP_InputField nameFLD;
@@ -50,6 +56,7 @@ public class ConfigLanguageController : MonoBehaviour
             lang = "EN";
 
         SwapLabels();
+        SetControls();
     }
 
     public void SwapLabels()
@@ -75,6 +82,20 @@ public class ConfigLanguageController : MonoBehaviour
 
             nameFLD.placeholder.GetComponent<TMP_Text>().text = inputPromptCZ;
             urlFLD.placeholder.GetComponent<TMP_Text>().text = inputPromptCZ;
+        }
+    }
+
+    private void SetControls()
+    {
+        if (lang == "CZ")
+        {
+            controlsCZ.SetActive(true);
+            controlsEN.SetActive(false);
+        }
+        else if (lang == "EN")
+        {
+            controlsEN.SetActive(true);
+            controlsCZ.SetActive(false);
         }
     }
 }

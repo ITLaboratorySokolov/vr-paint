@@ -5,9 +5,10 @@ using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
 
 namespace ZCU.TechnologyLab.Common.Unity.Editor.Drawers.Attributes
 {
-    [CustomPropertyDrawer(typeof(HelpBoxAttribute))]
-    public class HelpBoxAttributeDrawer : DecoratorDrawer
+    // [CustomPropertyDrawer(typeof(HelpBoxAttribute))]
+    public class HelpBoxAttributeDrawer // : DecoratorDrawer
     {
+        /*
         public override void OnGUI(Rect position)
         {
             var helpBoxAttribute = (HelpBoxAttribute)attribute;
@@ -36,5 +37,6 @@ namespace ZCU.TechnologyLab.Common.Unity.Editor.Drawers.Attributes
                 default: throw new NotSupportedException("Message type is not supported");
             }
         }
+        */
     }
 }

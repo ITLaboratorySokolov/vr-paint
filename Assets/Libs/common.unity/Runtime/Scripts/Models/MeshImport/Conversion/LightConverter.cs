@@ -79,7 +79,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.MeshImport.Conversion
         private static void SetAreaLight(UnityEngine.Light unityLight, UnityEngine.GameObject lightGameObject, Assimp.Light light)
         {
             unityLight.type = UnityEngine.LightType.Area;
-            unityLight.areaSize = new UnityEngine.Vector2(light.AreaSize.X, light.AreaSize.Y);
+            //unityLight.areaSize = new UnityEngine.Vector2(light.AreaSize.X, light.AreaSize.Y);
             SetDirection(lightGameObject, light);
             SetPosition(lightGameObject, light);
         }

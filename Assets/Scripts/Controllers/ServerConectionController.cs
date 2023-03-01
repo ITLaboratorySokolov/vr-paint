@@ -112,31 +112,16 @@ public class ServerConectionController : MonoBehaviour
         syncCallDone = false;
     }
 
-    /// <summary>
-    /// Called when successfully connected to server
-    /// </summary>
-    public void ConnectedToServer()
+    public void SpawnLocalObjects()
     {
-        Debug.Log("Connected to server");
-        StartCoroutine(SyncCall());
+        StartCoroutine(SpawnRigCorout());
     }
 
-    /// <summary>
-    /// Starting synchronization call
-    /// </summary>
-    /// <returns> IEnumerator </returns>
-    IEnumerator SyncCall()
+    IEnumerator SpawnRigCorout()
     {
-        yield return new WaitUntil(() => session.State == SessionState.Connected);
+        yield return new WaitUntil(() => syncCallDone);
 
-        var res = GetObjectsAsync();
-
-        while (!res.IsCompleted)
-            yield return null;
-
-        // teï chci poslat ruce na server
-        // pokud tam sou tak??
-        var tr = rigSpawner.SpawnRig();
+        var tr = rigSpawner.AddRigToServer();
 
         while (!tr.IsCompleted)
             yield return null;
@@ -160,6 +145,31 @@ public class ServerConectionController : MonoBehaviour
         var hs = GameObject.Find(rigSpawner.headNM);
         mc = hs.AddComponent<MoveController>();
         mc.parent = hr.transform;
+
+        rigSpawner.SwapColor(true);
+    }
+
+    /// <summary>
+    /// Called when successfully connected to server
+    /// </summary>
+    public void ConnectedToServer()
+    {
+        Debug.Log("Connected to server");
+        StartCoroutine(SyncCall());
+    }
+
+    /// <summary>
+    /// Starting synchronization call
+    /// </summary>
+    /// <returns> IEnumerator </returns>
+    IEnumerator SyncCall()
+    {
+        yield return new WaitUntil(() => session.State == SessionState.Connected);
+
+        var res = GetObjectsAsync();
+
+        while (!res.IsCompleted)
+            yield return null;
 
         if (res.Result)
             Debug.Log("Sync call completed");

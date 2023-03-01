@@ -36,6 +36,11 @@ public class ConfigController : MonoBehaviour
     [SerializeField()]
     TMP_InputField urlFLD;
 
+    [Header("GameObjects")]
+    [SerializeField]
+    GameObject controlsPanel;
+
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -89,4 +94,13 @@ public class ConfigController : MonoBehaviour
         }
     }
 
+    public void OnExit()
+    {
+        Application.Quit();
+    }
+
+    public void ToggleControlsPanel(bool val)
+    {
+        controlsPanel.SetActive(val);
+    }
 }
