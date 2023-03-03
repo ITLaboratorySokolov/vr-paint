@@ -3,7 +3,7 @@
 namespace ZCU.TechnologyLab.Common.Unity.Models.Utility.Events
 {
     /// <summary>
-    /// Arguments of <see cref="ZCU.TechnologyLab.Common.Unity.WorldObjects.Properties.IPropertiesManager.PropertiesChanged"/> event.
+    /// Arguments of <see cref="ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties.Managers.IPropertiesManager.PropertiesChanged"/> event.
     /// </summary>
     public class PropertiesChangedEventArgs
     {

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties.Managers;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility.Inventory
 {

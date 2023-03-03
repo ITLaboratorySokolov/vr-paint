@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 9182696217476131624}
   - component: {fileID: 1626171563871067382}
   - component: {fileID: -2768353764945877929}
+  - component: {fileID: 8672749047973862560}
   m_Layer: 0
   m_Name: ServerHead
   m_TagString: hand
@@ -131,8 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d529cf5af29b9f429883ff6105f41ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionalProperties:
-  - {fileID: 1626171563871067382}
+  _optionalPropertiesManager: {fileID: 8672749047973862560}
 --- !u!114 &1626171563871067382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,5 +157,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26249aae85772544ba5651c4dc990fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reportTransformChangedEvent: 1
-  transformChangedEventReportDelay: 0.25
+  _enableReporting: 1
+  _reportDelay: 0.1
+--- !u!114 &8672749047973862560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8818666956281619540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8649ce6e16a74a8982673b4253a77866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _optionalProperties: []

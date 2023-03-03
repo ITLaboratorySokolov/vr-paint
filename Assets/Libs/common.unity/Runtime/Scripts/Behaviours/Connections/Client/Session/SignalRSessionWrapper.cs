@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Connections.Client.Session;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
@@ -14,25 +15,29 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
     {
         [HelpBox("Server Url and Hub have to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
         [SerializeField]
-        private StringVariable serverUrl;
+        [FormerlySerializedAs("serverUrl")]
+        private StringVariable _serverUrl;
 
         [SerializeField]
-        private StringVariable hub;
+        [FormerlySerializedAs("hub")]
+        private StringVariable _hub;
 
+        private SignalRSession _signalRSession;
+        
         /// <summary>
         /// Id which is used to map users to established connections.
         /// </summary>
-        public string ConnectionId => ((SignalRSession)this.sessionClient).ConnectionId;
+        public string ConnectionId => _signalRSession.ConnectionId;
         
         private void OnValidate()
         {
-            Assert.IsNotNull(this.serverUrl, "Server Url was null.");
-            Assert.IsNotNull(this.hub, "Hub was null.");
+            Assert.IsNotNull(_serverUrl, "Server Url was null.");
+            Assert.IsNotNull(_hub, "Hub was null.");
         }
 
-        protected override void CreateClient()
+        protected override ISessionClient CreateClient()
         {
-            this.sessionClient = new SignalRSession(this.serverUrl.Value, this.hub.Value);
+            return _signalRSession = new SignalRSession(_serverUrl.Value, _hub.Value);
         }
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4455092927514641347}
   - component: {fileID: 7665712026706044639}
   - component: {fileID: 2227182423372648728}
+  - component: {fileID: 8646560953202498402}
   m_Layer: 0
   m_Name: ServerBitmapPrefab
   m_TagString: Untagged
@@ -96,4 +97,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e0359a83130457489d87f84c85e2715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionalProperties: []
+  _supportedPixelFormats:
+  - Name: RGB
+    Format: 3
+  - Name: RGBA
+    Format: 4
+  - Name: ARGB
+    Format: 5
+  _optionalPropertiesManager: {fileID: 8646560953202498402}
+--- !u!114 &8646560953202498402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474942695453261125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8649ce6e16a74a8982673b4253a77866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _optionalProperties: []

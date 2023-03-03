@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Connections.Client.Session;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.Utility;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
 {
@@ -13,57 +15,59 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
     /// </summary>
     public abstract class SessionClientWrapper : MonoBehaviour, ISessionClient
     {
-        /// <inheritdoc/>
-        public event EventHandler<Exception> Disconnected;
-
-        /// <inheritdoc/>
-        public event EventHandler<Exception> Reconnecting;
-
-        /// <inheritdoc/>
-        public event EventHandler Reconnected;
+        public event Action Started;
+        public event Action StartFailed;
+        public event Action<Exception> Disconnected;
+        public event Action<Exception> Reconnecting;
+        public event Action Reconnected;
 
         [SerializeField]
         [Tooltip("Event called when session is started.")]
-        private UnityEvent onStarted = new();
+        [FormerlySerializedAs("started")]
+        private UnityEvent _started = new();
 
         [SerializeField]
         [Tooltip("Event called when session cannot be started.")]
-        private UnityEvent onStartFailed = new();
+        [FormerlySerializedAs("startFailed")]
+        private UnityEvent _startFailed = new();
 
         [SerializeField]
         [Tooltip("Event called when session disconnects.")]
-        private UnityEvent onDisconnected = new();
+        [FormerlySerializedAs("disconnected")]
+        private UnityEvent<Exception> _disconnected = new();
 
         [SerializeField]
         [Tooltip("Event called when session is reconnecting.")]
-        private UnityEvent onReconnecting = new();
+        [FormerlySerializedAs("reconnecting")]
+        private UnityEvent<Exception> _reconnecting = new();
 
         [SerializeField]
         [Tooltip("Event called when session reconnected.")]
-        private UnityEvent onReconnected = new();
+        [FormerlySerializedAs("reconnected")]
+        private UnityEvent _reconnected = new();
 
-        protected ISessionClient sessionClient;
+        private ISessionClient _sessionClient;
 
         /// <inheritdocs/>
-        public SessionState State => this.sessionClient.State;
+        public SessionState State => _sessionClient.State;
 
         protected virtual void Awake()
         {
-            this.CreateClient();
-            this.sessionClient.Disconnected += this.SessionClient_Disconnected;
-            this.sessionClient.Reconnecting += this.SessionClient_Reconnecting;
-            this.sessionClient.Reconnected += this.SessionClient_Reconnected;
+            _sessionClient = CreateClient();
+            _sessionClient.Disconnected += SessionClient_Disconnected;
+            _sessionClient.Reconnecting += SessionClient_Reconnecting;
+            _sessionClient.Reconnected += SessionClient_Reconnected;
         }
         
         // Remove event handlers.
         protected virtual void OnDestroy()
         {
-            this.sessionClient.Disconnected -= this.SessionClient_Disconnected;
-            this.sessionClient.Reconnecting -= this.SessionClient_Reconnecting;
-            this.sessionClient.Reconnected -= this.SessionClient_Reconnected;
+            _sessionClient.Disconnected -= SessionClient_Disconnected;
+            _sessionClient.Reconnecting -= SessionClient_Reconnecting;
+            _sessionClient.Reconnected -= SessionClient_Reconnected;
         }
         
-        protected abstract void CreateClient();
+        protected abstract ISessionClient CreateClient();
 
         /// <summary>
         /// Starts a session.
@@ -71,16 +75,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
         /// </summary>
         public async void StartSession()
         {
-            try
-            {                    
-                await this.StartSessionAsync();
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Cannot start session", this);
-                Debug.LogException(ex, this);
-                this.onStartFailed.Invoke();
-            }
+            await StartSessionAsync();
         }
 
         /// <summary>
@@ -89,9 +84,35 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
         /// </summary>
         public async void StopSession()
         {
+            await StopSessionAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task StartSessionAsync()
+        {
+            try
+            {                                
+                await _sessionClient.StartSessionAsync();
+                Debug.Log("Session started");
+                Started?.Invoke();
+                _started.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Cannot start session", this);
+                Debug.LogException(ex, this);
+                StartFailed?.Invoke();
+                _startFailed.Invoke();
+            }
+        }
+
+        /// <inheritdoc/>
+        public async Task StopSessionAsync()
+        {
             try
             {
-                await this.StopSessionAsync();
+                await _sessionClient.StopSessionAsync();
+                Debug.Log("Session stopped");
             }
             catch (Exception ex)
             {
@@ -101,65 +122,50 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
         }
 
         /// <inheritdoc/>
-        public async Task StartSessionAsync()
-        {
-            await this.sessionClient.StartSessionAsync();
-            Debug.Log("Session started");
-            this.onStarted.Invoke();
-        }
-
-        /// <inheritdoc/>
-        public async Task StopSessionAsync()
-        {
-            await this.sessionClient.StopSessionAsync();
-            Debug.Log("Session stopped");
-        }
-
-        /// <inheritdoc/>
         public void RegisterCallback<T>(string method, Action<T> callback)
         {
-            this.sessionClient.RegisterCallback(method, callback);
+            _sessionClient.RegisterCallback(method, callback);
         }
 
         /// <inheritdoc/>
-        public void UnregisterCallback(string method)
+        public void RemoveCallbacks(string method)
         {
-            this.sessionClient.UnregisterCallback(method);
+            _sessionClient.RemoveCallbacks(method);
         }
 
         /// <inheritdoc/>
         public Task SendMessageAsync<T>(string method, T parameter)
         {
-            return this.sessionClient.SendMessageAsync(method, parameter);
+            return _sessionClient.SendMessageAsync(method, parameter);
         }
         
-        private void SessionClient_Disconnected(object sender, Exception e)
+        private void SessionClient_Disconnected(Exception cause)
         {
-            Debug.Log("Session disconnected");
-            ExecuteOnMainThread.RunOnMainThread.Enqueue(() => {
-                // Code here will be called in the main thread...
-                this.Disconnected?.Invoke(sender, e);
-                this.onDisconnected.Invoke();
+            UnityDispatcher.ExecuteOnUnityThread(() =>
+            {
+                Debug.Log("Session disconnected");
+                Disconnected?.Invoke(cause);
+                _disconnected.Invoke(cause);
             });
         }
 
-        private void SessionClient_Reconnecting(object sender, Exception e)
+        private void SessionClient_Reconnecting(Exception cause)
         {
-            Debug.Log("Session reconnecting");
-            ExecuteOnMainThread.RunOnMainThread.Enqueue(() => {
-                // Code here will be called in the main thread...
-                this.Reconnecting?.Invoke(sender, e);
-                this.onReconnecting.Invoke();
+            UnityDispatcher.ExecuteOnUnityThread(() =>
+            {
+                Debug.Log("Session reconnecting");
+                Reconnecting?.Invoke(cause);
+                _reconnecting.Invoke(cause);
             });
         }
 
-        private void SessionClient_Reconnected(object sender, EventArgs e)
+        private void SessionClient_Reconnected()
         {
-            Debug.Log("Session reconnected");
-            ExecuteOnMainThread.RunOnMainThread.Enqueue(() => {
-                // Code here will be called in the main thread...
-                this.Reconnected?.Invoke(sender, e);
-                this.onReconnected.Invoke();
+            UnityDispatcher.ExecuteOnUnityThread(() =>
+            {
+                Debug.Log("Session reconnected");
+                Reconnected?.Invoke();
+                _reconnected.Invoke();
             });
         }
     }

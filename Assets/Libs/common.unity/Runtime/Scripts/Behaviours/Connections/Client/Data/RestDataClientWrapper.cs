@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Connections.Client.Data;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
@@ -14,16 +15,17 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Data
     {
         [SerializeField]
         [HelpBox("Server Url has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
-        private StringVariable serverUrl;
+        [FormerlySerializedAs("serverUrl")]
+        private StringVariable _serverUrl;
 
         private void OnValidate()
         {
-            Assert.IsNotNull(this.serverUrl, "Server Url was null.");
+            Assert.IsNotNull(_serverUrl, "Server Url was null.");
         }
 
-        protected override void CreateClient()
+        protected override IDataClient CreateClient()
         {
-            this.dataClient = new RestDataClient(this.serverUrl.Value);
+            return new RestDataClient(_serverUrl.Value);
         }
     }
 }

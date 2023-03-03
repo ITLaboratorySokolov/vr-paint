@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ZCU.TechnologyLab.Common.Unity.Models.Attributes
 {
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class HelpBoxAttribute : PropertyAttribute
     {
         public enum MessageType
@@ -14,17 +14,17 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.Attributes
             Error,
         }
 
-        public readonly string Text;
+        public string Text { get; }
 
-        public readonly MessageType Type;
+        public MessageType Type { get; }
 
-        public readonly bool Slim;
+        public bool Slim { get; }
 
         public HelpBoxAttribute(string text, MessageType type, bool slim = false)
         {
-            this.Text = text;
-            this.Type = type;
-            this.Slim = slim;
+            Text = text;
+            Type = type;
+            Slim = slim;
         }
     }
 }

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Serialization.Mesh;
-using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
-using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Serializers;
 using ZCU.TechnologyLab.Common.Unity.Models.Utility;
 using ZCU.TechnologyLab.Common.Unity.Models.Utility.Events;
 using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties.Managers;
@@ -26,9 +25,9 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
     ///     2) Via <see cref="SetMesh"/>, <see cref="SetVertices"/>, <see cref="SetTriangles"/>, <see cref="SetVerticesAndTriangles"/>
     ///     3) Via <see cref="SetProperties"/>
     /// 
-    /// If you use the first option, the changes to the mesh will not triggger <see cref="PropertiesChanged"/> 
+    /// If you use the first option, the changes to the mesh will not trigger <see cref="PropertiesChanged"/> 
     /// event and even if you add the mesh to <see cref="WorldObjectManager"/> 
-    /// it will not propagete changes to a server. You would have to update the mesh manually by 
+    /// it will not propagate changes to a server. You would have to update the mesh manually by 
     /// <see cref="WorldObjectManager.UpdateObjectAsync"/>.
     /// 
     /// If you want to propagate changes via events automatically you can use the second option, but 
@@ -56,106 +55,67 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         /// </summary>
         private static readonly string[] SupportedPrimitives = { "Triangle" };
 
+        [SerializeField]
+        [FormerlySerializedAs("optionalPropertiesManager")]
+        private OptionalPropertiesManager _optionalPropertiesManager;
+
         /// <summary>
         /// Mesh filter.
         /// </summary>
         /// <remarks>
-        /// Provides informations about a mesh.
+        /// Provides information about a mesh.
         /// </remarks>
-        private MeshFilter meshFilter;
+        private MeshFilter _meshFilter;
 
         /// <summary>
         /// Mesh renderer.
         /// </summary>
         /// <remarks>
-        /// Provides informations about material of a mesh.
+        /// Provides information about material of a mesh.
         /// </remarks>
-        private MeshRenderer meshRenderer;
+        private MeshRenderer _meshRenderer;
 
         /// <summary>
         /// Mesh serializer factory.
         /// </summary>
-        private MeshSerializerFactory meshSerializerFactory = new MeshSerializerFactory();
-
-        [SerializeField]
-        private List<OptionalProperty> optionalProperties = new List<OptionalProperty>();
+        private MeshSerializerFactory _meshSerializerFactory = new();
 
         /// <inheritdoc/>
         public string ManagedType => ManagedTypeDescription;
-
-        /// <summary>
-        /// Gets list of optional properties.
-        /// </summary>
-        public IList<OptionalProperty> OptionalProperties => this.optionalProperties;
 
         /// <summary>
         /// Initializes mesh filter and mesh renderer.
         /// </summary>
         private void Awake()
         {
-            this.meshFilter = this.GetComponent<MeshFilter>();
-            if(this.meshFilter.mesh == null)
-            {
-                this.meshFilter.mesh = new Mesh();
-            }
+            _meshFilter = GetComponent<MeshFilter>();
+            InitializeMesh();
             
-            this.meshRenderer = this.GetComponent<MeshRenderer>();
-            if(this.meshRenderer.material == null)
+            _meshRenderer = GetComponent<MeshRenderer>();
+            InitializeMaterial();
+        }
+        
+        /// <inheritdoc/>
+        public Dictionary<string, byte[]> GetProperties()
+        {
+            var properties = _meshSerializerFactory.RawMeshSerializer.Serialize(
+                PointConverter.Point3DToFloat(_meshFilter.mesh.vertices), 
+                _meshFilter.mesh.triangles, SupportedPrimitives[0]);
+            
+            _optionalPropertiesManager.AddProperties(properties);
+            return properties;
+        }
+
+        /// <inheritdoc/>
+        public void SetProperties(Dictionary<string, byte[]> properties)
+        {
+            if(_meshSerializerFactory.IsRawMesh(properties))
             {
-                this.meshRenderer.material = new Material(Shader.Find("Diffuse"));
+                SetRawMeshProperties(properties);
+            } else if (_meshSerializerFactory.IsPlyFile(properties))
+            {
+                // TODO ply file
             }
-        }
-
-        /// <summary>
-        /// Sets a new mesh.
-        /// 
-        /// The method triggers <see cref="PropertiesChanged"/> event.
-        /// When a mesh of a MeshFilter is changed outside of the scope of this method
-        /// the event is not called.
-        /// </summary>
-        /// <param name="mesh">The mesh.</param>
-        public void SetMesh(Mesh mesh)
-        {
-            this.meshFilter.mesh = mesh;
-            this.PropertiesChanged?.Invoke(this, new PropertiesChangedEventArgs
-            {
-                ObjectName = this.gameObject.name,
-                Properties = this.GetProperties()
-            });
-        }
-
-        /// <summary>
-        /// Sets a new material.
-        /// </summary>
-        /// <param name="material">The material.</param>
-        public void SetMaterial(Material material)
-        {
-             this.meshRenderer.material = material;
-        }
-
-        /// <summary>
-        /// Sets vertices and triangles of a mesh.
-        /// 
-        /// The method recalculates normals and bounds of the mesh.
-        /// 
-        /// The method triggers <see cref="PropertiesChanged"/> event.
-        /// When vertices or triangles of a mesh are changed outside of the scope of this method
-        /// the event is not called.
-        /// </summary>
-        /// <param name="vertices">Vertices.</param>
-        /// <param name="triangles">Triangles.</param>
-        public void SetVerticesAndTriangles(Vector3[] vertices, int[] triangles)
-        {
-            this.meshFilter.mesh.vertices = vertices;
-            this.meshFilter.mesh.triangles = triangles;
-            this.meshFilter.mesh.RecalculateNormals();
-            this.meshFilter.mesh.RecalculateBounds();
-
-            this.PropertiesChanged?.Invoke(this, new PropertiesChangedEventArgs
-            {
-                ObjectName = this.gameObject.name,
-                Properties = this.GetProperties()
-            });
         }
 
         /// <summary>
@@ -172,15 +132,11 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         /// <param name="vertices">Vertices.</param>
         public void SetVertices(Vector3[] vertices)
         {
-            this.meshFilter.mesh.vertices = vertices;
-            this.meshFilter.mesh.RecalculateNormals();
-            this.meshFilter.mesh.RecalculateBounds();
+            var mesh = _meshFilter.mesh;
+            mesh.vertices = vertices;
+            RecalculateMesh(mesh);
 
-            this.PropertiesChanged?.Invoke(this, new PropertiesChangedEventArgs
-            { 
-                ObjectName = this.gameObject.name,
-                Properties = this.GetProperties()
-            });
+            InvokePropertiesChanged();
         }
 
         /// <summary>
@@ -197,77 +153,106 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         /// <param name="triangles">Triangles.</param>
         public void SetTriangles(int[] triangles)
         {
-            this.meshFilter.mesh.triangles = triangles;
-            this.meshFilter.mesh.RecalculateNormals();
-            this.meshFilter.mesh.RecalculateBounds();
+            var mesh = _meshFilter.mesh;
+            mesh.triangles = triangles;
+            RecalculateMesh(mesh);
 
-            this.PropertiesChanged?.Invoke(this, new PropertiesChangedEventArgs
+            InvokePropertiesChanged();
+        }
+
+        
+        /// <summary>
+        /// Sets vertices and triangles of a mesh.
+        /// 
+        /// The method recalculates normals and bounds of the mesh.
+        /// 
+        /// The method triggers <see cref="PropertiesChanged"/> event.
+        /// When vertices or triangles of a mesh are changed outside of the scope of this method
+        /// the event is not called.
+        /// </summary>
+        /// <param name="vertices">Vertices.</param>
+        /// <param name="triangles">Triangles.</param>
+        public void SetVerticesAndTriangles(Vector3[] vertices, int[] triangles)
+        {
+            UpdateMesh(vertices, triangles);
+            InvokePropertiesChanged();
+        }
+        
+        /// <summary>
+        /// Sets a new mesh.
+        /// 
+        /// The method triggers <see cref="PropertiesChanged"/> event.
+        /// When a mesh of a MeshFilter is changed outside of the scope of this method
+        /// the event is not called.
+        /// </summary>
+        /// <param name="mesh">The mesh.</param>
+        public void SetMesh(Mesh mesh)
+        {
+            _meshFilter.mesh = mesh;
+            InvokePropertiesChanged();
+        }
+
+        /// <summary>
+        /// Sets a new material.
+        /// </summary>
+        /// <param name="material">The material.</param>
+        public void SetMaterial(Material material)
+        {
+            _meshRenderer.material = material;
+        }
+        
+        private void InitializeMaterial()
+        {
+            if (_meshRenderer.material == null)
             {
-                ObjectName = this.gameObject.name,
-                Properties = this.GetProperties()
+                _meshRenderer.material = new Material(Shader.Find("Diffuse"));
+            }
+        }
+
+        private void InitializeMesh()
+        {
+            if (_meshFilter.mesh == null)
+            {
+                _meshFilter.mesh = new Mesh();
+            }
+        }
+        
+        private void UpdateMesh(Vector3[] vertices, int[] triangles)
+        {
+            var mesh = _meshFilter.mesh;
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+            RecalculateMesh(mesh);
+        }
+        
+        private static void RecalculateMesh(Mesh mesh)
+        {
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+        }
+
+        private void InvokePropertiesChanged()
+        {
+            PropertiesChanged?.Invoke(this, new PropertiesChangedEventArgs
+            {
+                ObjectName = gameObject.name,
+                Properties = GetProperties()
             });
         }
-
-        /// <inheritdoc/>
-        public Dictionary<string, byte[]> GetProperties()
+        
+        private void SetRawMeshProperties(Dictionary<string, byte[]> properties)
         {
-            var properties = this.meshSerializerFactory.RawMeshSerializer.Serialize(PointConverter.Point3DToFloat(this.meshFilter.mesh.vertices), this.meshFilter.mesh.triangles, SupportedPrimitives[0]);
-            foreach(var optionalProperty in this.optionalProperties)
+            var meshSerializer = _meshSerializerFactory.RawMeshSerializer;
+            if (!SupportedPrimitives.Contains(meshSerializer.PrimitiveSerializer.Deserialize(properties)))
             {
-                try
-                {
-                    properties.Add(optionalProperty.GetPropertyName(), optionalProperty.Serialize());
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError($"Unable to serialize optional property: {ex.Message}");
-                }
+                return;
             }
 
-            return properties;
-        }
+            var vertices = PointConverter.FloatToPoint3D(meshSerializer.VerticesSerializer.Deserialize(properties));
+            var triangles = meshSerializer.IndicesSerializer.Deserialize(properties);
+            UpdateMesh(vertices, triangles);
 
-        /// <inheritdoc/>
-        public void SetProperties(Dictionary<string, byte[]> properties)
-        {
-            if(this.meshSerializerFactory.IsRawMesh(properties))
-            {
-                var meshSerializer = this.meshSerializerFactory.RawMeshSerializer;
-                if (SupportedPrimitives.Contains(meshSerializer.PrimitiveSerializer.Deserialize(properties)))
-                {
-
-                    // TODO tady sem to předělal!
-                    var points = PointConverter.FloatToPoint3D(meshSerializer.VerticesSerializer.Deserialize(properties));
-
-                    int maxPointsIn16 = 65535;
-                    if (points.Length > maxPointsIn16)
-                    {
-                        this.meshFilter.mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
-                    }
-
-                    this.meshFilter.mesh.vertices = points;
-                    this.meshFilter.mesh.triangles = meshSerializer.IndicesSerializer.Deserialize(properties);
-
-                    this.meshFilter.mesh.RecalculateNormals();
-                    this.meshFilter.mesh.RecalculateBounds();
-
-                    foreach (var optionalProperty in this.optionalProperties)
-                    {
-                        try
-                        {
-                            optionalProperty.Process(properties);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.LogError($"Unable to process optional property: {ex.Message}");
-                            Debug.LogError(optionalProperty.GetPropertyName());
-                        }
-                    }
-                }
-            } else if (this.meshSerializerFactory.IsPlyFile(properties))
-            {
-
-            }
+            _optionalPropertiesManager.SetProperties(properties);
         }
     }
 }

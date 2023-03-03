@@ -35,7 +35,7 @@
         {
             var colors = new UnityEngine.Color[texture.Width * texture.Height];
 
-            for (int i = 0; i < colors.Length; i++)
+            for (var i = 0; i < colors.Length; i++)
             {
                 var texel = texture.NonCompressedData[i];
                 colors[i] = new UnityEngine.Color(texel.R, texel.G, texel.B, texel.A);

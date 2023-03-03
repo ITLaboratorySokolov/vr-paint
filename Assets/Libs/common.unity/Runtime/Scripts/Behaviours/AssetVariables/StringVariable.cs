@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables
 {
@@ -9,15 +10,16 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables
     public class StringVariable : ScriptableObject
     {
         [SerializeField]
-        private string value;
+        [FormerlySerializedAs("value")]
+        private string _value;
 
         /// <summary>
         /// Value of the variable.
         /// </summary>
         public string Value
         {
-            get => this.value;
-            set => this.value = value;
+            get => _value;
+            set => _value = value;
         }
     }
 }

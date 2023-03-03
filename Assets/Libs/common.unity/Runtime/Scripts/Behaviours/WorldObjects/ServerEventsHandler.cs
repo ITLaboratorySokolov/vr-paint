@@ -5,10 +5,9 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server;
-using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Storage;
 using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
-using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties.Managers;
+using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
 {
@@ -20,68 +19,78 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         [Header("Networking")]
         [HelpBox("Server Session Connection and Server Data Connection have to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
         [SerializeField]
-        private ServerSessionAdapterWrapper serverSessionAdapter;
+        [FormerlySerializedAs("serverSessionAdapter")]
+        private ServerSessionAdapterWrapper _serverSessionAdapter;
 
         [SerializeField]
-        private ServerDataAdapterWrapper serverDataAdapter;
+        [FormerlySerializedAs("serverDataAdapter")]
+        private ServerDataAdapterWrapper _serverDataAdapter;
 
         [Header("Storage")]
         [HelpBox("World Object Storage has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
         [SerializeField]
-        private WorldObjectStorage worldObjectStorage;
+        [FormerlySerializedAs("worldObjectStorage")]
+        private WorldObjectStorageWrapper _worldObjectStorage;
+        
+        [HelpBox("Prefab Storage has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [SerializeField]
+        [FormerlySerializedAs("prefabStorage")]
+        private PrefabStorageWrapper _prefabStorage;
 
         [Header("Events")]
         [SerializeField]
-        private WorldObjectEventsHandler worldObjectEventsHandler;
+        [FormerlySerializedAs("worldObjectEventsHandler")]
+        private WorldObjectEventsHandler _worldObjectEventsHandler;
 
         [Space]
         [SerializeField]
-        private UnityEvent<GameObject> worldObjectAdded = new UnityEvent<GameObject>();
+        [FormerlySerializedAs("worldObjectAdded")]
+        private UnityEvent<GameObject> _worldObjectAdded = new();
 
         [SerializeField]
-        private UnityEvent<GameObject> worldObjectRemoved = new UnityEvent<GameObject>();
+        [FormerlySerializedAs("worldObjectRemoved")]
+        private UnityEvent<GameObject> _worldObjectRemoved = new();
 
         [SerializeField]
-        private UnityEvent<GameObject> worldObjectUpdated = new UnityEvent<GameObject>();
+        [FormerlySerializedAs("worldObjectUpdated")]
+        private UnityEvent<GameObject> _worldObjectUpdated = new();
 
         [SerializeField]
-        private UnityEvent<GameObject> worldObjectPropertiesUpdated = new UnityEvent<GameObject>();
+        [FormerlySerializedAs("worldObjectPropertiesUpdated")]
+        private UnityEvent<GameObject> _worldObjectPropertiesUpdated = new();
 
         [SerializeField]
-        private UnityEvent<GameObject> worldObjectTransformed = new UnityEvent<GameObject>();
+        [FormerlySerializedAs("worldObjectTransformed")]
+        private UnityEvent<GameObject> _worldObjectTransformed = new();
 
         private void OnValidate()
         {
-            Assert.IsNotNull(this.serverSessionAdapter, "Server Session Connection was null.");
-            Assert.IsNotNull(this.serverDataAdapter, "Server Data Connection was null.");
-            Assert.IsNotNull(this.worldObjectStorage, "World Object Storage was null.");
+            Assert.IsNotNull(_serverSessionAdapter, "Server Session Connection was null.");
+            Assert.IsNotNull(_serverDataAdapter, "Server Data Connection was null.");
+            Assert.IsNotNull(_worldObjectStorage, "World Object Storage was null.");
         }
 
         private void Start()
         {
-            this.AssignConnectionEvents();
+            AssignConnectionEvents();
         }
-
+        
         private void OnDestroy()
         {
-            if (this.serverSessionAdapter != null)
-            {
-                this.serverSessionAdapter.WorldObjectAdded -= this.SessionConnection_WorldObjectAdded;
-                this.serverSessionAdapter.WorldObjectRemoved -= this.SessionConnection_WorldObjectRemoved;
-                this.serverSessionAdapter.WorldObjectUpdated -= this.SessionConnection_WorldObjectUpdated;
-                this.serverSessionAdapter.WorldObjectPropertiesUpdated -= this.SessionConnection_WorldObjectPropertiesUpdated;
-                this.serverSessionAdapter.WorldObjectTransformed -= this.SessionConnection_WorldObjectTransformed;
-            }
+            _serverSessionAdapter.WorldObjectAdded -= SessionConnection_WorldObjectAdded;
+            _serverSessionAdapter.WorldObjectRemoved -= SessionConnection_WorldObjectRemoved;
+            _serverSessionAdapter.WorldObjectUpdated -= SessionConnection_WorldObjectUpdated;
+            _serverSessionAdapter.WorldObjectPropertiesUpdated -= SessionConnection_WorldObjectPropertiesUpdated;
+            _serverSessionAdapter.WorldObjectTransformed -= SessionConnection_WorldObjectTransformed;
         }
 
-        /// <inheritdoc/>
         public void AssignConnectionEvents()
         {
-            this.serverSessionAdapter.WorldObjectAdded += this.SessionConnection_WorldObjectAdded;
-            this.serverSessionAdapter.WorldObjectRemoved += this.SessionConnection_WorldObjectRemoved;
-            this.serverSessionAdapter.WorldObjectUpdated += this.SessionConnection_WorldObjectUpdated;
-            this.serverSessionAdapter.WorldObjectPropertiesUpdated += this.SessionConnection_WorldObjectPropertiesUpdated;
-            this.serverSessionAdapter.WorldObjectTransformed += this.SessionConnection_WorldObjectTransformed;
+            _serverSessionAdapter.WorldObjectAdded += SessionConnection_WorldObjectAdded;
+            _serverSessionAdapter.WorldObjectRemoved += SessionConnection_WorldObjectRemoved;
+            _serverSessionAdapter.WorldObjectUpdated += SessionConnection_WorldObjectUpdated;
+            _serverSessionAdapter.WorldObjectPropertiesUpdated += SessionConnection_WorldObjectPropertiesUpdated;
+            _serverSessionAdapter.WorldObjectTransformed += SessionConnection_WorldObjectTransformed;
         }
 
         private async void SessionConnection_WorldObjectAdded(string worldObjectName)
@@ -91,12 +100,22 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Add world object");
                 Debug.Log($"Name: {worldObjectName}");
 
-                if (!this.worldObjectStorage.IsStored(worldObjectName))
+                if (_worldObjectStorage.IsStored(worldObjectName))
                 {
-                    // Download the object from the server
-                    WorldObjectDto addedObjectDto = await this.serverDataAdapter.GetWorldObjectAsync(worldObjectName);
-                    GameObject worldObject = WorldObjectUtils.AddObject(this.worldObjectEventsHandler, this.worldObjectStorage, addedObjectDto);
-                    this.worldObjectAdded.Invoke(worldObject);
+                    return;
+                }
+                
+                // Download the object from the server
+                var addedObjectDto = await _serverDataAdapter.GetWorldObjectAsync(worldObjectName);
+                var worldObject = WorldObjectUtils.AddObject(
+                    _worldObjectEventsHandler, 
+                    _prefabStorage, 
+                    _worldObjectStorage, 
+                    addedObjectDto);
+
+                if (worldObject != null)
+                {
+                    _worldObjectAdded.Invoke(worldObject);
                 }
             }
             catch (Exception ex)
@@ -112,15 +131,15 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Remove world object");
                 Debug.Log($"Name: {worldObjectName}");
 
-                if (this.worldObjectStorage.Remove(worldObjectName, out GameObject worldObject))
+                if(_worldObjectStorage.Remove(worldObjectName, out var worldObject))
                 {
-                    if (this.worldObjectEventsHandler != null)
+                    if(_worldObjectEventsHandler != null)
                     {
-                        this.worldObjectEventsHandler.RemoveEventHandlers(worldObject);
+                        _worldObjectEventsHandler.RemoveEventHandlers(worldObject);
                     }
-
-                    this.worldObjectRemoved.Invoke(worldObject);
-                    GameObject.Destroy(worldObject);
+                    
+                    _worldObjectRemoved.Invoke(worldObject);
+                    Destroy(worldObject);
                 }
             }
             catch (Exception ex)
@@ -136,16 +155,20 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Update world object");
                 Debug.Log($"Name: {worldObjectName}");
 
-                if (this.worldObjectStorage.Get(worldObjectName, out var worldObject))
+                if (_worldObjectStorage.Get(worldObjectName, out var worldObject))
                 {
-                    WorldObjectDto worldObjectDto = await this.serverDataAdapter.GetWorldObjectAsync(worldObjectName);
+                    var worldObjectDto = await _serverDataAdapter.GetWorldObjectAsync(worldObjectName);
 
-                    WorldObjectUtils.SetTransform(worldObject, worldObjectDto.Position, worldObjectDto.Rotation, worldObjectDto.Scale);
+                    WorldObjectUtils.SetTransform(
+                        worldObject, 
+                        worldObjectDto.Position, 
+                        worldObjectDto.Rotation, 
+                        worldObjectDto.Scale);
 
-                    IPropertiesManager propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
+                    var propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
                     propertiesManager.SetProperties(worldObjectDto.Properties);
 
-                    this.worldObjectUpdated.Invoke(worldObject);
+                    _worldObjectUpdated.Invoke(worldObject);
                 }
             }
             catch (Exception ex)
@@ -161,14 +184,14 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Set world object properties");
                 Debug.Log($"Name: {worldObjectName}");
 
-                if (this.worldObjectStorage.Get(worldObjectName, out var worldObject))
+                if (_worldObjectStorage.Get(worldObjectName, out var worldObject))
                 {
-                    WorldObjectPropertiesDto propertiesDto = await this.serverDataAdapter.GetWorldObjectPropertiesAsync(worldObjectName);
+                    var propertiesDto = await _serverDataAdapter.GetWorldObjectPropertiesAsync(worldObjectName);
 
-                    IPropertiesManager propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
+                    var propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
                     propertiesManager.SetProperties(propertiesDto.Properties);
-
-                    this.worldObjectPropertiesUpdated.Invoke(worldObject);
+                    
+                    _worldObjectPropertiesUpdated.Invoke(worldObject);
                 }
             }
             catch (Exception ex)
@@ -184,10 +207,15 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Transform world object");
                 Debug.Log($"Name: {worldObjectTransformDto.ObjectName}");
 
-                if (this.worldObjectStorage.Get(worldObjectTransformDto.ObjectName, out var worldObject))
+                if (_worldObjectStorage.Get(worldObjectTransformDto.ObjectName, out var worldObject))
                 {
-                    WorldObjectUtils.SetTransform(worldObject, worldObjectTransformDto.Position, worldObjectTransformDto.Rotation, worldObjectTransformDto.Scale);
-                    this.worldObjectTransformed.Invoke(worldObject);
+                    WorldObjectUtils.SetTransform(
+                        worldObject, 
+                        worldObjectTransformDto.Position, 
+                        worldObjectTransformDto.Rotation, 
+                        worldObjectTransformDto.Scale);
+                    
+                    _worldObjectTransformed.Invoke(worldObject);
                 }
             }
             catch (Exception ex)

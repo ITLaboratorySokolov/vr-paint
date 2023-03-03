@@ -78,10 +78,11 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.MeshImport.Conversion
         /// <param name="light">Assimp light.</param>
         private static void SetAreaLight(UnityEngine.Light unityLight, UnityEngine.GameObject lightGameObject, Assimp.Light light)
         {
-            unityLight.type = UnityEngine.LightType.Area;
-            //unityLight.areaSize = new UnityEngine.Vector2(light.AreaSize.X, light.AreaSize.Y);
-            SetDirection(lightGameObject, light);
-            SetPosition(lightGameObject, light);
+            throw new NotSupportedException($"Area lights are not available at runtime and can only be baked into lightmaps.");
+            // unityLight.type = UnityEngine.LightType.Area;
+            // unityLight.areaSize = new UnityEngine.Vector2(light.AreaSize.X, light.AreaSize.Y);
+            // SetDirection(lightGameObject, light);
+            // SetPosition(lightGameObject, light);
         }
 
         /// <summary>

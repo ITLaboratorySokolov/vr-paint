@@ -1,9 +1,11 @@
-﻿// using SimpleFileBrowser;
+﻿//using SimpleFileBrowser;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility
@@ -21,25 +23,28 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility
         /// Event called when a file is loaded and game object is created according to a type of a file.
         /// </summary>
         [SerializeField]
-        private UnityEvent<GameObject> OnFileLoaded = new UnityEvent<GameObject> ();
+        [FormerlySerializedAs("OnFileLoaded")]
+        private UnityEvent<GameObject> _onFileLoaded = new();
 
         /// <summary>
         /// Opens a file dialog.
         /// </summary>
         public void OpenLocalFile()
         {
-            this.StartCoroutine(this.ShowLoadDialogCoroutine());
+            StartCoroutine(ShowLoadDialogCoroutine());
         }
 
         /// <summary>
         /// Opens a file dialog and waits for user input. Loaded file is then parsed and object is added to an active world space.
         /// </summary>
         /// <returns>An enumerator.</returns>
-        IEnumerator ShowLoadDialogCoroutine()
+        private IEnumerator ShowLoadDialogCoroutine()
         {
             throw new NotImplementedException();
+
             /*
-            FileBrowser.SetFilters(false, 
+            FileBrowser.SetFilters(
+                false, 
                 new FileBrowser.Filter("Obrázek (*.jpg; *.png)", ".jpg", ".png"),
                 new FileBrowser.Filter("Mesh (*.obj; *.fbx; *.gltf; *.ply; *.stl)", ".obj", ".fbx", ".gltf", ".ply", ".stl"));
 
@@ -47,7 +52,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility
             // Load file/folder: both, Allow multiple selection: true
             // Initial path: default (Documents), Initial filename: empty
             // Title: "Load File", Submit button text: "Load"
-            yield return FileBrowser.WaitForLoadDialog(FileBrowser.PickMode.Files, true, null, null, "Otevřít soubory", "Otevřít");
+            yield return FileBrowser.WaitForLoadDialog(
+                FileBrowser.PickMode.Files, 
+                true, 
+                null, 
+                null, 
+                "Otevřít soubory", 
+                "Otevřít");
 
             // Dialog is closed
             // Print whether the user has selected some files/folders or cancelled the operation (FileBrowser.Success)
@@ -55,7 +66,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility
 
             if (FileBrowser.Success)
             {
-                this.ReadFiles(FileBrowser.Result);
+                ReadFiles(FileBrowser.Result);
             }
             */
         }
@@ -64,36 +75,19 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility
         /// Reads selected files.
         /// </summary>
         /// <param name="paths">Paths of files.</param>
-        private void ReadFiles(string[] paths)
+        private void ReadFiles(IEnumerable<string> paths)
         {
             foreach (var path in paths)
             {
-                string extension = Path.GetExtension(path).ToLower();
-                GameObject obj;
-
-                switch (extension)
+                var extension = Path.GetExtension(path).ToLower();
+                var obj = extension switch
                 {
-                    case ".jpg":
-                    case ".png":
-                        {
-                            obj = this.ReadImage(path);
-                        }
-                        break;
-                    case ".obj":
-                    case ".fbx":
-                    case ".gltf":
-                    case ".ply":
-                    case ".stl":
-                        {
-                            obj = this.ReadMesh(path);
-                        }
-                        break;
-                    default:
-                        throw new FileLoadException("Unknown file extension.");
+                    ".jpg" or ".png" => ReadImage(path),
+                    ".obj" or ".fbx" or ".gltf" or ".ply" or ".stl" => ReadMesh(path),
+                    _ => throw new FileLoadException("Unknown file extension.")
+                };
 
-                }
-
-                this.OnFileLoaded.Invoke(obj);
+                _onFileLoaded.Invoke(obj);
             }
         }
 
@@ -101,15 +95,14 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility
         /// Creates a bitmap world object from a file.
         /// </summary>
         /// <param name="path">Path of the file.</param>
-        private GameObject ReadImage(string filePath)
+        private static GameObject ReadImage(string path)
         {
-            GameObject obj = new GameObject(Path.GetFileNameWithoutExtension(filePath));
-            var data = File.ReadAllBytes(filePath);
+            var obj = new GameObject(Path.GetFileNameWithoutExtension(path));
+            var data = File.ReadAllBytes(path);
             var texture = new Texture2D(1, 1);
             texture.LoadImage(data);
             texture.Apply();
-
-
+            
             var propertiesManager = obj.AddComponent<BitmapPropertiesManager>();
             propertiesManager.SetTexture(texture);
 
@@ -121,7 +114,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility
         /// </summary>
         /// <param name="filePath">Path of the file.</param>
         /// <returns></returns>
-        private GameObject ReadMesh(string filePath)
+        private static GameObject ReadMesh(string filePath)
         {
             // GameObject obj = MeshImporter.Load(filePath);
             //

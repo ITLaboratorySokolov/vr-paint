@@ -9,6 +9,7 @@ using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Storage;
 using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
+using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects;
 using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties.Managers;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
@@ -30,42 +31,49 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         [Header("Networking")]
         [HelpBox("Server Data Connection has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
         [SerializeField]
-        private ServerDataAdapterWrapper serverDataAdapter;
+        [FormerlySerializedAs("serverDataAdapter")]
+        private ServerDataAdapterWrapper _serverDataAdapter;
 
         [Header("Storage")]
         [HelpBox("World Object Storage has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
         [SerializeField]
-        private WorldObjectStorage worldObjectStorage;
+        [FormerlySerializedAs("worldObjectStorage")]
+        private WorldObjectStorageWrapper _worldObjectStorage;
 
+        [HelpBox("Prefab Storage has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [SerializeField]
+        [FormerlySerializedAs("prefabStorage")]
+        private PrefabStorageWrapper _prefabStorage;
+        
         [Header("Events")]
         [SerializeField]
-        private WorldObjectEventsHandler worldObjectEventsHandler;
+        [FormerlySerializedAs("worldObjectEventsHandler")]
+        private WorldObjectEventsHandler _worldObjectEventsHandler;
 
         private void OnValidate()
         {
-            Assert.IsNotNull(this.serverDataAdapter, "Server Data Connection was null.");
-            Assert.IsNotNull(this.worldObjectStorage, "World Object Storage was null.");
+            Assert.IsNotNull(_serverDataAdapter, "Server Data Connection was null.");
+            Assert.IsNotNull(_worldObjectStorage, "World Object Storage was null.");
         }
 
         /// <summary>
         /// Adds an object to the manager and to a server.
         /// </summary>
-        /// <param name="gameObject">Added game object.</param>
+        /// <param name="worldObject">Added game object.</param>
         /// <returns>A task.</returns>
         public async Task AddObjectAsync(GameObject worldObject)
         {
             var propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
 
             var worldObjectDto = CreateWorldObjectDto(worldObject, propertiesManager);
-            await this.serverDataAdapter.AddWorldObjectAsync(worldObjectDto);
+            await _serverDataAdapter.AddWorldObjectAsync(worldObjectDto);
 
-            if(this.worldObjectEventsHandler != null)
+            if(_worldObjectEventsHandler != null)
             {
-                this.worldObjectEventsHandler.AssignEventHandlers(worldObject);
+                _worldObjectEventsHandler.AssignEventHandlers(worldObject);
             }
             
-
-            if (!this.worldObjectStorage.Store(worldObject))
+            if (!_worldObjectStorage.Store(worldObject))
             {
                 throw new ArgumentException($"GameObject with name {worldObject.name} cannot be added");
             }
@@ -79,13 +87,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         /// <exception cref="ArgumentException">Thrown when object is not added to the manager, or when the object does not have <see cref="IPropertiesManager"/> component.</exception>
         public async Task<GameObject> RemoveObjectAsync(string objectName)
         {
-            await this.serverDataAdapter.RemoveWorldObjectAsync(objectName);
+            await _serverDataAdapter.RemoveWorldObjectAsync(objectName);
 
-            if (this.worldObjectStorage.Remove(objectName, out GameObject worldObject))
+            if (_worldObjectStorage.Remove(objectName, out GameObject worldObject))
             {
-                if(this.worldObjectEventsHandler != null)
+                if(_worldObjectEventsHandler != null)
                 {
-                    this.worldObjectEventsHandler.RemoveEventHandlers(worldObject);
+                    _worldObjectEventsHandler.RemoveEventHandlers(worldObject);
                 }
             }
             else
@@ -105,7 +113,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         /// <exception cref="ArgumentException">Thrown when an object with a same name doesn't exist.</exception>
         public async Task<GameObject> UpdateObjectAsync(GameObject worldObject)
         {
-            if (!this.worldObjectStorage.Get(worldObject.name, out var oldWorldObject))
+            if (!_worldObjectStorage.Get(worldObject.name, out var oldWorldObject))
             {
                 throw new ArgumentException($"GameObject with name {worldObject.name} is unknown");
             }
@@ -114,15 +122,15 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
 
             // Send update that replaces old object to the new one on a server
             var worldObjectUpdateDto = CreateWorldObjectUpdateDto(worldObject, propertiesManager);
-            await this.serverDataAdapter.UpdateWorldObjectAsync(worldObject.name, worldObjectUpdateDto);
+            await _serverDataAdapter.UpdateWorldObjectAsync(worldObject.name, worldObjectUpdateDto);
 
-            if(this.worldObjectEventsHandler != null)
+            if(_worldObjectEventsHandler != null)
             {
-                this.worldObjectEventsHandler.RemoveEventHandlers(oldWorldObject);
-                this.worldObjectEventsHandler.AssignEventHandlers(worldObject);
+                _worldObjectEventsHandler.RemoveEventHandlers(oldWorldObject);
+                _worldObjectEventsHandler.AssignEventHandlers(worldObject);
             }
             
-            this.worldObjectStorage.Replace(worldObject);
+            _worldObjectStorage.Replace(worldObject);
 
             return oldWorldObject;
         }
@@ -135,7 +143,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         /// <exception cref="ArgumentException">Thrown when object is not added to the manager, or when the object does not have <see cref="IPropertiesManager"/> component.</exception>
         public async Task UpdateObjectAsync(string objectName)
         {
-            if (!this.worldObjectStorage.Get(objectName, out var worldObject))
+            if (!_worldObjectStorage.Get(objectName, out var worldObject))
             {
                 throw new ArgumentException($"GameObject with name {objectName} is unknown");
             }
@@ -144,7 +152,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
 
             // Update object on a server
             var worldObjectUpdateDto = CreateWorldObjectUpdateDto(worldObject, propertiesManager);
-            await this.serverDataAdapter.UpdateWorldObjectAsync(worldObject.name, worldObjectUpdateDto);
+            await _serverDataAdapter.UpdateWorldObjectAsync(worldObject.name, worldObjectUpdateDto);
         }
 
         /// <summary>
@@ -153,18 +161,30 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         /// <returns>A task.</returns>
         public async Task<IEnumerable<GameObject>> LoadServerContentAsync()
         {
-            this.ClearLocalContent();
+            ClearLocalContent();
 
-            IEnumerable<WorldObjectDto> allObjects = await this.serverDataAdapter.GetAllWorldObjectsAsync();
+            var allObjects = await _serverDataAdapter.GetAllWorldObjectsAsync();
 
             Debug.Log("Load world objects");
 
             var worldObjects = new List<GameObject>();
             foreach (var worldObjectDto in allObjects)
             {
-                GameObject worldObject = WorldObjectUtils.AddObject(this.worldObjectEventsHandler, this.worldObjectStorage, worldObjectDto);
-                if (worldObject != null)
-                    worldObjects.Add(worldObject);
+                try
+                {
+                    var worldObject = WorldObjectUtils.AddObject(_worldObjectEventsHandler,
+                        _prefabStorage, _worldObjectStorage, worldObjectDto);
+
+                    if (worldObject != null)
+                    {
+                        worldObjects.Add(worldObject);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e.Message, this);
+                    Debug.LogException(e, this);
+                }
             }
 
             return worldObjects;
@@ -175,15 +195,15 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         /// </summary>
         public void ClearLocalContent()
         {
-            IEnumerable<GameObject> removedObjects = this.worldObjectStorage.ClearStorage();
+            var removedObjects = _worldObjectStorage.ClearStorage();
             foreach (var removedObject in removedObjects)
             {
-                if(this.worldObjectEventsHandler != null)
+                if(_worldObjectEventsHandler != null)
                 {
-                    this.worldObjectEventsHandler.RemoveEventHandlers(removedObject);
+                    _worldObjectEventsHandler.RemoveEventHandlers(removedObject);
                 }
                 
-                GameObject.Destroy(removedObject);
+                Destroy(removedObject);
             }
         }
 

@@ -6,8 +6,36 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.MeshImport.Conversion
     /// <summary>
     /// Convertor of an Assimp animation to Unity.
     /// </summary>
-    internal static class AnimationConverter
+    public static class AnimationConverter
     {
+        public struct KeyframeVector
+        {
+            public readonly UnityEngine.Keyframe X;
+            public readonly UnityEngine.Keyframe Y;
+            public readonly UnityEngine.Keyframe Z;
+
+            public KeyframeVector(UnityEngine.Keyframe x, UnityEngine.Keyframe y, UnityEngine.Keyframe z)
+            {
+                X = x;
+                Y = y;
+                Z = z;
+            }
+        }
+
+        public struct CurveVector
+        {
+            public UnityEngine.AnimationCurve X;
+            public UnityEngine.AnimationCurve Y;
+            public UnityEngine.AnimationCurve Z;
+            
+            public CurveVector(UnityEngine.AnimationCurve x, UnityEngine.AnimationCurve y, UnityEngine.AnimationCurve z)
+            {
+                X = x;
+                Y = y;
+                Z = z;
+            }
+        }
+        
         /// <summary>
         /// Converts Assimp animation to Unity. 
         /// Animation is converted to an animation clip, which is assigned to a game object via its name.
@@ -19,61 +47,81 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.MeshImport.Conversion
         {
             var clipBinding = new NodeClipBinding();
 
-            // Conversion of a mesh animation (animation of vertices)
             if (animation.HasMeshAnimations)
             {
-                for(int i = 0; i < animation.MeshAnimationChannelCount; i++)
+                for (var i = 0; i < animation.MeshAnimationChannelCount; i++)
                 {
-                    // TODO: animation of mesh vertices
-                    //animation.MeshAnimationChannels[i].
+                    var animationChannel = animation.MeshAnimationChannels[i];
+                    ConvertVertexAnimation(animationChannel);
                 }
             }
 
             if (animation.HasNodeAnimations)
             {
-                ConvertKeyframeAnimation(animation, clipBinding);
+                for (var i = 0; i < animation.NodeAnimationChannelCount; i++)
+                {
+                    var animationChannel = animation.NodeAnimationChannels[i];
+                    var animationClip = ConvertKeyframeAnimation(animationChannel);
+                    BindAnimationToGameObject(clipBinding, animationClip, animationChannel.NodeName);
+                }
             }
 
             return clipBinding;
         }
 
-        private static void ConvertKeyframeAnimation(Assimp.Animation animation, NodeClipBinding clipBinding)
+        public static void BindAnimationToGameObject(NodeClipBinding clipBinding, UnityEngine.AnimationClip animationClip, string gameObjectName)
         {
-            for (int i = 0; i < animation.NodeAnimationChannelCount; i++)
+            // Bind the clip and a game object
+            if (clipBinding.ClipBindings.TryGetValue(gameObjectName, out var clips))
             {
-                var animationChannel = animation.NodeAnimationChannels[i];
-                var clip = new UnityEngine.AnimationClip();
-
-                // Set position keys
-                if (animationChannel.HasPositionKeys)
-                {
-                    ConvertVectorCurves(animationChannel.PositionKeys, clip, "localPosition",
-                        ConvertVectorKeyToKeyframes);
-                }
-
-                // Set rotation keys
-                if (animationChannel.HasRotationKeys)
-                {
-                    ConvertVectorCurves(animationChannel.RotationKeys, clip, "localRotation",
-                        ConvertQuaternionKeyToKeyframes);
-                }
-
-                // Set scaling keys
-                if (animationChannel.HasScalingKeys)
-                {
-                    ConvertVectorCurves(animationChannel.ScalingKeys, clip, "scale", ConvertVectorKeyToKeyframes);
-                }
-
-                // Bind the clip and a game object
-                if (clipBinding.ClipBindings.TryGetValue(animationChannel.NodeName, out var clips))
-                {
-                    clips.Add(clip);
-                }
-                else
-                {
-                    clipBinding.ClipBindings[animationChannel.NodeName] = new List<UnityEngine.AnimationClip> { clip };
-                }
+                clips.Add(animationClip);
             }
+            else
+            {
+                clipBinding.ClipBindings[gameObjectName] = new List<UnityEngine.AnimationClip> { animationClip };
+            }
+        }
+
+        public static void ConvertVertexAnimation(Assimp.MeshAnimationChannel animationChannel)
+        {
+            // TODO: animation of mesh vertices
+            UnityEngine.Debug.LogError("Vertex animation is not supported");
+        }
+
+        public static UnityEngine.AnimationClip ConvertKeyframeAnimation(Assimp.NodeAnimationChannel animationChannel)
+        {
+            // SetCurve can be called only on legacy animation clip in runtime.
+            var clip = new UnityEngine.AnimationClip { legacy = true };
+
+            // Set position keys
+            if (animationChannel.HasPositionKeys)
+            {
+                var curveVector = ConvertKeysToCurves(animationChannel.PositionKeys, ConvertVectorKeyToKeyframes);
+                SetVectorCurves(clip, $"localPosition", curveVector);
+            }
+
+            // Set rotation keys
+            if (animationChannel.HasRotationKeys)
+            {
+                var curveVector = ConvertKeysToCurves(animationChannel.RotationKeys, ConvertQuaternionKeyToKeyframes);
+                SetVectorCurves(clip, $"localRotation", curveVector);
+            }
+
+            // Set scaling keys
+            if (animationChannel.HasScalingKeys)
+            {
+                var curveVector = ConvertKeysToCurves(animationChannel.ScalingKeys, ConvertVectorKeyToKeyframes);
+                SetVectorCurves(clip, $"localScale", curveVector);
+            }
+
+            return clip;
+        }
+
+        public static void SetVectorCurves(UnityEngine.AnimationClip clip, string propertyName, CurveVector curves)
+        {
+            clip.SetCurve("", typeof(UnityEngine.Transform), $"{propertyName}.x", curves.X);
+            clip.SetCurve("", typeof(UnityEngine.Transform), $"{propertyName}.y", curves.Y);
+            clip.SetCurve("", typeof(UnityEngine.Transform), $"{propertyName}.z", curves.Z);
         }
 
         /// <summary>
@@ -81,61 +129,52 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.MeshImport.Conversion
         /// </summary>
         /// <typeparam name="T">Type of the animated property.</typeparam>
         /// <param name="keys">Keys of the animated property.</param>
-        /// <param name="animationClip">Unity animation clip that will handle the animation.</param>
-        /// <param name="propertyName">Name of the animated property.</param>
-        /// <param name="convertFunc">Function that converts Assimp keys to a vector of Unity keyframes.</param>
-        private static void ConvertVectorCurves<T>(IReadOnlyList<T> keys, UnityEngine.AnimationClip animationClip, string propertyName, Action<T, int, UnityEngine.Keyframe[], UnityEngine.Keyframe[], UnityEngine.Keyframe[]> convertFunc)
+        /// <param name="keyConvertFunc">Function that converts Assimp keys to a vector of Unity keyframes.</param>
+        public static CurveVector ConvertKeysToCurves<T>(IReadOnlyList<T> keys, Func<T, KeyframeVector> keyConvertFunc)
         {
             var xKeys = new UnityEngine.Keyframe[keys.Count];
             var yKeys = new UnityEngine.Keyframe[keys.Count];
             var zKeys = new UnityEngine.Keyframe[keys.Count];
 
-            for (int i = 0; i < keys.Count; i++)
+            for (var i = 0; i < keys.Count; i++)
             {
-                convertFunc(keys[i], i, xKeys, yKeys, zKeys);
+                var keyframeVector = keyConvertFunc(keys[i]);
+                xKeys[i] = keyframeVector.X;
+                yKeys[i] = keyframeVector.Y;
+                zKeys[i] = keyframeVector.Z;
             }
 
-            var curve = new UnityEngine.AnimationCurve(xKeys);
-            animationClip.SetCurve("", typeof(UnityEngine.Transform), $"{propertyName}.x", curve);
-
-            curve = new UnityEngine.AnimationCurve(yKeys);
-            animationClip.SetCurve("", typeof(UnityEngine.Transform), $"{propertyName}.y", curve);
-
-            curve = new UnityEngine.AnimationCurve(zKeys);
-            animationClip.SetCurve("", typeof(UnityEngine.Transform), $"{propertyName}.z", curve);
+            return new CurveVector(
+                new UnityEngine.AnimationCurve(xKeys), 
+                new UnityEngine.AnimationCurve(yKeys), 
+                new UnityEngine.AnimationCurve(zKeys));
         }
 
         /// <summary>
         /// Helper function that converts a vector key to vector keyframes.
         /// </summary>
         /// <param name="key">The key of an animated property.</param>
-        /// <param name="index">Index of the key.</param>
-        /// <param name="xKeys">Keyframes of x element of a vector.</param>
-        /// <param name="yKeys">Keyframes of y element of a vector.</param>
-        /// <param name="zKeys">Keyframes of z element of a vector.</param>
-        private static void ConvertVectorKeyToKeyframes(Assimp.VectorKey key, int index, UnityEngine.Keyframe[] xKeys, UnityEngine.Keyframe[] yKeys, UnityEngine.Keyframe[] zKeys)
+        public static KeyframeVector ConvertVectorKeyToKeyframes(Assimp.VectorKey key)
         {
-            xKeys[index] = new UnityEngine.Keyframe((float)key.Time, key.Value.X);
-            yKeys[index] = new UnityEngine.Keyframe((float)key.Time, key.Value.Y);
-            zKeys[index] = new UnityEngine.Keyframe((float)key.Time, key.Value.Z);
+            return new KeyframeVector(
+                new UnityEngine.Keyframe((float)key.Time, key.Value.X),
+                new UnityEngine.Keyframe((float)key.Time, key.Value.Y),
+                new UnityEngine.Keyframe((float)key.Time, key.Value.Z));
         }
 
         /// <summary>
         /// Helper function that converts quaternion key to vector keyframes.
         /// </summary>
         /// <param name="key">The key of an animated property.</param>
-        /// <param name="index">Index of the key.</param>
-        /// <param name="xKeys">Keyframes of x element of a vector.</param>
-        /// <param name="yKeys">Keyframes of y element of a vector.</param>
-        /// <param name="zKeys">Keyframes of z element of a vector.</param>
-        private static void ConvertQuaternionKeyToKeyframes(Assimp.QuaternionKey key, int index,UnityEngine.Keyframe[] xKeys, UnityEngine.Keyframe[] yKeys, UnityEngine.Keyframe[] zKeys)
+        public static KeyframeVector ConvertQuaternionKeyToKeyframes(Assimp.QuaternionKey key)
         {
             var quaternion = new UnityEngine.Quaternion(key.Value.X, key.Value.Y, key.Value.Z, key.Value.W);
             var eulerRotation = quaternion.eulerAngles;
 
-            xKeys[index] = new UnityEngine.Keyframe((float)key.Time, eulerRotation.x);
-            yKeys[index] = new UnityEngine.Keyframe((float)key.Time, eulerRotation.y);
-            zKeys[index] = new UnityEngine.Keyframe((float)key.Time, eulerRotation.z);
+            return new KeyframeVector(
+                new UnityEngine.Keyframe((float)key.Time, eulerRotation.x),
+                new UnityEngine.Keyframe((float)key.Time, eulerRotation.y),
+                new UnityEngine.Keyframe((float)key.Time, eulerRotation.z));
         }
     }
 }

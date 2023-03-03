@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
 
@@ -13,48 +14,54 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.UI.MessageBox
     {
         [HelpBox("All fields have to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
         [SerializeField]
-        private TMP_Text title;
+        [FormerlySerializedAs("title")]
+        private TMP_Text _title;
 
         [SerializeField]
-        private TMP_Text content;
+        [FormerlySerializedAs("content")]
+        private TMP_Text _content;
 
         [SerializeField]
-        private Image icon;
+        [FormerlySerializedAs("icon")]
+        private Image _icon;
 
         [SerializeField]
         [Tooltip("Icon of an error type message box.")]
-        private Sprite errorIcon;
+        [FormerlySerializedAs("errorIcon")]
+        private Sprite _errorIcon;
 
         [SerializeField]
         [Tooltip("Icon of a warning type message box.")]
-        private Sprite warningIcon;
+        [FormerlySerializedAs("warningIcon")]
+        private Sprite _warningIcon;
 
         [SerializeField]
         [Tooltip("Icon of an info type message box.")]
-        private Sprite infoIcon;
+        [FormerlySerializedAs("infoIcon")]
+        private Sprite _infoIcon;
 
-        private MessageBoxType type;
+        private MessageBoxType _type;
 
         /// <inheritdoc/>
         public override string Title
         {
-            get => this.title.text;
-            set => this.title.text = value;
+            get => _title.text;
+            set => _title.text = value;
         }
 
         /// <inheritdoc/>
         public override MessageBoxType Type
         {
-            get => this.type;
+            get => _type;
             set
             {
-                this.type = value;
-                this.icon.sprite = this.type switch
+                _type = value;
+                _icon.sprite = _type switch
                 {
-                    MessageBoxType.Error => this.errorIcon,
-                    MessageBoxType.Warning => this.warningIcon,
-                    MessageBoxType.Information => this.infoIcon,
-                    _ => this.icon.sprite
+                    MessageBoxType.Error => _errorIcon,
+                    MessageBoxType.Warning => _warningIcon,
+                    MessageBoxType.Information => _infoIcon,
+                    _ => _icon.sprite
                 };
             }
         }
@@ -62,18 +69,18 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.UI.MessageBox
         /// <inheritdoc/>
         public override string Content
         {
-            get => this.content.text;
-            set => this.content.text = value;
+            get => _content.text;
+            set => _content.text = value;
         }
 
         private void OnValidate()
         {
-            Assert.IsNotNull(this.title, "Title was null.");
-            Assert.IsNotNull(this.content, "Content was null.");
-            Assert.IsNotNull(this.icon, "Icon was null.");
-            Assert.IsNotNull(this.errorIcon, "Error Icon was null.");
-            Assert.IsNotNull(this.warningIcon, "Warning Icon was null.");
-            Assert.IsNotNull(this.infoIcon, "Info Icon was null.");
+            Assert.IsNotNull(_title, "Title was null.");
+            Assert.IsNotNull(_content, "Content was null.");
+            Assert.IsNotNull(_icon, "Icon was null.");
+            Assert.IsNotNull(_errorIcon, "Error Icon was null.");
+            Assert.IsNotNull(_warningIcon, "Warning Icon was null.");
+            Assert.IsNotNull(_infoIcon, "Info Icon was null.");
         }
     }
 }

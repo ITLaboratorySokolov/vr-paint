@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.XR.Management;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 
 public class RigController : MonoBehaviour
@@ -35,6 +36,8 @@ public class RigController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        XRGeneralSettings.Instance.Manager.StartSubsystems();
+
         // spawn rig components
         SpawnRig();
         SwapColor(false);

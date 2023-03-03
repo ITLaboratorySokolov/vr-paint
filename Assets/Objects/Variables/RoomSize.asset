@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca740749d5569e4a8dc47820523092a, type: 3}
   m_Name: RoomSize
   m_EditorClassIdentifier: 
-  value: {x: 0, y: 0}
+  value: {x: 1.5, y: 1.5}

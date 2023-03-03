@@ -14,7 +14,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.Utility
         /// <returns>Array of floats.</returns>
         public static float[] Point3DToFloat(Vector3[] points)
         {
-            int index = 0;
+            var index = 0;
             var coordinates = new float[points.Length * 3];
 
             foreach (var point in points)
@@ -34,10 +34,10 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.Utility
         /// <returns>Array of vectors.</returns>
         public static Vector3[] FloatToPoint3D(float[] coordinates)
         {
-            int index = 0;
+            var index = 0;
             var points = new Vector3[coordinates.Length / 3];
 
-            for (int i = 0; i < coordinates.Length; i += 3)
+            for (var i = 0; i < coordinates.Length; i += 3)
             {
                 points[index++] = new Vector3(coordinates[i], coordinates[i + 1], coordinates[i + 2]);
             }

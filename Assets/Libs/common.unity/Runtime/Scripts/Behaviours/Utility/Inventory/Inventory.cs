@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility.Inventory
 {
@@ -10,18 +11,19 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility.Inventory
     public class Inventory<T> : ScriptableObject
     {
         [SerializeField]
-        private List<T> items = new();
+        [FormerlySerializedAs("items")]
+        private List<T> _items = new();
 
         /// <summary>
         /// Gets collection of items.
         /// </summary>
-        public IReadOnlyList<T> Items => this.items;
+        public IReadOnlyList<T> Items => _items;
 
         /// <summary>
         /// Gets an item on a given index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns>The item on the given index.</returns>
-        public T this[int index] => this.items[index];
+        public T this[int index] => _items[index];
     }
 }

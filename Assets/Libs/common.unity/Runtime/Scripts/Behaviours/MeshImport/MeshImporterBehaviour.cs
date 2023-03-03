@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Unity.Models.MeshImport;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.MeshImport
@@ -17,40 +18,42 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.MeshImport
         /// </summary>
         [Tooltip("Path of a 3D file.")]
         [SerializeField]
-        private string path;
+        [FormerlySerializedAs("path")]
+        private string _path;
 
         /// <summary>
         /// Import the mesh on start of a scene.
         /// </summary>
         [Tooltip("Import the mesh on start of a scene.")]
         [SerializeField]
-        private bool importOnStart;
+        [FormerlySerializedAs("importOnStart")]
+        private bool _importOnStart;
 
         /// <summary>
-        /// Imports a 3D file on start of a scene when the <see cref="importOnStart"/> is true.
-        /// The path to the 3D file is specified in the <see cref="path"/> field.
+        /// Imports a 3D file on start of a scene when the <see cref="_importOnStart"/> is true.
+        /// The path to the 3D file is specified in the <see cref="_path"/> field.
         /// </summary>
         public void Start()
         {
-            if(this.importOnStart)
+            if(_importOnStart)
             {
-                this.Import();
+                Import();
             }
         }
 
         /// <summary>
-        /// Imports a 3D file when the <see cref="path"/> is specified in the Unity inspector.
+        /// Imports a 3D file when the <see cref="_path"/> is specified in the Unity inspector.
         /// Otherwise it throws an exception.
         /// </summary>
         /// <exception cref="ArgumentException">Thrown when path is not specified.</exception>
         public void Import()
         {
-            if(string.IsNullOrEmpty(this.path))
+            if(string.IsNullOrEmpty(_path))
             {
                 throw new ArgumentException("Path is not specified in the inspector.");
             }
 
-            MeshImporter.Import(this.path);
+            MeshImporter.Import(_path);
         }
 
         /// <summary>

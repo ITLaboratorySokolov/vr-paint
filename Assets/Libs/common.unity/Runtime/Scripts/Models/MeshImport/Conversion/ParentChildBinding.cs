@@ -22,8 +22,8 @@
         /// <param name="child">Child node.</param>
         public ParentChildBinding(UnityEngine.GameObject parent, Assimp.Node child)
         {
-            this.Parent = parent;
-            this.Child = child;
+            Parent = parent;
+            Child = child;
         }
     }
 }

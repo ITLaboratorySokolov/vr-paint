@@ -80,15 +80,6 @@ public class WallCollisionProcessor : MonoBehaviour
         }
     }
 
-    public void CenterRoom(Vector3 center)
-    {
-        // move the whole room so it is centered to current camera pos
-
-        // move the collision walls
-        // move the teleportation area
-
-    }
-
     /// <summary>
     /// Display a warning wall upon collision
     /// </summary>

@@ -4,10 +4,9 @@ using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server;
-using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
 using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
 using ZCU.TechnologyLab.Common.Unity.Models.Utility.Events;
-using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties.Managers;
+using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
 {
@@ -19,15 +18,17 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         [Header("Networking")]
         [SerializeField]
         [HelpBox("Server Data Connection and Server Session Connection have to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
-        private ServerDataAdapterWrapper serverDataAdapter;
+        [FormerlySerializedAs("serverDataAdapter")]
+        private ServerDataAdapterWrapper _serverDataAdapter;
 
         [SerializeField]
-        private ServerSessionAdapterWrapper serverSessionAdapter;
+        [FormerlySerializedAs("serverSessionAdapter")]
+        private ServerSessionAdapterWrapper _serverSessionAdapter;
 
         private void OnValidate()
         {
-            Assert.IsNotNull(this.serverDataAdapter, "Server Data Connection was null.");
-            Assert.IsNotNull(this.serverSessionAdapter, "Server Session Connection was null.");
+            Assert.IsNotNull(_serverDataAdapter, "Server Data Connection was null.");
+            Assert.IsNotNull(_serverSessionAdapter, "Server Session Connection was null.");
         }
 
         /// <summary>
@@ -37,13 +38,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         /// <param name="worldObject">The object.</param>
         public void AssignEventHandlers(GameObject worldObject)
         {
-            IPropertiesManager propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
-            propertiesManager.PropertiesChanged += this.PropertiesManager_PropertiesChanged;
+            var propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
+            propertiesManager.PropertiesChanged += PropertiesManager_PropertiesChanged;
 
             var transformReport = worldObject.GetComponent<ReportTransformChange>();
             if (transformReport != null)
             {
-                transformReport.TransformChanged += this.TransformReport_TransformChanged;
+                transformReport.TransformChanged += TransformReport_TransformChanged;
             }
         }
 
@@ -54,46 +55,50 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         /// <param name="worldObject">The object.</param>
         public void RemoveEventHandlers(GameObject worldObject)
         {
-            IPropertiesManager propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
-            propertiesManager.PropertiesChanged -= this.PropertiesManager_PropertiesChanged;
+            var propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
+            propertiesManager.PropertiesChanged -= PropertiesManager_PropertiesChanged;
 
             var transformReport = worldObject.GetComponent<ReportTransformChange>();
             if (transformReport != null)
             {
-                transformReport.TransformChanged -= this.TransformReport_TransformChanged;
+                transformReport.TransformChanged -= TransformReport_TransformChanged;
             }
         }
 
-        private async void TransformReport_TransformChanged(object sender, TransformChangedEventArgs e)
+        private async void TransformReport_TransformChanged(TransformChangedEventArgs e)
         {
             try
             {
                 Debug.Log($"Transform of {e.Transform.gameObject.name} changed. Update server");
 
+                var position = e.Transform.position;
+                var rotation = e.Transform.rotation;
+                var localScale = e.Transform.localScale;
+                
                 var transformDto = new WorldObjectTransformDto
                 {
                     ObjectName = e.Transform.gameObject.name,
                     Position = new RemoteVectorDto
                     {
-                        X = e.Transform.position.x,
-                        Y = e.Transform.position.y,
-                        Z = e.Transform.position.z
+                        X = position.x,
+                        Y = position.y,
+                        Z = position.z
                     },
                     Rotation = new RemoteVectorDto
                     {
-                        X = e.Transform.rotation.eulerAngles.x,
-                        Y = e.Transform.rotation.eulerAngles.y,
-                        Z = e.Transform.rotation.eulerAngles.z
+                        X = rotation.eulerAngles.x,
+                        Y = rotation.eulerAngles.y,
+                        Z = rotation.eulerAngles.z
                     },
                     Scale = new RemoteVectorDto
                     {
-                        X = e.Transform.localScale.x,
-                        Y = e.Transform.localScale.y,
-                        Z = e.Transform.localScale.z
+                        X = localScale.x,
+                        Y = localScale.y,
+                        Z = localScale.z
                     }
                 };
 
-                await this.serverSessionAdapter.TransformWorldObjectAsync(transformDto);
+                await _serverSessionAdapter.TransformWorldObjectAsync(transformDto);
             }
             catch (Exception ex)
             {
@@ -113,7 +118,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                     Properties = e.Properties
                 };
 
-                await this.serverDataAdapter.UpdateWorldObjectPropertiesAsync(e.ObjectName, propertiesDto);
+                await _serverDataAdapter.UpdateWorldObjectPropertiesAsync(e.ObjectName, propertiesDto);
             }
             catch (Exception ex)
             {

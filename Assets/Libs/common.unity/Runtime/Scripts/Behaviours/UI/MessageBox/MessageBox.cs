@@ -40,9 +40,9 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.UI.MessageBox
         /// <param name="type">Type.</param>
         public void Initialize(string title, string content, MessageBoxType type)
         {
-            this.Title = title;
-            this.Content = content;
-            this.Type = type;
+            Title = title;
+            Content = content;
+            Type = type;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.UI.MessageBox
         /// </summary>
         public void SubmitButton_clicked()
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
         /// <summary>
@@ -58,8 +58,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.UI.MessageBox
         /// </summary>
         public void ExitButton_clicked()
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }
-

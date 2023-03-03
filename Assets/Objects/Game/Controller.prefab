@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 161957356994831314}
   - component: {fileID: -4874595014226637770}
   - component: {fileID: 6722327122432547491}
+  - component: {fileID: 6723357151905288595}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -116,8 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26249aae85772544ba5651c4dc990fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reportTransformChangedEvent: 1
-  transformChangedEventReportDelay: 0.25
+  _enableReporting: 1
+  _reportDelay: 0.1
 --- !u!114 &-4874595014226637770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d529cf5af29b9f429883ff6105f41ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionalProperties: []
+  _optionalPropertiesManager: {fileID: 6723357151905288595}
 --- !u!114 &6722327122432547491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +150,16 @@ MonoBehaviour:
   lineMaterial: {fileID: 2100000, guid: be43344bf2e17d84280b0187eac0242a, type: 2}
   boxMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
   generalMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
+--- !u!114 &6723357151905288595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7089250788900731249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8649ce6e16a74a8982673b4253a77866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _optionalProperties: []

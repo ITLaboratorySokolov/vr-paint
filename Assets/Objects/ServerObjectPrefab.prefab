@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -4751802170383463930}
   - component: {fileID: 2729817109905243161}
   - component: {fileID: -4644933111016800190}
+  - component: {fileID: 3420457858355887363}
   - component: {fileID: 3636451904438298842}
   - component: {fileID: 476049909321704166}
   - component: {fileID: 3309025961797577739}
@@ -166,14 +167,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d529cf5af29b9f429883ff6105f41ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionalProperties:
+  _optionalPropertiesManager: {fileID: 3420457858355887363}
+--- !u!114 &3420457858355887363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381866689056338526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8649ce6e16a74a8982673b4253a77866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _optionalProperties:
   - {fileID: 3636451904438298842}
   - {fileID: 476049909321704166}
-  - {fileID: -8742696934938988691}
-  - {fileID: 6376350579584854226}
   - {fileID: 3309025961797577739}
   - {fileID: 1117705545611690377}
   - {fileID: 4001556055028762082}
+  - {fileID: -8742696934938988691}
+  - {fileID: 6376350579584854226}
 --- !u!114 &3636451904438298842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,5 +294,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26249aae85772544ba5651c4dc990fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reportTransformChangedEvent: 1
-  transformChangedEventReportDelay: 0.25
+  _enableReporting: 1
+  _reportDelay: 0.1

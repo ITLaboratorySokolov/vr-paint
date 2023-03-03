@@ -203,13 +203,17 @@ public class ServerConectionController : MonoBehaviour
                 if (n.StartsWith("Line"))
                 {
                     int nmlen = ("Line" + clientName.Value).Length;
+
+                    Debug.Log(n);
+
                     string num = n.Substring(nmlen);
                     int numP = 0;
                     int.TryParse(num, out numP);
 
+                    Debug.Log(numP);
+
                     // if the lane was drawn by this client
-                    string cName = n.Substring(4, n.Length - num.Length);
-                    if (cName.Equals(clientName.Value))
+                    if (n.Equals("Line" + clientName.Value + numP))
                         l.Add(numP);
                  
                     paintCont.AddServerLine(obj);

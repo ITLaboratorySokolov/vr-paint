@@ -1,0 +1,26 @@
+{
+    "name": "ZCU.TechnologyLab.Common.Unity.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bc00b5fb1bba4d549bafdc8c4418aa43",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:f322e0d6d4b4c9144aab2d6164a867a4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "AssimpNet.dll",
+        "NSubstitute.dll",
+        "Castle.Core.dll",
+        "ZCU.TechnologyLab.Common.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

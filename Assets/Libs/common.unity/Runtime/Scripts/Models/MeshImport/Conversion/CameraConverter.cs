@@ -5,7 +5,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.MeshImport.Conversion
     /// <summary>
     /// Converter of an Assimp camera to Unity.
     /// </summary>
-    internal static class CameraConverter
+    public static class CameraConverter
     {
         /// <summary>
         /// Converts an Assimp camera to Unity and assigns it to a game object.
@@ -22,22 +22,24 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.MeshImport.Conversion
             }
         }
 
-        private static UnityEngine.Camera CreateCameraComponent(Assimp.Camera camera, UnityEngine.GameObject gameObject)
+        public static UnityEngine.Camera CreateCameraComponent(Assimp.Camera camera, UnityEngine.GameObject gameObject)
         {
             var unityCamera = gameObject.AddComponent<UnityEngine.Camera>();
             unityCamera.nearClipPlane = camera.ClipPlaneNear;
             unityCamera.farClipPlane = camera.ClipPlaneFar;
-            unityCamera.fieldOfView = UnityEngine.Mathf.Rad2Deg * camera.FieldOfview;
-
+            
+            // When AspectRatio is zero it means it is not specified
             if (camera.AspectRatio != 0)
             {
                 unityCamera.aspect = camera.AspectRatio;
             }
+            
+            unityCamera.fieldOfView = ConvertFieldOfView(camera.FieldOfview, unityCamera.aspect);
 
             return unityCamera;
         }
 
-        private static UnityEngine.GameObject CreateCameraObject(Assimp.Camera camera, UnityEngine.GameObject parentGameObject)
+        public static UnityEngine.GameObject CreateCameraObject(Assimp.Camera camera, UnityEngine.GameObject parentGameObject)
         {
             return new UnityEngine.GameObject(camera.Name)
             {
@@ -47,6 +49,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.MeshImport.Conversion
                     localPosition = new UnityEngine.Vector3(camera.Position.X, camera.Position.Y, camera.Position.Z)
                 }
             };
+        }
+
+        /// <param name="fieldOfView">Horizontal field of view in radians</param>
+        /// <returns>Vertical field of view in degrees</returns>
+        private static float ConvertFieldOfView(float fieldOfView, float aspectRatio)
+        {
+            return UnityEngine.Camera.HorizontalToVerticalFieldOfView(UnityEngine.Mathf.Rad2Deg * fieldOfView, aspectRatio);
         }
     }
 }

@@ -22,8 +22,8 @@
         /// <param name="material">A material.</param>
         public MeshMaterialBinding(UnityEngine.Mesh mesh, UnityEngine.Material material)
         {
-            this.Material = material;
-            this.Mesh = mesh;
+            Material = material;
+            Mesh = mesh;
         }
     }
 }
