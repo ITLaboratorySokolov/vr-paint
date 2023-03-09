@@ -153,8 +153,8 @@ MonoBehaviour:
   serverConnection: {fileID: 0}
   texProp: {fileID: 4001556055028762082}
   lineMaterial: {fileID: 2100000, guid: be43344bf2e17d84280b0187eac0242a, type: 2}
-  boxMaterial: {fileID: 2100000, guid: 62115cc7e61e4164c8a9868eadbdfa7d, type: 2}
-  generalMaterial: {fileID: 2100000, guid: 62115cc7e61e4164c8a9868eadbdfa7d, type: 2}
+  boxMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
+  generalMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
 --- !u!114 &-4644933111016800190
 MonoBehaviour:
   m_ObjectHideFlags: 0
