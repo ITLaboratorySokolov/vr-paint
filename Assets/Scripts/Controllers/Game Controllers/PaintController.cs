@@ -62,7 +62,7 @@ public class PaintController : MonoBehaviour
     int numberOfBrushes = 2;
     /// <summary> Textures for brushes </summary>
     [SerializeField]
-    Texture2D[] textures;
+    Texture[] textures;
     /// <summary> Brushes </summary>
     internal Brush[] brushes;
     /// <summary> Eraser </summary>
@@ -97,10 +97,12 @@ public class PaintController : MonoBehaviour
             yValues[i] = (Mathf.Sin((float) (xValue * 2 * Mathf.PI)) + 1) / 2.0f;
         }
 
+        Texture2D tx1 = ConvertorHelper.TextureToTexture2D(textures[0]);
+
         // Manually create two brushes
         brushes = new Brush[numberOfBrushes];
-        brushes[0] = new Brush() { Width = 0.05f, Color = Color.red, Texture = textures[0], Name = "Brush01", TimePerIter = 5, WidthModifier = yValues };
-        brushes[1] = new Brush() { Width = 0.05f, Color = Color.black, Texture = textures[1], Name = "Brush02", TimePerIter = 10, WidthModifier = yValues };
+        brushes[0] = new Brush() { Width = 0.05f, Color = Color.red, Texture = tx1, Name = "Brush01", TimePerIter = 5, WidthModifier = yValues };
+        brushes[1] = new Brush() { Width = 0.05f, Color = Color.black, Texture = null, Name = "Brush02", TimePerIter = 10, WidthModifier = yValues };
 
         brushDictionary = new Dictionary<string, Brush>();
         brushDictionary.Add(brushes[0].Name, brushes[0]);
@@ -272,7 +274,7 @@ public class PaintController : MonoBehaviour
 
             currLineObj = o;
 
-            serverCont.SendTriangleStripToServer(o);
+            serverCont.SendTriangleStripToServer(o, brushes[currentBrush].Texture);
         }
     }
 
@@ -344,7 +346,7 @@ public class PaintController : MonoBehaviour
 
         paintingOn = false;
         timeToUpdate = 0.25f;
-        serverCont.UpdateTriangleStripOnServer(currLineObj);
+        serverCont.UpdateTriangleStripOnServer(currLineObj, brushes[currentBrush].Texture);
         lineCounter++;
     }
 
@@ -362,6 +364,18 @@ public class PaintController : MonoBehaviour
         // Set brush color
         if (brushes != null && brushes[currentBrush] != null)
             brushes[currentBrush].Color = c;
+    }
+
+    /// <summary>
+    /// Set width to the width of current brush
+    /// </summary>
+    /// <param name="f"> Width </param>
+    public void SetBrushWidth()
+    {
+        float f = brushes[currentBrush].Width;
+        // Resize
+        Vector3 scale = new Vector3(f, f, f);
+        rigCont.SetBrushScale(scale);
     }
 
     /// <summary>

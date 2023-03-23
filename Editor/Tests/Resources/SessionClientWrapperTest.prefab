@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1540429207017930024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7245909330310920680}
+  - component: {fileID: 6728286319729326278}
+  - component: {fileID: 7287983209089297462}
+  m_Layer: 0
+  m_Name: SessionClientWrapperTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7245909330310920680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540429207017930024}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1050.6853, y: 464.35236, z: 2.8935833}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6728286319729326278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540429207017930024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ec575226f5435f82bfd5c878d7d670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  started:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7287983209089297462}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.IntegrationTests.Connections.Session.SignalRSessionWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.IntegrationTests
+        m_MethodName: OnStarted
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  startFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7287983209089297462}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.SignalRSessionWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnStartFailed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  disconnected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7287983209089297462}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.SignalRSessionWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnDisconnected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  reconnecting:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7287983209089297462}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.SignalRSessionWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnReconnecting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  reconnected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7287983209089297462}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.SignalRSessionWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnReconnected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7287983209089297462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540429207017930024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada0aec646ec9954bb0d6e305206ef94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

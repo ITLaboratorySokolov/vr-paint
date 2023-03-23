@@ -75,7 +75,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         /// </remarks>
         private MeshRenderer _meshRenderer;
 
-        private BitmapProperties _bitmapProperties;
+        private TextureManipulation _textureManipulation;
 
         /// <inheritdoc/>
         public string ManagedType => ManagedTypeDescription;
@@ -87,7 +87,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         {
             _meshRenderer = GetComponent<MeshRenderer>();
             _meshFilter = GetComponent<MeshFilter>();
-            _bitmapProperties = new BitmapProperties(_supportedPixelFormats);
+            _textureManipulation = new TextureManipulation(_supportedPixelFormats);
         }
 
         /// <summary>
@@ -104,7 +104,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
             var material = _meshRenderer.material;
             var mesh = _meshFilter.mesh;
             
-            var oldTexture = _bitmapProperties.SetTexture(texture, material, mesh);
+            var oldTexture = _textureManipulation.SetTextureWithSupportedFormat(texture, material);
+            MeshManipulation.UpdateMeshToSize(mesh, texture.width, texture.height);
             
             PropertiesChanged?.Invoke(this, new PropertiesChangedEventArgs
             {
@@ -131,7 +132,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
             var material = _meshRenderer.material;
             var mesh = _meshFilter.mesh;
 
-            _bitmapProperties.SetTextureData(width, height, format, data, material, mesh);
+            _textureManipulation.SetTextureDataToMaterial(width, height, format, data, material);
+            MeshManipulation.UpdateMeshToSize(mesh, width, height);
             
             PropertiesChanged?.Invoke(this, new PropertiesChangedEventArgs
             {
@@ -145,7 +147,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         {
             var material = _meshRenderer.material;
 
-            var properties = _bitmapProperties.GetProperties(material);
+            var properties = _textureManipulation.GetTextureProperties(material);
             
             if (_optionalPropertiesManager != null)
             {
@@ -161,7 +163,10 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
             var material = _meshRenderer.material;
             var mesh = _meshFilter.mesh;
             
-            _bitmapProperties.SetProperties(properties, material, mesh);
+            _textureManipulation.SetTexturePropertiesToMaterial(properties, material);
+
+            var texture = material.mainTexture;
+            MeshManipulation.UpdateMeshToSize(mesh, texture.width, texture.height);
             
             if (_optionalPropertiesManager != null)
             {

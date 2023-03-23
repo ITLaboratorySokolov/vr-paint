@@ -102,6 +102,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
 
                 if (_worldObjectStorage.IsStored(worldObjectName))
                 {
+                    Debug.Log("World object already exists locally");
                     return;
                 }
                 

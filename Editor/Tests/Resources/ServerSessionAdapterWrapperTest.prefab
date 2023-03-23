@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1585460993756533876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1275761305877241737}
+  - component: {fileID: 7823186303675275436}
+  - component: {fileID: 3500334313874018831}
+  - component: {fileID: 3256352916697718731}
+  m_Layer: 0
+  m_Name: ServerSessionAdapterWrapperTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1275761305877241737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585460993756533876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1050.6853, y: 464.35236, z: 2.8935833}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7823186303675275436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585460993756533876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d852ba81c4a074b42add67bdfe61db2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sessionClient: {fileID: 3256352916697718731}
+  worldObjectAdded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3500334313874018831}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.ServerSessionAdapterWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnWorldObjectAdded
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  worldObjectPropertiesUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3500334313874018831}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.ServerSessionAdapterWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnWorldObjectPropertiesUpdated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  worldObjectUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3500334313874018831}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.ServerSessionAdapterWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnWorldObjectUpdated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  worldObjectRemoved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3500334313874018831}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.ServerSessionAdapterWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnWorldObjectRemoved
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  worldObjectTransformed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3500334313874018831}
+        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Tests.Library.ServerSessionAdapterWrapperEventsHandler,
+          ZCU.TechnologyLab.Common.Unity.Tests.Library
+        m_MethodName: OnWorldObjectTransformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3500334313874018831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585460993756533876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a75417672beb4292b1ee7244185a6fa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3256352916697718731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585460993756533876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ec575226f5435f82bfd5c878d7d670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  started:
+    m_PersistentCalls:
+      m_Calls: []
+  startFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  disconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  reconnecting:
+    m_PersistentCalls:
+      m_Calls: []
+  reconnected:
+    m_PersistentCalls:
+      m_Calls: []

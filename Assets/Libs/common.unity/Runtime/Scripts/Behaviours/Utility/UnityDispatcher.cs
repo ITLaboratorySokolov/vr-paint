@@ -52,7 +52,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Utility
         {
             if (Instance == null)
             {
-                Debug.LogWarning("UnityDispatcher is not in a scene");
+                Debug.LogError("UnityDispatcher is not in a scene");
             }
 
             lock (s_lockObject)

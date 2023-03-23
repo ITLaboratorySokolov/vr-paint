@@ -38,8 +38,24 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections
         {
             if (!_reportChangesBackToSourceClient)
             {
-                _restDataClient.AddHeader(ConnectionIdHeaderName, _signalRSession.ConnectionId);
+                _signalRSession.Started += OnStarted;
+                _signalRSession.Reconnected += OnReconnected;
             }
+        }
+
+        private void OnReconnected()
+        {
+            SetConnectionIdToHeader();
+        }
+
+        private void OnStarted()
+        {
+            SetConnectionIdToHeader();
+        }
+
+        private void SetConnectionIdToHeader()
+        {
+            _restDataClient.AddHeader(ConnectionIdHeaderName, _signalRSession.ConnectionId);
         }
     }
 }

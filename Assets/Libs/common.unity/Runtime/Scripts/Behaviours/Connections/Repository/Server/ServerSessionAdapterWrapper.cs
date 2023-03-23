@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 using ZCU.TechnologyLab.Common.Connections.Repository.Server;
 using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.Utility;
 using ZCU.TechnologyLab.Common.Unity.Models.Attributes;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server
@@ -113,32 +114,47 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Serve
 
         private void OnWorldObjectPropertiesUpdated(string objectName)
         {
-            WorldObjectPropertiesUpdated?.Invoke(objectName);
-            _worldObjectPropertiesUpdated.Invoke(objectName);
+            UnityDispatcher.ExecuteOnUnityThread(() =>
+            {
+                WorldObjectPropertiesUpdated?.Invoke(objectName);
+                _worldObjectPropertiesUpdated.Invoke(objectName);
+            });
         }
 
         private void OnWorldObjectUpdated(string objectName)
         {
-            WorldObjectUpdated?.Invoke(objectName);
-            _worldObjectUpdated.Invoke(objectName);
+            UnityDispatcher.ExecuteOnUnityThread(() =>
+            {
+                WorldObjectUpdated?.Invoke(objectName);
+                _worldObjectUpdated.Invoke(objectName);
+            });
         }
 
         private void OnWorldObjectAdded(string objectName)
         {
-            WorldObjectAdded?.Invoke(objectName);
-            _worldObjectAdded.Invoke(objectName);
+            UnityDispatcher.ExecuteOnUnityThread(() =>
+            {
+                WorldObjectAdded?.Invoke(objectName);
+                _worldObjectAdded.Invoke(objectName);
+            });
         }
 
         private void OnWorldObjectRemoved(string objectName)
         {
-            WorldObjectRemoved?.Invoke(objectName);
-            _worldObjectRemoved.Invoke(objectName);
+            UnityDispatcher.ExecuteOnUnityThread(() =>
+            {
+                WorldObjectRemoved?.Invoke(objectName);
+                _worldObjectRemoved.Invoke(objectName);
+            });
         }
 
         private void OnWorldObjectTransformed(WorldObjectTransformDto transformDto)
         {
-            WorldObjectTransformed?.Invoke(transformDto);
-            _worldObjectTransformed.Invoke(transformDto);
+            UnityDispatcher.ExecuteOnUnityThread(() =>
+            {
+                WorldObjectTransformed?.Invoke(transformDto);
+                _worldObjectTransformed.Invoke(transformDto);
+            });
         }
     }
 }

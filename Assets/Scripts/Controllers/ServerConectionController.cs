@@ -88,9 +88,9 @@ public class ServerConectionController : MonoBehaviour
     {
         Debug.Log("Regained connection");
         paintCont.ToggleReadyForInput(true);
-        // TODO tady by se mìly stáhnout updaty ze serveru
         objCont.ObjectsClear();
         StartCoroutine(SyncCall());
+        SpawnLocalObjects();
     }
 
     /// <summary>
@@ -147,6 +147,7 @@ public class ServerConectionController : MonoBehaviour
         mc.parent = hr.transform;
 
         rigSpawner.SwapColor(true);
+        paintCont.SetBrushWidth();
     }
 
     /// <summary>
@@ -252,15 +253,22 @@ public class ServerConectionController : MonoBehaviour
     /// Send triangle strip mesh to server
     /// </summary>
     /// <param name="obj"> Game object </param>
-    internal void SendTriangleStripToServer(GameObject obj)
+    internal void SendTriangleStripToServer(GameObject obj, Texture2D t2D)
     {
+        if (obj == null)
+            return;
+
         // Set properties
         MeshPropertiesManager propsManager = obj.GetComponent<MeshPropertiesManager>();
         Mesh mesh = obj.GetComponent<MeshFilter>().mesh;
         propsManager.name = obj.name;
 
-        // TODO this doesnt send UVS?
-        Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle", "_MainTex", ConvertorHelper.Vec2ToFloats(mesh.uv));
+        Dictionary<string, byte[]> props;
+        if (t2D != null)
+            props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle", ConvertorHelper.Vec2ToFloats(mesh.uv), t2D.width, t2D.height, "RGBA", t2D.GetRawTextureData());
+        else
+            props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
+
         propsManager.SetProperties(props);
         propsManager.SetMesh(mesh);
 
@@ -272,20 +280,26 @@ public class ServerConectionController : MonoBehaviour
         var t = objCont.AddObjectAsync(obj);
         while (!t.IsCompleted)
             yield return null;
-
     }
 
     /// <summary>
     /// Update triangle strip mesh on server
     /// </summary>
     /// <param name="obj"> Game object </param>
-    internal void UpdateTriangleStripOnServer(GameObject obj)
+    internal void UpdateTriangleStripOnServer(GameObject obj, Texture2D t2D)
     {
+        if (obj == null)
+            return;
+
         MeshPropertiesManager propsManager = obj.GetComponent<MeshPropertiesManager>();
         Mesh mesh = obj.GetComponent<MeshFilter>().mesh;
 
-        Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle", "_MainTex", ConvertorHelper.Vec2ToFloats(mesh.uv));
-        // Dictionary<string, byte[]> props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
+        Dictionary<string, byte[]> props;
+        if (t2D != null)
+            props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle", ConvertorHelper.Vec2ToFloats(mesh.uv), t2D.width, t2D.height, "RGBA", t2D.GetRawTextureData());
+        else
+            props = serializer.Serialize(ConvertorHelper.Vec3ToFloats(mesh.vertices), mesh.GetIndices(0), "Triangle");
+
         propsManager.SetMesh(mesh);
         propsManager.SetProperties(props);
     }

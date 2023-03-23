@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
-using ZCU.TechnologyLab.Common.Serialization.Mesh;
-using ZCU.TechnologyLab.Common.Unity.Models.Utility;
 using ZCU.TechnologyLab.Common.Unity.Models.Utility.Events;
+using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties;
 using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties.Managers;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers
@@ -50,11 +48,14 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         /// </summary>
         private const string ManagedTypeDescription = "Mesh";
 
-        /// <summary>
-        /// Supported mesh primitives.
-        /// </summary>
-        private static readonly string[] SupportedPrimitives = { "Triangle" };
-
+        [SerializeField]
+        private List<PixelFormat> _supportedTexturePixelFormats = new()
+        {
+            new PixelFormat { Name = "RGB", Format = TextureFormat.RGB24 },
+            new PixelFormat { Name = "RGBA", Format = TextureFormat.RGBA32 },
+            new PixelFormat { Name = "ARGB", Format = TextureFormat.ARGB32 }
+        };
+        
         [SerializeField]
         [FormerlySerializedAs("optionalPropertiesManager")]
         private OptionalPropertiesManager _optionalPropertiesManager;
@@ -75,11 +76,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         /// </remarks>
         private MeshRenderer _meshRenderer;
 
-        /// <summary>
-        /// Mesh serializer factory.
-        /// </summary>
-        private MeshSerializerFactory _meshSerializerFactory = new();
-
+        private MeshManipulation _meshManipulation;
+        
         /// <inheritdoc/>
         public string ManagedType => ManagedTypeDescription;
 
@@ -89,32 +87,37 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         private void Awake()
         {
             _meshFilter = GetComponent<MeshFilter>();
-            InitializeMesh();
-            
             _meshRenderer = GetComponent<MeshRenderer>();
-            InitializeMaterial();
+            _meshManipulation = new MeshManipulation(_supportedTexturePixelFormats);
         }
         
         /// <inheritdoc/>
         public Dictionary<string, byte[]> GetProperties()
         {
-            var properties = _meshSerializerFactory.RawMeshSerializer.Serialize(
-                PointConverter.Point3DToFloat(_meshFilter.mesh.vertices), 
-                _meshFilter.mesh.triangles, SupportedPrimitives[0]);
+            var material = _meshRenderer.material;
+            var mesh = _meshFilter.mesh;
+
+            var properties = _meshManipulation.GetPropertiesFromMesh(mesh, material);
             
-            _optionalPropertiesManager.AddProperties(properties);
+            if (_optionalPropertiesManager != null)
+            {
+                _optionalPropertiesManager.AddProperties(properties);
+            }
+            
             return properties;
         }
 
         /// <inheritdoc/>
         public void SetProperties(Dictionary<string, byte[]> properties)
         {
-            if(_meshSerializerFactory.IsRawMesh(properties))
+            var mesh = _meshFilter.mesh;
+            var material = _meshRenderer.material;
+            
+            _meshManipulation.SetPropertiesToMesh(properties, mesh, material);
+
+            if (_optionalPropertiesManager != null)
             {
-                SetRawMeshProperties(properties);
-            } else if (_meshSerializerFactory.IsPlyFile(properties))
-            {
-                // TODO ply file
+                _optionalPropertiesManager.SetProperties(properties);
             }
         }
 
@@ -133,8 +136,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         public void SetVertices(Vector3[] vertices)
         {
             var mesh = _meshFilter.mesh;
-            mesh.vertices = vertices;
-            RecalculateMesh(mesh);
+            MeshManipulation.SetVertices(vertices, mesh);
+            MeshManipulation.RecalculateMesh(mesh);
 
             InvokePropertiesChanged();
         }
@@ -155,7 +158,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         {
             var mesh = _meshFilter.mesh;
             mesh.triangles = triangles;
-            RecalculateMesh(mesh);
+            MeshManipulation.RecalculateMesh(mesh);
 
             InvokePropertiesChanged();
         }
@@ -174,7 +177,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         /// <param name="triangles">Triangles.</param>
         public void SetVerticesAndTriangles(Vector3[] vertices, int[] triangles)
         {
-            UpdateMesh(vertices, triangles);
+            var mesh = _meshFilter.mesh;
+            MeshManipulation.UpdateMeshVerticesAndTriangles(vertices, triangles, mesh);
             InvokePropertiesChanged();
         }
         
@@ -199,36 +203,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
         public void SetMaterial(Material material)
         {
             _meshRenderer.material = material;
-        }
-        
-        private void InitializeMaterial()
-        {
-            if (_meshRenderer.material == null)
-            {
-                _meshRenderer.material = new Material(Shader.Find("Diffuse"));
-            }
-        }
-
-        private void InitializeMesh()
-        {
-            if (_meshFilter.mesh == null)
-            {
-                _meshFilter.mesh = new Mesh();
-            }
-        }
-        
-        private void UpdateMesh(Vector3[] vertices, int[] triangles)
-        {
-            var mesh = _meshFilter.mesh;
-            mesh.vertices = vertices;
-            mesh.triangles = triangles;
-            RecalculateMesh(mesh);
-        }
-        
-        private static void RecalculateMesh(Mesh mesh)
-        {
-            mesh.RecalculateNormals();
-            mesh.RecalculateBounds();
+            InvokePropertiesChanged();
         }
 
         private void InvokePropertiesChanged()
@@ -238,21 +213,6 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Mana
                 ObjectName = gameObject.name,
                 Properties = GetProperties()
             });
-        }
-        
-        private void SetRawMeshProperties(Dictionary<string, byte[]> properties)
-        {
-            var meshSerializer = _meshSerializerFactory.RawMeshSerializer;
-            if (!SupportedPrimitives.Contains(meshSerializer.PrimitiveSerializer.Deserialize(properties)))
-            {
-                return;
-            }
-
-            var vertices = PointConverter.FloatToPoint3D(meshSerializer.VerticesSerializer.Deserialize(properties));
-            var triangles = meshSerializer.IndicesSerializer.Deserialize(properties);
-            UpdateMesh(vertices, triangles);
-
-            _optionalPropertiesManager.SetProperties(properties);
         }
     }
 }

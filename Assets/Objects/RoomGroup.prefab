@@ -143,7 +143,6 @@ GameObject:
   - component: {fileID: 5693552669717003168}
   - component: {fileID: 5693552669717003169}
   - component: {fileID: 5693552669717003182}
-  - component: {fileID: 5693552669717003170}
   - component: {fileID: 5693552669717003171}
   m_Layer: 0
   m_Name: Ground
@@ -307,20 +306,6 @@ MonoBehaviour:
   m_Teleporting:
     m_PersistentCalls:
       m_Calls: []
---- !u!64 &5693552669717003170
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5693552669717003172}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &5693552669717003171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -707,7 +692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ec92911c468db45be1f48d13af948c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallCollisionProcessor: {fileID: 5693552669577773641}
-  roomCenter: {fileID: 0}
-  walkableGround: {fileID: 5693552669717003172}
-  displayGround: {fileID: 7307781011794227693}
+  irlRoomWalls: {fileID: 0}
+  player: {fileID: 0}
+  irlGround: {fileID: 0}

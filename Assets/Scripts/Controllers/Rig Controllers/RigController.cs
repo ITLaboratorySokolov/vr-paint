@@ -128,6 +128,13 @@ public class RigController : MonoBehaviour
         handRNM = "HandR_" + objCont.clientName.Value;
         headNM = "Head_" + objCont.clientName.Value;
 
+        if (lHandObj == null)
+            lHandObj = SpawnRigComponent(lhand, lhandRig, handLNM);
+        if (rHandObj == null)
+            rHandObj = SpawnRigComponent(rhand, rhandRig, handRNM);
+        if (headObj == null)
+            headObj = SpawnRigComponent(head, headRig, headNM);
+
         // left hand
         bool res = await SendRigComponent(lHandObj);
         res = await SendRigComponent(rHandObj);

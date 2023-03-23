@@ -7,11 +7,20 @@ public class MenuController : MonoBehaviour
 {
     [Header("Canvas objects")]
     /// <summary> Displayed brush name </summary>
-    public Text brushNameDisplayTXT;
+    [SerializeField]
+    Text brushNameDisplayTXT;
     /// <summary> Color picker </summary>
-    public FlexibleColorPicker picker;
+    [SerializeField]
+    FlexibleColorPicker picker;
     /// <summary> Width slider </summary>
-    public Slider widthSlider;
+    [SerializeField]
+    Slider widthSlider;
+    /// <summary> Exit panel </summary>
+    [SerializeField]
+    GameObject exitPanel;
+    /// <summary> Controls panel </summary>
+    [SerializeField]
+    GameObject controlsPanel;
 
     [Header("Scripts")]
     public LanguageController langController;
@@ -50,5 +59,20 @@ public class MenuController : MonoBehaviour
     public void SwitchLanguage()
     {
         langController.SwapLanguage();
+    }
+
+    public void ToggleExitCanvas(bool val)
+    {
+        exitPanel.SetActive(val);
+    }
+
+    public void OnExit()
+    {
+        Application.Quit();
+    }
+
+    public void ToggleControlsPanel(bool val)
+    {
+        controlsPanel.SetActive(val);
     }
 }
