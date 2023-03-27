@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: "Fakulta aplikovan\xFDch v\u011Bd, Z\u010CU"
-  productName: VR Paint
+  productName: VRPaint
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -42,7 +42,7 @@ PlayerSettings:
   m_SplashScreenLogos:
   - logo: {fileID: 21300000, guid: 87cdb51f4a728304d8314e90b8fa6c97, type: 3}
     duration: 4
-  m_VirtualRealitySplashScreen: {fileID: 0}
+  m_VirtualRealitySplashScreen: {fileID: 2800000, guid: 87cdb51f4a728304d8314e90b8fa6c97, type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
@@ -136,7 +136,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0
+  bundleVersion: 2.0
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}
@@ -173,7 +173,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.Fakulta-aplikovan--ch-v--d--Z--U.VR-Paint
+    Standalone: com.Fakulta-aplikovan--ch-v--d--Z--U.VRPaint
   buildNumber:
     Standalone: 0
     iPhone: 0

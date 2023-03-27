@@ -165,6 +165,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties
         static RenderTexture renderTexture;
         private static Texture2D ToTexture2D(Texture texture)
         {
+            /*
             Texture2D texture2D = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
             // texture2D.Reinitialize(texture.width, texture.height); 
 
@@ -181,15 +182,14 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties
 
             UnityEngine.Object.Destroy(currentRT);
             return texture2D;
+            */
 
-            /*
             if (texture is not Texture2D texture2D)
             {
                 throw new InvalidOperationException("Texture is not 2D");
             }
 
             return texture2D;
-            */
         }
     }
 }

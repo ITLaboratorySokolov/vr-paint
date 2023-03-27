@@ -166,7 +166,7 @@ public static class ConvertorHelper
     /// </summary>
     /// <param name="texture"> Source texture </param>
     /// <returns> Resulting texture </returns>
-    public static Texture2D TextureToTexture2D(Texture texture)
+    public static Texture2D TextureToTexture2D(this Texture texture)
     {
         Texture2D texture2D = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
         // texture2D.Reinitialize(texture.width, texture.height); 
@@ -184,5 +184,26 @@ public static class ConvertorHelper
 
         UnityEngine.Object.Destroy(currentRT);
         return texture2D;
+    }
+
+    /// <summary>
+    /// Changes format of texture
+    /// </summary>
+    /// <param name="oldTexture"> Texture </param>
+    /// <param name="newFormat"> New format </param>
+    /// <returns> New texture with desired format </returns>
+    public static Texture2D ChangeFormat(this Texture2D oldTexture, TextureFormat newFormat)
+    {
+        if (oldTexture == null)
+            return null;
+
+        //Create new empty Texture
+        Texture2D newTex = new Texture2D(2, 2, newFormat, false);
+        //Copy old texture pixels into new one
+        newTex.SetPixels(oldTexture.GetPixels());
+        //Apply
+        newTex.Apply();
+
+        return newTex;
     }
 }

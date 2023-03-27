@@ -24,7 +24,8 @@ public class LineImporter
             tex = new Texture2D(2, 2);
             tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
         }
-        b.Texture = tex;
+        b.Texture = tex.TextureToTexture2D();
+        // b.Texture = ConvertorHelper.TextureToTexture2D(tex);
 
         return b;
     }
