@@ -150,6 +150,25 @@ public class ServerConectionController : MonoBehaviour
         paintCont.SetBrushWidth();
     }
 
+    internal void OnExit()
+    {
+        StartCoroutine(ExitCorout());
+    }
+
+    private IEnumerator ExitCorout()
+    {
+        yield return StartCoroutine(RemoveRigCorout());
+        Application.Quit();
+    }
+
+    IEnumerator RemoveRigCorout()
+    {
+        var tr = rigSpawner.RemoveRigFromServer();
+
+        while (!tr.IsCompleted)
+            yield return null;
+    }
+
     /// <summary>
     /// Called when successfully connected to server
     /// </summary>

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ZCU.TechnologyLab.Common.Connections.Client.Session;
+using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session;
 
 public class MenuController : MonoBehaviour
 {
@@ -9,6 +12,8 @@ public class MenuController : MonoBehaviour
     /// <summary> Displayed brush name </summary>
     [SerializeField]
     Text brushNameDisplayTXT;
+    [SerializeField]
+    TMP_Text connectionTXT;
     /// <summary> Color picker </summary>
     [SerializeField]
     FlexibleColorPicker picker;
@@ -66,13 +71,42 @@ public class MenuController : MonoBehaviour
         exitPanel.SetActive(val);
     }
 
-    public void OnExit()
+    public void OnExit(ServerConectionController scc)
     {
-        Application.Quit();
+        scc.OnExit();
     }
 
     public void ToggleControlsPanel(bool val)
     {
         controlsPanel.SetActive(val);
+    }
+
+    /// <summary>
+    /// Display connection status
+    /// </summary>
+    /// <param name="connected"> Is connected to server </param>
+    public void SetConnection(SignalRSessionWrapper session) // bool connected)
+    {
+        Debug.Log(session.State.ToString());
+
+        string state = langController.GetSessionStateString(session.State);
+
+        if (session.State == SessionState.Connected)
+            ChangeConnection(state, Color.green);
+        else if (session.State == SessionState.Reconnecting)
+            ChangeConnection(state, Color.yellow);
+        else
+            ChangeConnection(state, Color.red);
+    }
+
+    /// <summary>
+    /// Change displayed connection status
+    /// </summary>
+    /// <param name="msg"> Message </param>
+    /// <param name="c"> Colour of text </param>
+    public void ChangeConnection(string msg, Color c)
+    {
+        connectionTXT.text = msg;
+        connectionTXT.color = c;
     }
 }

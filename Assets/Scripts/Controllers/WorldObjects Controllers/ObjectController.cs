@@ -21,7 +21,7 @@ public class ObjectController : MonoBehaviour
         return woManager.LoadServerContentAsync();
     }
 
-    public async Task ObjectRemoved(string name)
+    public async Task RemoveObject(string name)
     {
         Debug.Log("Remove");
         await woManager.RemoveObjectAsync(name);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ZCU.TechnologyLab.Common.Connections.Client.Session;
 
 public class LanguageController : MonoBehaviour
 {
@@ -122,5 +123,24 @@ public class LanguageController : MonoBehaviour
             yesBT.GetComponentInChildren<TMP_Text>().text = yesEN;
             noBT.GetComponentInChildren<TMP_Text>().text = noEN;
         }
+    }
+
+    internal string GetSessionStateString(SessionState state)
+    {
+        if (lang == "CZ")
+        {
+            if (state == SessionState.Closed)
+                return "Odpojeno";
+            if (state == SessionState.Connected)
+                return "Pøipojeno";
+            if (state == SessionState.Reconnecting)
+                return "Pøipojování";
+            if (state == SessionState.Closing)
+                return "Odpojování";
+            if (state == SessionState.Starting)
+                return "Zaèíná";
+        }
+
+        return state.ToString();
     }
 }

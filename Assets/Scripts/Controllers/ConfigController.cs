@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -39,7 +40,12 @@ public class ConfigController : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField]
     GameObject controlsPanel;
-
+    
+    [Header("ErrorIcons")]
+    [SerializeField]
+    GameObject errorNM;
+    [SerializeField]
+    GameObject errorURL;
 
     // Start is called before the first frame update
     private void Start()
@@ -65,6 +71,22 @@ public class ConfigController : MonoBehaviour
     {
         serverUrl.Value = urlFLD.text.Trim();
         clientName.Value = nameFLD.text.Trim();
+
+        urlFLD.text = serverUrl.Value;
+        nameFLD.text = clientName.Value;
+
+        bool noClient = false;
+        if (clientName.Value == null || clientName.Value.Length == 0)
+            noClient = true;
+        errorNM.SetActive(noClient);
+
+        bool noUrl = false;
+        if (serverUrl.Value == null || serverUrl.Value.Length == 0)
+            noUrl = true;
+        errorURL.SetActive(noUrl);
+
+        if (noUrl || noClient)
+            return;
 
         SceneManager.LoadScene(nextScene);
     }
@@ -92,6 +114,15 @@ public class ConfigController : MonoBehaviour
                 roomSize.Value = new Vector2(x, z);
             }
         }
+    }
+
+    /// <summary>
+    /// Filter username
+    /// - only a-zA-Z0-9_- allowed
+    /// </summary>
+    public void FilterName()
+    {
+        nameFLD.text = Regex.Replace(nameFLD.text, "[^a-zA-Z0-9_-]+", "", RegexOptions.Compiled);
     }
 
     public void OnExit()
