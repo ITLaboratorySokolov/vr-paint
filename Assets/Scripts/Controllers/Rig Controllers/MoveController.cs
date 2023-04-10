@@ -1,17 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script used to move game object with set parent transform
+/// </summary>
 public class MoveController : MonoBehaviour
 {
     public Vector3 modPos;
     public Transform parent;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

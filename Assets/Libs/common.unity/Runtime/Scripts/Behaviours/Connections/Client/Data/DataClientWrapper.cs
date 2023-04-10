@@ -17,13 +17,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Data
         {
             _dataClient = CreateClient();
         }
-        
+
         protected abstract IDataClient CreateClient();
-        
+
         /// <inheritdoc/>
-        public void AddHeader(string name, string value)
+        public void SetHeader(string name, string value)
         {
-            _dataClient.AddHeader(name, value);
+            _dataClient.SetHeader(name, value);
         }
 
         /// <inheritdoc/>

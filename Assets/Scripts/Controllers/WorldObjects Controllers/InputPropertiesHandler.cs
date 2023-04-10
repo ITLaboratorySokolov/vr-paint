@@ -1,23 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Script used to set properties of incoming game object from the server
+/// - properties are based on the name of the game object
+/// </summary>
 public class InputPropertiesHandler : MonoBehaviour
 {
-    float timeUntilUpdate;
-
     [SerializeField]
     public ObjectController objCont;
     [SerializeField]
     public ServerConectionController serverConnection;
-
-    Vector3 newPos;
-    Vector3 lastPos;
-
-    Quaternion newRot;
-    Quaternion lastRot;
 
     [SerializeField]
     TextureProperty texProp;
@@ -32,14 +24,11 @@ public class InputPropertiesHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timeUntilUpdate = 0;
-
         MeshRenderer mr = GetComponent<MeshRenderer>();
         Color c = mr.material.GetColor("_Color"); ;
         Texture t = mr.material.GetTexture("_MainTex");
 
-        //texProp.textureName = "_MainTex";
-
+        // object is a line
         if (name.StartsWith("Line"))
         {
             mr.material = lineMaterial;
@@ -52,6 +41,7 @@ public class InputPropertiesHandler : MonoBehaviour
 
             // GetComponent<Rigidbody>().useGravity = false;
         }
+        // object is a box
         else if (name.StartsWith("CardboardBox"))
         {
             mr.material = boxMaterial;
@@ -59,6 +49,7 @@ public class InputPropertiesHandler : MonoBehaviour
             if (t != null)
                 mr.material.SetTexture("_MainTex", t);
         }
+        // object is a general object
         else
         {
             mr.material = generalMaterial;
@@ -68,16 +59,5 @@ public class InputPropertiesHandler : MonoBehaviour
         }
 
     }
-
-    public void StartPosition()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }   
 
 }

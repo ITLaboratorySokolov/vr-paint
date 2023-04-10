@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Language controller handling the switch of language in intro screen
+/// - app supports czech and english
+/// </summary>
 public class ConfigLanguageController : MonoBehaviour
 {
     string urlCZ = "URL serveru:";
@@ -47,7 +49,9 @@ public class ConfigLanguageController : MonoBehaviour
     [SerializeField()]
     TMP_InputField urlFLD;
 
-
+    /// <summary>
+    /// Swap languages
+    /// </summary>
     public void SwapLanguage()
     {
         if (lang == "EN")
@@ -59,6 +63,9 @@ public class ConfigLanguageController : MonoBehaviour
         SetControls();
     }
 
+    /// <summary>
+    /// Swap displayed labels
+    /// </summary>
     public void SwapLabels()
     {
         if (lang == "EN")
@@ -85,6 +92,9 @@ public class ConfigLanguageController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Swap displayed controls
+    /// </summary>
     private void SetControls()
     {
         if (lang == "CZ")

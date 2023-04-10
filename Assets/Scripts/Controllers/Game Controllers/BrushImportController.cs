@@ -1,9 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+/// <summary>
+/// Script used to import brush data
+/// </summary>
 public class BrushImportController : MonoBehaviour
 {
     [SerializeField]
@@ -15,10 +16,12 @@ public class BrushImportController : MonoBehaviour
     void Start()
     {
         li = new LineImporter();
-
         ReloadBrushes();
     }
 
+    /// <summary>
+    /// Load brushes from folder Brushes on the same level as the exe
+    /// </summary>
     public void ReloadBrushes()
     {
         Debug.Log("Loading brushes...");
@@ -34,21 +37,13 @@ public class BrushImportController : MonoBehaviour
                 // if they are xmls import as brush
                 if (fileName.EndsWith(".xml"))
                 {
-                    // TODO catch errors
                     Brush b = li.ImportBrush(fileName.Substring(0, fileName.Length - 4));
                     bList.Add(b);
                 }
-
             }
         }
 
         // add to brushes
         paintController.AddBrushes(bList);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -1,10 +1,13 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 
+/// <summary>
+/// Script used to controll the paint actions
+/// - reacts to brush swaps and swap between brush and eraser
+/// - controls the painting of a line
+/// </summary>
 public class PaintController : MonoBehaviour
 {
     [Header("Action input references")]
@@ -51,9 +54,13 @@ public class PaintController : MonoBehaviour
     /// <summary> Line counter - number of present lines </summary>
     internal int lineCounter;
 
+    /// <summary> Currently painted triangle strip </summary>
     TriangleStrip currentLineStrip;
+    /// <summary> Used strip generator </summary>
     TriangleStripGenerator stripGenerator;
+    /// <summary> When painting started </summary>
     float startPaintTime;
+    /// <summary> Current time </summary>
     float currPaintTime;
 
     [Header("Brushes")]
@@ -150,11 +157,11 @@ public class PaintController : MonoBehaviour
     }
 
     /// <summary>
-    /// Get all children with given tag
+    /// Get first child with given tag
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="tag"></param>
-    /// <returns></returns>
+    /// <param name="t"> Parent transform </param>
+    /// <param name="tag"> Tag </param>
+    /// <returns> Child with tag or null </returns>
     private Transform GetChildWithTag(Transform t, string tag)
     {
         foreach (Transform tr in t)
@@ -193,7 +200,6 @@ public class PaintController : MonoBehaviour
     /// <summary>
     /// Toggle eraser brush
     /// </summary>
-    /// <param name="obj"></param>
     private void ToggleEraser(InputAction.CallbackContext obj)
     {
         // If currently painting
@@ -213,7 +219,6 @@ public class PaintController : MonoBehaviour
     /// Switch active brush
     /// - set current index
     /// </summary>
-    /// <param name="obj"></param>
     private void SwitchBrush(InputAction.CallbackContext obj)
     {
         // If eraser is active
@@ -263,8 +268,11 @@ public class PaintController : MonoBehaviour
             // create a new mesh
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
             o.name = "Line" + clientName.Value + lineCounter;
-            currentLineStrip = new TriangleStrip(controllerGrip.position);
-            o.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
+
+            float widthModifier = Mathf.Max(0.001f, brushes[currentBrush].WidthModifier[0]);
+            float w = brushes[currentBrush].Width * widthModifier;
+            currentLineStrip = new TriangleStrip(controllerGrip.position, controllerGrip.up.normalized, w);
+            // o.GetComponent<MeshFilter>().mesh = currentLineStrip.mesh;
             
             o.GetComponent<MeshCollider>().enabled = true;
             Debug.Log("Set colliders");
@@ -303,8 +311,7 @@ public class PaintController : MonoBehaviour
                 widthModifier = b.WidthModifier[modLen - 1];
             else
             {
-                // TODO shouldnt i divide by timestep?? to get "percentage" how far it is
-                t = (paintTime % timestep) / timestep; // (paintTime - (timestep * startIn));
+                t = (paintTime % timestep) / timestep; 
                 widthModifier = Mathf.Lerp(b.WidthModifier[startIn], b.WidthModifier[endIn], t);
             }
         }
@@ -408,7 +415,7 @@ public class PaintController : MonoBehaviour
     /// Toggle when this script should react on painting input
     /// Switching between two controller modes, painting and UI interaction
     /// </summary>
-    /// <param name="val"></param>
+    /// <param name="val"> True if painting enabled, false if not </param>
     public void TogglePaintingEnabled(bool val)
     {
         paintingEnabled = val;

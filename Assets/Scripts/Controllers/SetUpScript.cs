@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 
-// TODO path to config file
-
 /// <summary>
 /// Script managing the set up of the application
 /// - reads config file
@@ -38,9 +36,9 @@ public class SetUpScript : MonoBehaviour
     Vec2FVariable roomSize;
 
     /// <summary>
-    /// Set up configuration1before application starts
-    /// - read from config min and max recorded depth, horizontal and vertical pan, zoom and server url
-    /// </summary>
+    /// Set up configuration before application starts
+    /// -  set room size
+    /// /// </summary>
     private void Awake()
     {
         pathToConfig = Application.dataPath + "/../config.txt"; // Directory.GetCurrentDirectory() + "\\config.txt";
@@ -55,6 +53,9 @@ public class SetUpScript : MonoBehaviour
             resetAction.action.performed += ResetSetUp;
     }
 
+    /// <summary>
+    /// Read config file
+    /// </summary>
     private void ReadConfig()
     {
         if (File.Exists(pathToConfig))
@@ -80,6 +81,10 @@ public class SetUpScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reset configuration
+    /// </summary>
+    /// <param name="ctx"></param>
     public void ResetSetUp(InputAction.CallbackContext ctx)
     {
         Debug.Log("Reseting configuration!");

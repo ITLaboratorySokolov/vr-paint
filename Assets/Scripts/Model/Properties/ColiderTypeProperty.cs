@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Serialization.Properties;
@@ -13,6 +12,7 @@ public class ColiderTypeProperty : OptionalProperty
     /// <summary> Property name </summary>
     string propertyName = "ColiderType";
 
+    [Header("Colliders")]
     [SerializeField()]
     BoxCollider boxCol;
     [SerializeField()]

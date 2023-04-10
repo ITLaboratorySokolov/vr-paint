@@ -1,47 +1,58 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects;
-using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Storage;
 using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Storage;
 
+/// <summary>
+/// Script used for sending, deleting or updating objects on server
+/// </summary>
 public class ObjectController : MonoBehaviour
 {
-    public WorldObjectManager woManager;
-    public WorldObjectMemoryStorage woMemoryStorage;
-    public ServerDataAdapterWrapper dataAdapter;
+    [SerializeField]
+    WorldObjectManager woManager;
+    [SerializeField]
+    WorldObjectMemoryStorage woMemoryStorage;
+    [SerializeField]
+    ServerDataAdapterWrapper dataAdapter;
+    [SerializeField]
     public StringVariable clientName;
 
+    /// <summary>
+    /// Load server content
+    /// </summary>
     public Task<IEnumerable<GameObject>> ObjectRecieve()
     {
         Debug.Log("Recieve all");
         return woManager.LoadServerContentAsync();
     }
 
+    /// <summary>
+    /// Remove object from server
+    /// </summary>
+    /// <param name="name"> Name of object </param>
     public async Task RemoveObject(string name)
     {
         Debug.Log("Remove");
         await woManager.RemoveObjectAsync(name);
     }
 
+    /// <summary>
+    /// Clear local content
+    /// </summary>
     public void ObjectsClear()
     {
         Debug.Log("Clear");
         woManager.ClearLocalContent();
     }
 
-    public void RemoveObjectFromLocal(string name)
-    {
-        Debug.Log("Remove local");
-        GameObject o;
-        bool res = woMemoryStorage.Remove(name, out o);
-        if (res)
-            Destroy(o);
-    }
-
+    /// <summary>
+    /// Remove object from server and local
+    /// </summary>
+    /// <param name="name"> Name of object </param>
+    /// <param name="obj"> Game object </param>
     public async Task DestroyObject(string name, GameObject obj)
     {
         Debug.Log("Destroy " + name);
@@ -50,28 +61,45 @@ public class ObjectController : MonoBehaviour
         Debug.Log("Destroyed " + name);
     }
 
+    /// <summary>
+    /// Add object to server
+    /// </summary>
+    /// <param name="obj"> Game object </param>
     public async Task AddObjectAsync(GameObject obj)
     {
         Debug.Log("Add " + obj.name);
         await woManager.AddObjectAsync(obj);
-
     }
 
+    /// <summary>
+    /// Update properties of object
+    /// </summary>
+    /// <param name="name"> Name of object </param>
+    /// <returns></returns>
     public async Task UpdateProperties(string name)
     {
         Debug.Log("Update " + name);
         await woManager.UpdateObjectAsync(name);
     }
 
+    /// <summary>
+    /// Does server contain object with name
+    /// </summary>
+    /// <param name="name"> Name of object </param>
+    /// <returns></returns>
     public async Task<bool> ContainsObject(string name)
     {
         return await dataAdapter.ContainsWorldObjectAsync(name);
     }
 
-    public async Task RefreshObject(string name)
+    /// <summary>
+    /// New object was added at runtime
+    /// </summary>
+    /// <param name="o"></param>
+    public void AddedNewObjectAtRuntime(GameObject o)
     {
-        await dataAdapter.GetAllWorldObjectsAsync();
-        //var d = await dataAdapter.GetWorldObjectAsync(name);
-        Debug.Log("Refreshed " + name);
+        var iph = o.GetComponent<InputPropertiesHandler>();
+        if (iph != null)
+            iph.objCont = this;
     }
 }

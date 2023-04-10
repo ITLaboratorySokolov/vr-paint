@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class used to freeze rotation of a game object
+/// </summary>
 public class FreezeRotation : MonoBehaviour
 {
     Quaternion iniRot;
@@ -10,7 +11,6 @@ public class FreezeRotation : MonoBehaviour
     void Start()
     {
         iniRot = transform.rotation;
-
     }
 
     // Update is called once per frame

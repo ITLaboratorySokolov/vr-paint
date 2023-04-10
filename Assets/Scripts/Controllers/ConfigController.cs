@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -10,10 +7,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
 
+/// <summary>
+/// Script used to controll the intro screen and set configuration of the application
+/// </summary>
 public class ConfigController : MonoBehaviour
 {
     [Header("Config")]
-    /// <summary> Path to config file </summary>
     string pathToConfig;
 
     [SerializeField]
@@ -22,10 +21,8 @@ public class ConfigController : MonoBehaviour
     ConfigLanguageController langController;
 
     [Header("Variables")]
-    /// <summary> Server url </summary>
     [SerializeField]
     private StringVariable serverUrl;
-    /// <summary> Name of client </summary>
     [SerializeField]
     private StringVariable clientName;
     [SerializeField]
@@ -61,12 +58,18 @@ public class ConfigController : MonoBehaviour
         DisplayValues();
     }
 
+    /// <summary>
+    /// Display values on screen
+    /// </summary>
     private void DisplayValues()
     {
         nameFLD.text = clientName.Value;
         urlFLD.text = serverUrl.Value;
     }
 
+    /// <summary>
+    /// On Play button clicked
+    /// </summary>
     public void Play()
     {
         serverUrl.Value = urlFLD.text.Trim();
@@ -75,11 +78,13 @@ public class ConfigController : MonoBehaviour
         urlFLD.text = serverUrl.Value;
         nameFLD.text = clientName.Value;
 
+        // if no client name set
         bool noClient = false;
         if (clientName.Value == null || clientName.Value.Length == 0)
             noClient = true;
         errorNM.SetActive(noClient);
 
+        // if no server url set
         bool noUrl = false;
         if (serverUrl.Value == null || serverUrl.Value.Length == 0)
             noUrl = true;
@@ -91,6 +96,9 @@ public class ConfigController : MonoBehaviour
         SceneManager.LoadScene(nextScene);
     }
 
+    /// <summary>
+    /// Read config file
+    /// </summary>
     private void ReadConfig()
     {
         if (File.Exists(pathToConfig))
@@ -125,11 +133,18 @@ public class ConfigController : MonoBehaviour
         nameFLD.text = Regex.Replace(nameFLD.text, "[^a-zA-Z0-9_-]+", "", RegexOptions.Compiled);
     }
 
+    /// <summary>
+    /// On Exit button clicked
+    /// </summary>
     public void OnExit()
     {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Toggle panel displaying app controls
+    /// </summary>
+    /// <param name="val"> True for panel on, false for panel off </param>
     public void ToggleControlsPanel(bool val)
     {
         controlsPanel.SetActive(val);

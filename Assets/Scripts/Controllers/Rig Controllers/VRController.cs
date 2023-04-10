@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.XR.Management;
 
+/// <summary>
+/// Script used to disable OpenXR
+/// </summary>
 public class VRController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -9,7 +12,10 @@ public class VRController : MonoBehaviour
         StopXR();
     }
 
-
+    /// <summary>
+    /// Stop OpenXR
+    /// - so the application is displayed and controlled on desktop only
+    /// </summary>
     void StopXR()
     {
         if (XRGeneralSettings.Instance.Manager.isInitializationComplete)
@@ -20,14 +26,4 @@ public class VRController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void OnDestroy()
-    {
-
-    }
 }

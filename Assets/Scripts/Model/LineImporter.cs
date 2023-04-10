@@ -1,11 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
 
+/// <summary>
+/// Class used to import brush data
+/// </summary>
 public class LineImporter
 {
+    /// <summary>
+    /// Import brush with name brushname saved in directory dirPath
+    /// - brush file named "<brushname>.xml"
+    /// - texture file named "<brushname>.png"
+    /// </summary>
+    /// <param name="brushname"> Name of the brush </param>
+    /// <param name="dirPath"> Directory the brush is saved in </param>
+    /// <returns> Imported brush </returns>
     public Brush ImportBrush(string brushname)
     {
         Brush b;
@@ -24,7 +33,10 @@ public class LineImporter
             tex = new Texture2D(2, 2);
             tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
         }
-        b.Texture = tex.TextureToTexture2D();
+        if (tex != null)
+            b.Texture = tex.TextureToTexture2D();
+        else
+            b.Texture = null;
         // b.Texture = ConvertorHelper.TextureToTexture2D(tex);
 
         return b;

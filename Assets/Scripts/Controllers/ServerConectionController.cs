@@ -7,16 +7,17 @@ using UnityEngine.Events;
 using ZCU.TechnologyLab.Common.Connections.Client.Session;
 using ZCU.TechnologyLab.Common.Serialization.Mesh;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.AssetVariables;
-using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session;
-using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Server;
-using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
 
+/// <summary>
+/// Script used to controll connection to server
+/// - handles connecting, disconnecting, reconnecting
+/// - processes mesh to be send to server
+/// </summary>
 public class ServerConectionController : MonoBehaviour
 {
     [Header("Controllers")]
-    /// <summary> Paint controller </summary>
     [SerializeField]
     PaintController paintCont;
     [SerializeField]
@@ -25,30 +26,25 @@ public class ServerConectionController : MonoBehaviour
     RigController rigSpawner;
 
     [Header("Serializers")]
-    /// <summary> Mesh serializer </summary>
     RawMeshSerializer serializer;
 
     [Header("Connection")]
     /// <summary> Session </summary>
     [SerializeField]
     SignalRSessionWrapper session;
-
-    WorldObjectManager wom;
-
-
+    /// <summary> Name of client </summary>
+    [SerializeField]
+    private StringVariable clientName;
     /// <summary> Synchronization call has been finished </summary>
     internal bool syncCallDone;
     /// <summary> Highest number of line on server </summary>
     int serverLines;
-    /// <summary> Name of client </summary>
-    [SerializeField]
-    private StringVariable clientName;
 
     [Header("Actions")]
     /// <summary> Action performed upon Start </summary>
     [SerializeField]
     UnityEvent actionStart = new UnityEvent();
-    /// <summary Action performed upon Destroy </summary>
+    /// <summary> Action performed upon Destroy </summary>
     [SerializeField]
     UnityEvent actionEnd = new UnityEvent();
 
@@ -65,37 +61,61 @@ public class ServerConectionController : MonoBehaviour
     /// </summary>
     public void ConnectionFailed()
     {
+        syncCallDone = false;
         paintCont.ToggleReadyForInput(false);
+
         Debug.Log("Launching restart procedure");
+
         StartCoroutine(RestartConnection());
     }
 
+    /// <summary>
+    /// On disconnected from server
+    /// - clear local objects
+    /// - start reconnect procedure
+    /// </summary>
     public void OnDisconnected()
     {
+        syncCallDone = false;
         paintCont.ToggleReadyForInput(false);
         objCont.ObjectsClear();
+        rigSpawner.SpawnRig();
+
         Debug.Log("Disconnected - Launching restart procedure");
+
         StartCoroutine(RestartConnection());
     }
 
+    /// <summary>
+    /// On reconnecting to server
+    /// </summary>
     public void OnReconnecting()
     {
-        Debug.Log("Lost connection");
+        syncCallDone = false;
         paintCont.ToggleReadyForInput(false);
+     
+        Debug.Log("Lost connection");
     }
 
+    /// <summary>
+    /// On reconnected to server
+    /// - delete local objects 
+    /// - spawn local object again
+    /// </summary>
     public void OnReconnected()
     {
-        Debug.Log("Regained connection");
         paintCont.ToggleReadyForInput(true);
         objCont.ObjectsClear();
+
+        Debug.Log("Regained connection");
+        
         StartCoroutine(SyncCall());
         SpawnLocalObjects();
     }
 
     /// <summary>
     /// Restarting procedure
-    /// - creates a minimum 5s delay
+    /// - creates a 5s delay between attempts
     /// </summary>
     /// <returns></returns>
     IEnumerator RestartConnection()
@@ -112,11 +132,17 @@ public class ServerConectionController : MonoBehaviour
         syncCallDone = false;
     }
 
+    /// <summary>
+    /// Spawn local objects
+    /// </summary>
     public void SpawnLocalObjects()
     {
         StartCoroutine(SpawnRigCorout());
     }
 
+    /// <summary>
+    /// Spawn rig and send it to server
+    /// </summary>
     IEnumerator SpawnRigCorout()
     {
         yield return new WaitUntil(() => syncCallDone);
@@ -150,17 +176,27 @@ public class ServerConectionController : MonoBehaviour
         paintCont.SetBrushWidth();
     }
 
+    /// <summary>
+    /// On application exit
+    /// </summary>
     internal void OnExit()
     {
         StartCoroutine(ExitCorout());
     }
 
+    /// <summary>
+    /// Exit coroutine
+    /// - remove rig from server and exit application
+    /// </summary>
     private IEnumerator ExitCorout()
     {
         yield return StartCoroutine(RemoveRigCorout());
         Application.Quit();
     }
 
+    /// <summary>
+    /// Remove rig from server
+    /// </summary>
     IEnumerator RemoveRigCorout()
     {
         var tr = rigSpawner.RemoveRigFromServer();
@@ -195,7 +231,6 @@ public class ServerConectionController : MonoBehaviour
             Debug.Log("Sync call completed");
         else 
             Debug.Log("Sync call unsuccessfull");
-
     }
 
     /// <summary>
@@ -294,6 +329,10 @@ public class ServerConectionController : MonoBehaviour
         StartCoroutine(AddObjectCoroutine(obj));
     }
 
+    /// <summary>
+    /// Add object to server
+    /// </summary>
+    /// <param name="obj"> Object to add </param>
     IEnumerator AddObjectCoroutine(GameObject obj)
     {
         var t = objCont.AddObjectAsync(obj);
@@ -332,14 +371,17 @@ public class ServerConectionController : MonoBehaviour
     internal void DestroyObjectOnServer(string name, GameObject obj)
     {
         StartCoroutine(DestroyObjectCoroutine(name, obj));
-
     }
 
+    /// <summary>
+    /// Destroy object coroutine
+    /// </summary>
+    /// <param name="name"> Name of object </param>
+    /// <param name="obj"> Game object </param>
     IEnumerator DestroyObjectCoroutine(string name, GameObject obj)
     {
         var t = objCont.DestroyObject(name, obj);
         while (!t.IsCompleted)
             yield return null;
     }
-
 }

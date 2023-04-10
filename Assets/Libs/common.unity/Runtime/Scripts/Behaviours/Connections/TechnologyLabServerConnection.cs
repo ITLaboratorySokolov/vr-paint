@@ -55,7 +55,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections
 
         private void SetConnectionIdToHeader()
         {
-            _restDataClient.AddHeader(ConnectionIdHeaderName, _signalRSession.ConnectionId);
+            Debug.Log("Connection id:" + _signalRSession.ConnectionId);
+            _restDataClient.SetHeader(ConnectionIdHeaderName, _signalRSession.ConnectionId);
         }
     }
 }

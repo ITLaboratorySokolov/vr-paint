@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ZCU.TechnologyLab.Common.Serialization.Properties;
@@ -58,6 +57,4 @@ public class UVProperty : OptionalProperty
 
         return serialized;
     }
-
-
 }

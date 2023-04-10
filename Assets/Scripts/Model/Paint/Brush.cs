@@ -1,7 +1,9 @@
 using System.Xml.Serialization;
 using UnityEngine;
 
-/// <summary> Class representing a brush </summary>
+/// <summary>
+/// Class representing a brush 
+/// </summary>
 public class Brush : IDrawInstrument
 {
     /// <summary>

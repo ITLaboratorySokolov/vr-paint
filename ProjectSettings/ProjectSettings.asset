@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: "Fakulta aplikovan\xFDch v\u011Bd, Z\u010CU"
-  productName: VRPaint
+  productName: PaintVR
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -136,7 +136,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 2.0
+  bundleVersion: 2.1
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}
@@ -154,8 +154,6 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: -5754193652726391307, guid: 6b37b9f18b1bbbe45bbb6585943ac2e1, type: 2}
-  - {fileID: -3972787334237636114, guid: baa12325e1bf10a419aab003f01d1785, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

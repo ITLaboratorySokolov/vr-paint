@@ -1,11 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ZCU.TechnologyLab.Common.Connections.Client.Session;
 
+/// <summary>
+/// Script used to switch between languages
+/// - application supports czech and english
+/// </summary>
 public class LanguageController : MonoBehaviour
 {
     [Header("Text")]
@@ -79,6 +80,9 @@ public class LanguageController : MonoBehaviour
         SetControls();
     }
 
+    /// <summary>
+    /// Set controls panel
+    /// </summary>
     private void SetControls()
     {
         if (lang == "CZ")
@@ -125,6 +129,11 @@ public class LanguageController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Translate session state to string that is displayed
+    /// </summary>
+    /// <param name="state"> Session state </param>
+    /// <returns> String to display </returns>
     internal string GetSessionStateString(SessionState state)
     {
         if (lang == "CZ")

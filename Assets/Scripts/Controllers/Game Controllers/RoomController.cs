@@ -1,31 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script used to set the size of the room player is allowed to move in
+/// </summary>
 public class RoomController : MonoBehaviour
 {
     [SerializeField]
     WallCollisionProcessor irlRoomWalls;
-
     [SerializeField]
     GameObject player;
-
     [SerializeField]
     GameObject irlGround;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // CenterRoom();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Set room size
+    /// - sets the size of the room player is allowed to move in
+    /// </summary>
+    /// <param name="wX"> Width in x </param>
+    /// <param name="wZ"> Width in z </param>
     public void SetRoomSize(float wX, float wZ)
     {
         // set position of walls

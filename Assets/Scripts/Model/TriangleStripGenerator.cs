@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class used to modify a created triangle strip
+/// </summary>
 public class TriangleStripGenerator
 {
-
+    // Helper variables
     Vector3[] newVertices;
     int[] newTriangles;
     Vector2[] newUVs;

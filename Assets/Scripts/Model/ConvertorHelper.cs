@@ -6,6 +6,11 @@ using UnityEngine;
 /// </summary>
 public static class ConvertorHelper
 {
+    // Texture helper variables
+    public static Texture2D texture2D;
+    static RenderTexture currentRT;
+    static RenderTexture renderTexture;
+
     /// <summary>
     /// Elongate array by add number of members, does not initialize the new members
     /// </summary>
@@ -156,10 +161,6 @@ public static class ConvertorHelper
 
         return floats;
     }
-
-    public static Texture2D texture2D;
-    static RenderTexture currentRT;
-    static RenderTexture renderTexture;
 
     /// <summary>
     /// Converts Texture to Texture2D

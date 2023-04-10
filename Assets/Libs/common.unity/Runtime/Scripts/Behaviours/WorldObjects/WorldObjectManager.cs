@@ -202,7 +202,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 {
                     _worldObjectEventsHandler.RemoveEventHandlers(removedObject);
                 }
-                
+
+                Debug.Log("Removing " + removedObject.name);
                 Destroy(removedObject);
             }
         }

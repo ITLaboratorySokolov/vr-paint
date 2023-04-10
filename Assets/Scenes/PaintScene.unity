@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepCoords: {x: 0, y: 0, z: -1}
+  playerTag: 
 --- !u!65 &86081165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -492,6 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepCoords: {x: 0, y: 0, z: 1}
+  playerTag: 
 --- !u!65 &172488642
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1844,6 +1846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepCoords: {x: 1, y: 0, z: 0}
+  playerTag: 
 --- !u!65 &540906587
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2992,6 +2995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepCoords: {x: -1, y: 0, z: 0}
+  playerTag: 
 --- !u!65 &1031369778
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3550,18 +3554,6 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1826393123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1826393117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c30c607c85d8f1b4099f689bde1d50bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1879450157
 GameObject:
   m_ObjectHideFlags: 0
@@ -4486,7 +4478,19 @@ MonoBehaviour:
   _worldObjectEventsHandler: {fileID: 177192902}
   _worldObjectAdded:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1879450160}
+        m_TargetAssemblyTypeName: ObjectController, Assembly-CSharp
+        m_MethodName: AddedNewObjectAtRuntime
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _worldObjectRemoved:
     m_PersistentCalls:
       m_Calls: []

@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ZCU.TechnologyLab.Common.Connections.Client.Session;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session;
 
+/// <summary>
+/// Script controlling the palette menu
+/// </summary>
 public class MenuController : MonoBehaviour
 {
     [Header("Canvas objects")]
@@ -28,6 +29,8 @@ public class MenuController : MonoBehaviour
     GameObject controlsPanel;
 
     [Header("Scripts")]
+    /// <summary> Language controller </summary>
+    [SerializeField]
     public LanguageController langController;
 
     /// <summary>
@@ -52,6 +55,7 @@ public class MenuController : MonoBehaviour
     /// <summary>
     /// Switch to eraser
     /// </summary>
+    /// <param name="b"> Eraser </param>
     public void SwitchToEraser(Eraser b)
     {
         // Set width
@@ -61,31 +65,46 @@ public class MenuController : MonoBehaviour
         brushNameDisplayTXT.text = b.Name;
     }
 
+    /// <summary>
+    /// Switch language
+    /// </summary>
     public void SwitchLanguage()
     {
         langController.SwapLanguage();
     }
 
+    /// <summary>
+    /// Toggle exit canvas
+    /// </summary>
+    /// <param name="val"> True if exit canvas on, false if off </param>
     public void ToggleExitCanvas(bool val)
     {
         exitPanel.SetActive(val);
     }
 
+    /// <summary>
+    /// On exit button clicked
+    /// </summary>
+    /// <param name="scc"></param>
     public void OnExit(ServerConectionController scc)
     {
         scc.OnExit();
     }
 
+    /// <summary>
+    /// Toggle controls canvas
+    /// </summary>
+    /// <param name="val"> True if control canvas on, false if off </param>
     public void ToggleControlsPanel(bool val)
     {
         controlsPanel.SetActive(val);
     }
 
     /// <summary>
-    /// Display connection status
+    /// Process session state
     /// </summary>
-    /// <param name="connected"> Is connected to server </param>
-    public void SetConnection(SignalRSessionWrapper session) // bool connected)
+    /// <param name="session"> Active session </param>
+    public void SetConnection(SignalRSessionWrapper session) 
     {
         Debug.Log(session.State.ToString());
 
