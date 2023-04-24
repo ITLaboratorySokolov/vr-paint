@@ -95,7 +95,7 @@ public class ConfigLanguageController : MonoBehaviour
     /// <summary>
     /// Swap displayed controls
     /// </summary>
-    private void SetControls()
+    public void SetControls()
     {
         if (lang == "CZ")
         {

@@ -54,6 +54,7 @@ public class ConfigController : MonoBehaviour
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         ReadConfig();
         langController.SwapLabels();
+        langController.SetControls();
 
         DisplayValues();
     }

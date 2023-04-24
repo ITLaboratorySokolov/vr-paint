@@ -221,8 +221,8 @@ public class PaintController : MonoBehaviour
     /// </summary>
     private void SwitchBrush(InputAction.CallbackContext obj)
     {
-        // If eraser is active
-        if (isEraser || !paintingEnabled)
+        // If eraser is active or user is currently painting
+        if (isEraser || paintingOn)
             return;
 
         currentBrush++;

@@ -126,7 +126,7 @@ public class RigController : MonoBehaviour
         Debug.Log("Spawning " + name + " ((search: Removing))");
 
         GameObject o = Instantiate(prefab, tfParent.position, tfParent.rotation, tfParent);
-        var uph = o.GetComponent<InputPropertiesHandler>();
+        var uph = o.GetComponent<ObjectPropertiesHandler>();
         uph.objCont = objCont;
         o.name = name;
 

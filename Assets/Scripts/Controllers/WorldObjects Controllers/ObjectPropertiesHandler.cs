@@ -4,15 +4,12 @@ using UnityEngine;
 /// Script used to set properties of incoming game object from the server
 /// - properties are based on the name of the game object
 /// </summary>
-public class InputPropertiesHandler : MonoBehaviour
+public class ObjectPropertiesHandler : MonoBehaviour
 {
     [SerializeField]
     public ObjectController objCont;
     [SerializeField]
     public ServerConectionController serverConnection;
-
-    [SerializeField]
-    TextureProperty texProp;
 
     [SerializeField]
     Material lineMaterial;

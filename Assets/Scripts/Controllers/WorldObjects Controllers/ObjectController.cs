@@ -98,7 +98,7 @@ public class ObjectController : MonoBehaviour
     /// <param name="o"></param>
     public void AddedNewObjectAtRuntime(GameObject o)
     {
-        var iph = o.GetComponent<InputPropertiesHandler>();
+        var iph = o.GetComponent<ObjectPropertiesHandler>();
         if (iph != null)
             iph.objCont = this;
     }

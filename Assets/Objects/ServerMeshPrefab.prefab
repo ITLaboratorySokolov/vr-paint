@@ -19,14 +19,10 @@ GameObject:
   - component: {fileID: 3420457858355887363}
   - component: {fileID: 3636451904438298842}
   - component: {fileID: 476049909321704166}
-  - component: {fileID: 3309025961797577739}
-  - component: {fileID: 1117705545611690377}
-  - component: {fileID: 4001556055028762082}
-  - component: {fileID: -8742696934938988691}
   - component: {fileID: 6376350579584854226}
   - component: {fileID: 8326284314937354278}
   m_Layer: 0
-  m_Name: ServerObjectPrefab
+  m_Name: ServerMeshPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,12 +142,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4381866689056338526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 662512661c28a5e4a9cf99a06b7d33a1, type: 3}
+  m_Script: {fileID: 11500000, guid: f2d5318feb5f04d4cb57d38a75402558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   objCont: {fileID: 0}
   serverConnection: {fileID: 0}
-  texProp: {fileID: 4001556055028762082}
+  texProp: {fileID: 0}
   lineMaterial: {fileID: 2100000, guid: be43344bf2e17d84280b0187eac0242a, type: 2}
   boxMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
   generalMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
@@ -167,6 +163,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d529cf5af29b9f429883ff6105f41ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _supportedTexturePixelFormats:
+  - Name: RGB
+    Format: 3
+  - Name: RGBA
+    Format: 4
+  - Name: ARGB
+    Format: 5
   _optionalPropertiesManager: {fileID: 3420457858355887363}
 --- !u!114 &3420457858355887363
 MonoBehaviour:
@@ -183,10 +186,6 @@ MonoBehaviour:
   _optionalProperties:
   - {fileID: 3636451904438298842}
   - {fileID: 476049909321704166}
-  - {fileID: 3309025961797577739}
-  - {fileID: 1117705545611690377}
-  - {fileID: 4001556055028762082}
-  - {fileID: -8742696934938988691}
   - {fileID: 6376350579584854226}
 --- !u!114 &3636451904438298842
 MonoBehaviour:
@@ -218,58 +217,6 @@ MonoBehaviour:
   boxCol: {fileID: 4381866689056632443}
   sphCol: {fileID: -4751802170383463930}
   meshCol: {fileID: 8820254482816043734}
---- !u!114 &3309025961797577739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4381866689056338526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b712ad6069a1ec34db1167ee41f9b1aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1117705545611690377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4381866689056338526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5a787ddb8882647a4f37ac1d8e493c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textureName: _MainTex
---- !u!114 &4001556055028762082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4381866689056338526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39dfa39009bfc3847b7b843e119e9503, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  texSizeProperty: {fileID: 3309025961797577739}
-  texFormatProperty: {fileID: 1117705545611690377}
-  textureName: _MainTex
---- !u!114 &-8742696934938988691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4381866689056338526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7095a19c72be19d4d90c8e34b68c66ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6376350579584854226
 MonoBehaviour:
   m_ObjectHideFlags: 0
