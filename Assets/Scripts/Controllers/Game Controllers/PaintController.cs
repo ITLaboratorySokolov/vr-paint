@@ -185,12 +185,12 @@ public class PaintController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!paintingEnabled || !inputEnabled)
-            return;
-
         // Stop drawing on released painting button
         if (paintRef.action.WasReleasedThisFrame())
             DisablePaint();
+
+        if (!paintingEnabled || !inputEnabled)
+            return;
 
         // Paint if painting button held
         if (paintingOn)
@@ -346,10 +346,14 @@ public class PaintController : MonoBehaviour
     /// <summary>
     /// Stop painting
     /// </summary>
-    private void DisablePaint()
+    public void DisablePaint()
     {
-        if (isEraser || !paintingEnabled)
+        Debug.Log("Called Disabling");
+
+        if (isEraser || !paintingOn) // || !paintingEnabled 
             return;
+
+        Debug.Log("Disabling");
 
         paintingOn = false;
         timeToUpdate = 0.25f;
@@ -427,25 +431,30 @@ public class PaintController : MonoBehaviour
     /// <param name="addBrushes"> List of new brushes </param>
     public void AddBrushes(List<Brush> addBrushes)
     {
-        List<Brush> uniques = new List<Brush>();
+        Brush[] defaultBrushes = new Brush[2];
+        defaultBrushes[0] = brushes[0];
+        defaultBrushes[1] = brushes[1];
+
+        brushDictionary = new Dictionary<string, Brush>();
+        brushDictionary.Add(brushes[0].Name, brushes[0]);
+        brushDictionary.Add(brushes[1].Name, brushes[1]);
+
+        Brush[] newBrushSet = new Brush[defaultBrushes.Length + addBrushes.Count];
+        newBrushSet[0] = defaultBrushes[0];
+        newBrushSet[1] = defaultBrushes[1];
+
         for (int i = 0; i < addBrushes.Count; i++)
         {
-            if (!brushDictionary.ContainsKey(addBrushes[i].Name))
-                uniques.Add(addBrushes[i]);
-        }
-
-        Brush[] newBrushSet = new Brush[brushes.Length + uniques.Count];
-        for (int i = 0; i < brushes.Length; i++)
-            newBrushSet[i] = brushes[i];
-
-        for (int i = 0; i < uniques.Count; i++)
-        {
-            newBrushSet[brushes.Length + i] = uniques[i];
-            brushDictionary.Add(uniques[i].Name, uniques[i]);
+            newBrushSet[defaultBrushes.Length + i] = addBrushes[i];
+            brushDictionary.Add(addBrushes[i].Name, addBrushes[i]);
         }
 
         brushes = newBrushSet;
         numberOfBrushes = newBrushSet.Length;
+
+        // swap back to first brush
+        currentBrush = -1;
+        SwitchBrush(new InputAction.CallbackContext());
     }
 
     /// <summary>

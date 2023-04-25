@@ -69,7 +69,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         {
             try
             {
-                Debug.Log($"Transform of {e.Transform.gameObject.name} changed. Update server");
+                //Debug.Log($"Transform of {e.Transform.gameObject.name} changed. Update server");
 
                 var position = e.Transform.position;
                 var rotation = e.Transform.rotation;
