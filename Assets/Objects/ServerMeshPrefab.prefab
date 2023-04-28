@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 476049909321704166}
   - component: {fileID: 6376350579584854226}
   - component: {fileID: 8326284314937354278}
+  - component: {fileID: -1758215951122647082}
   m_Layer: 0
   m_Name: ServerMeshPrefab
   m_TagString: Untagged
@@ -147,7 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objCont: {fileID: 0}
   serverConnection: {fileID: 0}
-  texProp: {fileID: 0}
   lineMaterial: {fileID: 2100000, guid: be43344bf2e17d84280b0187eac0242a, type: 2}
   boxMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
   generalMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
@@ -243,3 +243,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enableReporting: 1
   _reportDelay: 0.1
+--- !u!114 &-1758215951122647082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381866689056338526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d5318feb5f04d4cb57d38a75402558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objCont: {fileID: 0}
+  serverConnection: {fileID: 0}
+  lineMaterial: {fileID: 2100000, guid: be43344bf2e17d84280b0187eac0242a, type: 2}
+  boxMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
+  generalMaterial: {fileID: 2100000, guid: a56a8b4213c8e7a44ba8e98097309aa2, type: 2}
