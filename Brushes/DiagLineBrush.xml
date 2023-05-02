@@ -14,7 +14,7 @@
     <float>0.9520565</float>
     <float>0.952056468</float>
     <float>0.5887852</float>
-    <float>0.00100008748</float>
+    <float>0.5</float>
   </WidthModifier>
   <TimePerIter>5</TimePerIter>
 </Brush>

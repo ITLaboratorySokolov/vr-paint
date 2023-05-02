@@ -43,8 +43,8 @@ public class LanguageController : MonoBehaviour
     string brushEN = "Brush: ";
     string widthCZ = "Velikost";
     string widthEN = "Width";
-    string refreshCZ = "Reload brushes";
-    string refreshEN = "Naèíst štetce";
+    string refreshCZ = "Naèíst štetce";
+    string refreshEN = "Reload brushes";
     string contCZ = "Ovládání";
     string contEN = "Controls";
 

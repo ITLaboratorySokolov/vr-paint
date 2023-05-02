@@ -306,10 +306,10 @@ public class PaintController : MonoBehaviour
             float paintTime = (currPaintTime - startPaintTime) % b.TimePerIter;
             
             startIn = (int)(paintTime / timestep);
-            endIn = startIn + 1;
-            if (endIn == modLen)
-                widthModifier = b.WidthModifier[modLen - 1];
-            else
+            endIn = (startIn + 1) % modLen;
+            //if (endIn == modLen)
+                //widthModifier = b.WidthModifier[modLen - 1];
+            //else
             {
                 t = (paintTime % timestep) / timestep; 
                 widthModifier = Mathf.Lerp(b.WidthModifier[startIn], b.WidthModifier[endIn], t);
