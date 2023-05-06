@@ -267,7 +267,7 @@ public class PaintController : MonoBehaviour
 
             // create a new mesh
             GameObject o = Instantiate(simpleLine, lineParent.position, lineParent.rotation, lineParent);
-            o.name = "Line" + clientName.Value + lineCounter;
+            o.name = "Line_" + clientName.Value + "_" + lineCounter;
 
             float widthModifier = Mathf.Max(0.001f, brushes[currentBrush].WidthModifier[0]);
             float w = brushes[currentBrush].Width * widthModifier;
@@ -348,12 +348,8 @@ public class PaintController : MonoBehaviour
     /// </summary>
     public void DisablePaint()
     {
-        Debug.Log("Called Disabling");
-
         if (isEraser || !paintingOn) // || !paintingEnabled 
             return;
-
-        Debug.Log("Disabling");
 
         paintingOn = false;
         timeToUpdate = 0.25f;

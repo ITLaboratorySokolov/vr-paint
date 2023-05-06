@@ -255,9 +255,9 @@ public class ServerConectionController : MonoBehaviour
                 Debug.Log(n);
 
                 // Filter out lines
-                if (n.StartsWith("Line"))
+                if (n.StartsWith("Line_"))
                 {
-                    int nmlen = ("Line" + clientName.Value).Length;
+                    int nmlen = ("Line_" + clientName.Value).Length + 1;
 
                     Debug.Log(n);
 
@@ -268,7 +268,7 @@ public class ServerConectionController : MonoBehaviour
                     Debug.Log(numP);
 
                     // if the lane was drawn by this client
-                    if (n.Equals("Line" + clientName.Value + numP))
+                    if (n.Equals("Line_" + clientName.Value + "_" + numP))
                         l.Add(numP);
                  
                     paintCont.AddServerLine(obj);

@@ -27,6 +27,9 @@ public class MenuController : MonoBehaviour
     /// <summary> Controls panel </summary>
     [SerializeField]
     GameObject controlsPanel;
+    /// <summary> Save scenes panel </summary>
+    [SerializeField]
+    GameObject savePanel;
 
     [Header("Scripts")]
     /// <summary> Language controller </summary>
@@ -80,6 +83,15 @@ public class MenuController : MonoBehaviour
     public void ToggleExitCanvas(bool val)
     {
         exitPanel.SetActive(val);
+    }
+
+    /// <summary>
+    /// Toggle save canvas
+    /// </summary>
+    /// <param name="val"> True if save canvas on, false if off </param>
+    public void ToggleSaveCanvas(bool val)
+    {
+        savePanel.SetActive(val);
     }
 
     /// <summary>

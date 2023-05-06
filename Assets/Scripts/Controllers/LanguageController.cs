@@ -16,6 +16,8 @@ public class LanguageController : MonoBehaviour
     Text widthTXT;
     [SerializeField()]
     TMP_Text quitTXT;
+    [SerializeField()]
+    TMP_Text saveTitleTXT;
 
     [Header("Buttons")]
     [SerializeField()]
@@ -26,6 +28,20 @@ public class LanguageController : MonoBehaviour
     Button yesBT;
     [SerializeField()]
     Button noBT;
+    [SerializeField()]
+    Button scenesBT;
+    [SerializeField()]
+    Button load1;
+    [SerializeField()]
+    Button load2;
+    [SerializeField()]
+    Button load3;
+    [SerializeField()]
+    Button save1;
+    [SerializeField()]
+    Button save2;
+    [SerializeField()]
+    Button save3;
 
     [Header("Controls")]
     [SerializeField()]
@@ -48,6 +64,15 @@ public class LanguageController : MonoBehaviour
     string contCZ = "Ovládání";
     string contEN = "Controls";
 
+    string sceneCZ = "Scény";
+    string sceneEN = "Scenes";
+    string sceneContCZ = "Správa uložených scén";
+    string sceneContEN = "Saved scenes management";
+    string saveCZ = "Uložit na scénu ";
+    string saveEN = "Save as scene ";
+    string loadCZ = "Naèíst scénu ";
+    string loadEN = "Load scene ";
+    
     string quitCZ = "Ukonèit aplikaci?";
     string quitEN = "Do you want to quit?";
     string yesCZ = "Ano";
@@ -108,6 +133,15 @@ public class LanguageController : MonoBehaviour
             widthTXT.text = widthCZ;
             quitTXT.text = quitCZ;
 
+            saveTitleTXT.text = sceneContCZ;
+            scenesBT.GetComponentInChildren<TMP_Text>().text = sceneCZ;
+            load1.GetComponentInChildren<TMP_Text>().text = loadCZ + 1;
+            load2.GetComponentInChildren<TMP_Text>().text = loadCZ + 2;
+            load3.GetComponentInChildren<TMP_Text>().text = loadCZ + 3;
+            save1.GetComponentInChildren<TMP_Text>().text = saveCZ + 1;
+            save2.GetComponentInChildren<TMP_Text>().text = saveCZ + 2;
+            save3.GetComponentInChildren<TMP_Text>().text = saveCZ + 3;
+
             refreshBT.GetComponentInChildren<TMP_Text>().text = refreshCZ;
             langBT.GetComponentInChildren<TMP_Text>().text = langCZ;
             controlsBT.GetComponentInChildren<TMP_Text>().text = contCZ;
@@ -120,6 +154,15 @@ public class LanguageController : MonoBehaviour
             brushNMTXT.text = brushEN;
             widthTXT.text = widthEN;
             quitTXT.text = quitEN;
+
+            saveTitleTXT.text = sceneContEN;
+            scenesBT.GetComponentInChildren<TMP_Text>().text = sceneEN;
+            load1.GetComponentInChildren<TMP_Text>().text = loadEN + 1;
+            load2.GetComponentInChildren<TMP_Text>().text = loadEN + 2;
+            load3.GetComponentInChildren<TMP_Text>().text = loadEN + 3;
+            save1.GetComponentInChildren<TMP_Text>().text = saveEN + 1;
+            save2.GetComponentInChildren<TMP_Text>().text = saveEN + 2;
+            save3.GetComponentInChildren<TMP_Text>().text = saveEN + 3;
 
             refreshBT.GetComponentInChildren<TMP_Text>().text = refreshEN;
             langBT.GetComponentInChildren<TMP_Text>().text = langEN;
