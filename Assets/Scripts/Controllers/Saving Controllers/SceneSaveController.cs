@@ -83,64 +83,56 @@ public class SceneSaveController : MonoBehaviour
         else
         {
             List<WorldObjectDto> objs = sceneIn.LoadObjectsFromFolder(path);
-            List<int> l = new List<int>();
 
             // instantiate object
             foreach (WorldObjectDto o in objs)
             {
-                if (o.Type == "mesh")
+                // test if object exists on server
+                Task<bool> tC = objCont.ContainsObject(o.Name);
+                while (!tC.IsCompleted)
+                    yield return null;
+
+                // add to server if not there
+                if (!tC.Result)
                 {
-                    // if it is a line, i need to get the highest number so i can start counting up when painting new lines
-                    if (o.Name.StartsWith("Line_"))
+                    GameObject inst = null;
+                    // instantiate correct prefab and fill w/ data from world object dto
+                    if (o.Type == "mesh")
                     {
-                        int nmlen = ("Line_" + objCont.clientName.Value).Length + 1;
+                        inst = Instantiate(meshPrefab);
+                        inst.name = o.Name;
+                        inst.transform.position = VectorDTOToVector3(o.Position);
+                        inst.transform.eulerAngles = VectorDTOToVector3(o.Rotation);
+                        inst.transform.localScale = VectorDTOToVector3(o.Scale);
+                        inst.GetComponent<MeshPropertiesManager>().SetProperties(o.Properties);
 
-                        string num = o.Name.Substring(nmlen);
-                        int numP = 0;
-                        int.TryParse(num, out numP);
-
-                        // if the lane was drawn by this client
-                        if (o.Name.Equals("Line_" + objCont.clientName.Value + "_" + numP))
-                        {
-                            Debug.Log("Added line " + numP);
-                            l.Add(numP);
-                        }
+                    }
+                    else if (o.Type == "bitmap")
+                    {
+                        inst = Instantiate(bitmapPrefab);
+                        inst.name = o.Name;
+                        inst.transform.position = VectorDTOToVector3(o.Position);
+                        inst.transform.eulerAngles = VectorDTOToVector3(o.Rotation);
+                        inst.transform.localScale = VectorDTOToVector3(o.Scale);
+                        inst.GetComponent<BitmapPropertiesManager>().SetProperties(o.Properties);
                     }
 
-                    GameObject inst = Instantiate(meshPrefab);
-                    inst.name = o.Name;
-                    inst.transform.position = VectorDTOToVector3(o.Position);
-                    inst.transform.eulerAngles = VectorDTOToVector3(o.Rotation);
-                    inst.transform.localScale = VectorDTOToVector3(o.Scale);
-                    inst.GetComponent<MeshPropertiesManager>().SetProperties(o.Properties);
-
                     Task t2 = objCont.AddObjectAsync(inst);
                     while (!t2.IsCompleted)
                         yield return null;
                 }
-                else if (o.Type == "bitmap")
+                // move the one in scene if already on server
+                else
                 {
-                    GameObject inst = Instantiate(bitmapPrefab);
-                    inst.name = o.Name;
-                    inst.transform.position = VectorDTOToVector3(o.Position);
-                    inst.transform.eulerAngles = VectorDTOToVector3(o.Rotation);
-                    inst.transform.localScale = VectorDTOToVector3(o.Scale);
-                    inst.GetComponent<BitmapPropertiesManager>().SetProperties(o.Properties);
-
-                    Task t2 = objCont.AddObjectAsync(inst);
-                    while (!t2.IsCompleted)
-                        yield return null;
+                    GameObject inst = GameObject.Find(o.Name);
+                    if (inst != null)
+                    {
+                        inst.transform.position = VectorDTOToVector3(o.Position);
+                        inst.transform.eulerAngles = VectorDTOToVector3(o.Rotation);
+                        inst.transform.localScale = VectorDTOToVector3(o.Scale);
+                    }
                 }
-                // add object to server?
-                // await objCont.AddObjectAsync(o);
             }
-
-            int serverLines = -1;
-            for (int i = 0; i < l.Count; i++)
-                if (l[i] > serverLines)
-                    serverLines = l[i];
-            paintCont.ToggleReadyForInput(true, serverLines);
-            Debug.Log("Added lines " + serverLines);
         }
     }
 

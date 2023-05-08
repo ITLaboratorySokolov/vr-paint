@@ -2085,6 +2085,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2110900183}
     m_Modifications:
+    - target: {fileID: 501573792285059614, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 706265467587705944, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -2182,6 +2186,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MenuController, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 1740382565049947542, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
+      propertyPath: m_text
+      value: Load scene 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1902785711973532789, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -2265,6 +2273,10 @@ PrefabInstance:
     - target: {fileID: 3674723899566772531, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 95.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3765322546457643876, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
+      propertyPath: m_Interactable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3765322546457643876, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2353,6 +2365,10 @@ PrefabInstance:
     - target: {fileID: 4980727519097907079, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_Center.z
       value: 2.16134e-15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465736475856607596, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
+      propertyPath: m_text
+      value: Save as scene 3
       objectReference: {fileID: 0}
     - target: {fileID: 5508055575833215768, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_Layer
@@ -2930,6 +2946,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6636063997182434284, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
+      propertyPath: m_text
+      value: Save as scene 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6705983594427258116, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -3037,6 +3057,14 @@ PrefabInstance:
     - target: {fileID: 8301812074340503013, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371506723924655849, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
+      propertyPath: m_text
+      value: Load scene 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841814160631720404, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
+      propertyPath: m_Interactable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8841814160631720404, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
