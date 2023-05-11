@@ -37,7 +37,7 @@ public class SceneSaveController : MonoBehaviour
     /// <param name="slot"> Number of save slot </param>
     public void ExportScene(int slot)
     {
-        string path = Application.dataPath + "/Saves/" + slot + "/";
+        string path = Application.dataPath + "/../Saves/" + slot + "/";
         Debug.Log("Saving to " + path);
         
         if (!Directory.Exists(path))
@@ -73,7 +73,7 @@ public class SceneSaveController : MonoBehaviour
         while (!t.IsCompleted)
             yield return null;
 
-        string path = Application.dataPath + "/Saves/" + slot + "/";
+        string path = Application.dataPath + "/../Saves/" + slot + "/";
         Debug.Log("Importing from " + path);
 
         if (!Directory.Exists(path))
@@ -82,6 +82,7 @@ public class SceneSaveController : MonoBehaviour
         }
         else
         {
+            List<int> l = new List<int>();
             List<WorldObjectDto> objs = sceneIn.LoadObjectsFromFolder(path);
 
             // instantiate object
@@ -105,7 +106,6 @@ public class SceneSaveController : MonoBehaviour
                         inst.transform.eulerAngles = VectorDTOToVector3(o.Rotation);
                         inst.transform.localScale = VectorDTOToVector3(o.Scale);
                         inst.GetComponent<MeshPropertiesManager>().SetProperties(o.Properties);
-
                     }
                     else if (o.Type == "bitmap")
                     {
@@ -132,7 +132,25 @@ public class SceneSaveController : MonoBehaviour
                         inst.transform.localScale = VectorDTOToVector3(o.Scale);
                     }
                 }
+
+                if (o.Name.StartsWith("Line_" + objCont.clientName.Value))
+                {
+                    int nmlen = ("Line_" + objCont.clientName.Value).Length + 1;
+                    string num = o.Name.Substring(nmlen);
+                    int numP = 0;
+                    int.TryParse(num, out numP);
+                    
+                    // if the lane was drawn by this client
+                    if (o.Name.Equals("Line_" + objCont.clientName.Value + "_" + numP))
+                        l.Add(numP);
+                }
             }
+
+            int serverLines = -1;
+            for (int i = 0; i < l.Count; i++)
+                if (l[i] > serverLines)
+                    serverLines = l[i];
+            paintCont.ToggleReadyForInput(true, serverLines);
         }
     }
 

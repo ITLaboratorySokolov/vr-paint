@@ -17,6 +17,9 @@ public class ConfigLanguageController : MonoBehaviour
     string setCZ = "Hrát";
     string setEN = "Play";
 
+    string controlsTCZ = "Ovládání";
+    string controlsTEN = "Controls";
+
     string inputPromptCZ = "Napište text...";
     string inputPromptEN = "Enter text...";
 
@@ -36,6 +39,8 @@ public class ConfigLanguageController : MonoBehaviour
     Button langBT;
     [SerializeField()]
     Button playBT;
+    [SerializeField()]
+    Button controlsBT;
 
     [Header("Controls")]
     [SerializeField()]
@@ -75,6 +80,7 @@ public class ConfigLanguageController : MonoBehaviour
 
             langBT.GetComponentInChildren<TMP_Text>().text = langEN;
             playBT.GetComponentInChildren<TMP_Text>().text = setEN;
+            controlsBT.GetComponentInChildren<TMP_Text>().text = controlsTEN;
 
             nameFLD.placeholder.GetComponent<TMP_Text>().text = inputPromptEN;
             urlFLD.placeholder.GetComponent<TMP_Text>().text = inputPromptEN;
@@ -86,6 +92,7 @@ public class ConfigLanguageController : MonoBehaviour
 
             langBT.GetComponentInChildren<TMP_Text>().text = langCZ;
             playBT.GetComponentInChildren<TMP_Text>().text = setCZ;
+            controlsBT.GetComponentInChildren<TMP_Text>().text = controlsTCZ;
 
             nameFLD.placeholder.GetComponent<TMP_Text>().text = inputPromptCZ;
             urlFLD.placeholder.GetComponent<TMP_Text>().text = inputPromptCZ;

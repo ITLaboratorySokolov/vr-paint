@@ -1901,6 +1901,7 @@ MonoBehaviour:
   urlTXT: {fileID: 1903763060}
   langBT: {fileID: 1189421481}
   playBT: {fileID: 1116468294}
+  controlsBT: {fileID: 1532448811}
   controlsCZ: {fileID: 349405762}
   controlsEN: {fileID: 53705371}
   nameFLD: {fileID: 1001105649}

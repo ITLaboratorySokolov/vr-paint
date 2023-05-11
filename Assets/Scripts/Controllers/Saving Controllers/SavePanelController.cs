@@ -28,17 +28,17 @@ public class SavePanelController : MonoBehaviour
     public void ReloadActive()
     {
         load1.interactable = true;
-        string path = Application.dataPath + "/Saves/" + 1 + "/";
+        string path = Application.dataPath + "/../Saves/" + 1 + "/";
         if (!Directory.Exists(path))
             load1.interactable = false;
 
         load2.interactable = true;
-        path = Application.dataPath + "/Saves/" + 2 + "/";
+        path = Application.dataPath + "/../Saves/" + 2 + "/";
         if (!Directory.Exists(path))
             load2.interactable = false;
 
         load3.interactable = true;
-        path = Application.dataPath + "/Saves/" + 3 + "/";
+        path = Application.dataPath + "/../Saves/" + 3 + "/";
         if (!Directory.Exists(path))
             load3.interactable = false;
     }
