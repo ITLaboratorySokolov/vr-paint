@@ -2,6 +2,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class that contains manipulation with objects in the save panel
+/// </summary>
 public class SavePanelController : MonoBehaviour
 {
     [Header("Buttons")]

@@ -25,20 +25,20 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubtractiveShadowColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 4e154bf235e41704bbd6bbc6fd6c63f6, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.625131, g: 0.69543827, b: 0.78916645, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3681,6 +3681,68 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5618024411203256530, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
   m_PrefabInstance: {fileID: 649591609}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1717383902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1717383903}
+  - component: {fileID: 1717383904}
+  m_Layer: 0
+  m_Name: SkyboxToggle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1717383903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717383902}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 25.854797, y: 19.80245, z: 3.3613644}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1717383904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717383902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c5790ea5650d834dbdc798a802585fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availibleSkyboxes:
+  - {fileID: 2100000, guid: 4e154bf235e41704bbd6bbc6fd6c63f6, type: 2}
+  - {fileID: 2100000, guid: 85cf0b004bc4a654b9e501efcce47902, type: 2}
+  - {fileID: 2100000, guid: 2039a0ad0a9d05549928b70362f54902, type: 2}
+  - {fileID: 2100000, guid: 16bc8a9d5451ca44d8f70575adbece3a, type: 2}
+  - {fileID: 2100000, guid: 5d133deeaa66ed445853e946ff25e073, type: 2}
+  - {fileID: 2100000, guid: 119ec07f1c7ed204db46bd8465fd5a50, type: 2}
+  - {fileID: 2100000, guid: 369b9ebe3a62b904dbc19bd332b44086, type: 2}
+  groundColors:
+  - {r: 0.49019608, g: 0.49019608, b: 0.49019608, a: 1}
+  - {r: 0.695, g: 0.695, b: 0.695, a: 1}
+  - {r: 0.29799998, g: 0.29799998, b: 0.29799998, a: 1}
+  - {r: 0.113000005, g: 0.113000005, b: 0.113000005, a: 1}
+  - {r: 0.53900003, g: 0.16550182, b: 0.137445, a: 1}
+  - {r: 0.09714311, g: 0.18968242, b: 0.3490566, a: 1}
+  - {r: 0.061801117, g: 0.051155668, b: 0.241, a: 1}
+  groundMat: {fileID: 2100000, guid: 775c94debc16c1341a02656cc2813125, type: 2}
+  skyToggleAction: {fileID: -2299082271360964778, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &1826393117 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5900324845150156817, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}

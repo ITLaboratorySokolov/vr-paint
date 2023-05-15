@@ -1017,7 +1017,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",                
+                    "name": "",
                     "id": "31d838df-4d4e-4c16-a373-b9c07d9d2e2a",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "Sector(directions=12,sweepBehavior=1),Sector(directions=2,sweepBehavior=2)",
@@ -1489,6 +1489,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "ComputerInput",
+            "id": "c7c332c8-6908-4b28-942c-59a11488e923",
+            "actions": [
+                {
+                    "name": "SkyboxToggle",
+                    "type": "Button",
+                    "id": "3e19141e-fca7-4cdb-ad7e-4afe7059cc12",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1c5311fc-56ec-46b6-8ad6-07908fc4df27",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkyboxToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

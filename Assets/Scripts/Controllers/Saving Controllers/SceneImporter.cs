@@ -5,6 +5,9 @@ using System.IO;
 using System.Threading;
 using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 
+/// <summary>
+/// Class for the import of a scene from a folder
+/// </summary>
 public class SceneImporter
 {
     /// <summary>

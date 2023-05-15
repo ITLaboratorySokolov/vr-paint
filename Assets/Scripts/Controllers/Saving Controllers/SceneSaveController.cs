@@ -6,6 +6,9 @@ using UnityEngine;
 using ZCU.TechnologyLab.Common.Entities.DataTransferObjects;
 using ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Properties.Managers;
 
+/// <summary>
+/// Scene used to control saving and importing scenes
+/// </summary>
 public class SceneSaveController : MonoBehaviour
 {
     [Header("Importer/Exporter")]
