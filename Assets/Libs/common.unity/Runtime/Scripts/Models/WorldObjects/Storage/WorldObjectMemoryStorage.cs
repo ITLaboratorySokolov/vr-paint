@@ -1,17 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Storage
 {
     public class WorldObjectMemoryStorage : IWorldObjectStorage
     {
+        public event Action<GameObject> WorldObjectStored;
+        public event Action<GameObject> WorldObjectRemoved;
+        public event Action StorageCleared;
+        
         private readonly Dictionary<string, GameObject> _storedWorldObjects = new();
+
+        public int Count => _storedWorldObjects.Count;
         
         /// <inheritdoc/>
         public IEnumerable<GameObject> ClearStorage()
         {
             var values = new List<GameObject>(_storedWorldObjects.Values);
             _storedWorldObjects.Clear();
+            StorageCleared?.Invoke();
             return values;
         }
 
@@ -36,7 +45,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Storage
         /// <inheritdoc/>
         public bool Remove(string name, out GameObject worldObject)
         {
-            return _storedWorldObjects.Remove(name, out worldObject);
+            var result = _storedWorldObjects.Remove(name, out worldObject);
+            if (result)
+            {
+                WorldObjectRemoved?.Invoke(worldObject);
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -60,7 +75,13 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Storage
         /// <inheritdoc/>
         public bool Store(GameObject worldObject)
         {
-            return _storedWorldObjects.TryAdd(worldObject.name, worldObject);
+            var result = _storedWorldObjects.TryAdd(worldObject.name, worldObject);
+            if (result)
+            {
+                WorldObjectStored?.Invoke(worldObject);
+            }
+
+            return result;
         }
     }
 }

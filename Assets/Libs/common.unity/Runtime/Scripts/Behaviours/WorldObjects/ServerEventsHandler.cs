@@ -17,7 +17,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
     public class ServerEventsHandler : MonoBehaviour
     {
         [Header("Networking")]
-        [HelpBox("Server Session Connection and Server Data Connection have to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [HelpBox("Server Session Connection and Server Data Connection have to be assigned.", HelpBoxAttribute.MessageType.Warning)]
         [SerializeField]
         [FormerlySerializedAs("serverSessionAdapter")]
         private ServerSessionAdapterWrapper _serverSessionAdapter;
@@ -27,17 +27,32 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         private ServerDataAdapterWrapper _serverDataAdapter;
 
         [Header("Storage")]
-        [HelpBox("World Object Storage has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [HelpBox("World Object Storage has to be assigned.", HelpBoxAttribute.MessageType.Warning)]
         [SerializeField]
         [FormerlySerializedAs("worldObjectStorage")]
         private WorldObjectStorageWrapper _worldObjectStorage;
         
-        [HelpBox("Prefab Storage has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [HelpBox("Prefab Storage has to be assigned.", HelpBoxAttribute.MessageType.Warning)]
         [SerializeField]
         [FormerlySerializedAs("prefabStorage")]
         private PrefabStorageWrapper _prefabStorage;
 
         [Header("Events")]
+        [SerializeField] 
+        private bool _reactToAdd = true;
+        
+        [SerializeField] 
+        private bool _reactToRemove = true;
+        
+        [SerializeField] 
+        private bool _reactToUpdate = true;
+        
+        [SerializeField] 
+        private bool _reactToPropertiesUpdate = true;
+        
+        [SerializeField] 
+        private bool _reactToTransform = true;
+        
         [SerializeField]
         [FormerlySerializedAs("worldObjectEventsHandler")]
         private WorldObjectEventsHandler _worldObjectEventsHandler;
@@ -100,6 +115,12 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Add world object");
                 Debug.Log($"Name: {worldObjectName}");
 
+                if (!_reactToAdd)
+                {
+                    Debug.Log("Reaction to add is disabled.");
+                    return;
+                }
+                
                 if (_worldObjectStorage.IsStored(worldObjectName))
                 {
                     Debug.Log("World object already exists locally");
@@ -132,6 +153,12 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Remove world object");
                 Debug.Log($"Name: {worldObjectName}");
 
+                if (!_reactToRemove)
+                {
+                    Debug.Log("Reaction to remove is disabled.");
+                    return;
+                }
+                
                 if(_worldObjectStorage.Remove(worldObjectName, out var worldObject))
                 {
                     if(_worldObjectEventsHandler != null)
@@ -156,16 +183,29 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Update world object");
                 Debug.Log($"Name: {worldObjectName}");
 
+                if (!_reactToUpdate)
+                {
+                    Debug.Log("Reaction to update is disabled.");
+                    return;
+                }
+                
                 if (_worldObjectStorage.Get(worldObjectName, out var worldObject))
                 {
                     var worldObjectDto = await _serverDataAdapter.GetWorldObjectAsync(worldObjectName);
 
-                    WorldObjectUtils.SetTransform(
-                        worldObject, 
-                        worldObjectDto.Position, 
-                        worldObjectDto.Rotation, 
-                        worldObjectDto.Scale);
-
+                    if (_reactToTransform)
+                    {
+                        WorldObjectUtils.SetTransform(
+                            worldObject, 
+                            worldObjectDto.Position, 
+                            worldObjectDto.Rotation, 
+                            worldObjectDto.Scale);
+                    }
+                    else
+                    {
+                        Debug.Log("Reaction to transform is disabled.");
+                    }
+                    
                     var propertiesManager = WorldObjectUtils.GetPropertiesManager(worldObject);
                     propertiesManager.SetProperties(worldObjectDto.Properties);
 
@@ -185,6 +225,12 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Set world object properties");
                 Debug.Log($"Name: {worldObjectName}");
 
+                if (!_reactToPropertiesUpdate)
+                {
+                    Debug.Log("Reaction to properties update is disabled.");
+                    return;
+                }
+                
                 if (_worldObjectStorage.Get(worldObjectName, out var worldObject))
                 {
                     var propertiesDto = await _serverDataAdapter.GetWorldObjectPropertiesAsync(worldObjectName);
@@ -208,6 +254,12 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 Debug.Log("Transform world object");
                 Debug.Log($"Name: {worldObjectTransformDto.ObjectName}");
 
+                if (!_reactToTransform)
+                {
+                    Debug.Log("Reaction to transform is disabled.");
+                    return;
+                }
+                
                 if (_worldObjectStorage.Get(worldObjectTransformDto.ObjectName, out var worldObject))
                 {
                     WorldObjectUtils.SetTransform(

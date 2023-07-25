@@ -159,31 +159,9 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties
         {
             throw new ArgumentException($"Unsupported texture format: {format}");
         }
-
-
-        static RenderTexture currentRT;
-        static RenderTexture renderTexture;
+        
         private static Texture2D ToTexture2D(Texture texture)
         {
-            /*
-            Texture2D texture2D = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
-            // texture2D.Reinitialize(texture.width, texture.height); 
-
-            currentRT = RenderTexture.active;
-            renderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 32);
-            Graphics.Blit(texture, renderTexture);
-
-            RenderTexture.active = renderTexture;
-            texture2D.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
-            texture2D.Apply();
-
-            RenderTexture.ReleaseTemporary(renderTexture);
-            RenderTexture.active = currentRT;
-
-            UnityEngine.Object.Destroy(currentRT);
-            return texture2D;
-            */
-
             if (texture is not Texture2D texture2D)
             {
                 throw new InvalidOperationException("Texture is not 2D");

@@ -32,7 +32,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Serve
         /// <inheritdoc/>
         public event Action<WorldObjectTransformDto> WorldObjectTransformed;
 
-        [HelpBox("Session Client has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)] 
+        [HelpBox("Session Client has to be assigned.", HelpBoxAttribute.MessageType.Warning)] 
         [SerializeField]
         [FormerlySerializedAs("sessionClient")]
         private SessionClientWrapper _sessionClient;
@@ -73,16 +73,12 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Serve
         private void Awake()
         {
             _sessionAdapter = new ServerSessionAdapter(_sessionClient);
+            _sessionClient.Started += SessionClient_OnStarted;
+            _sessionClient.Disconnected -= SessionClient_OnDisconnected;
         }
 
-        private void Start()
+        private void SessionClient_OnStarted()
         {
-            /*
-             * Event handlers cannot be assigned in Awake.
-             * Session may not be initialized at that moment
-             * if Awake of the ServerSessionAdapterWrapper
-             * is called first.
-             */
             _sessionAdapter.WorldObjectAdded += OnWorldObjectAdded;
             _sessionAdapter.WorldObjectRemoved += OnWorldObjectRemoved;
             _sessionAdapter.WorldObjectTransformed += OnWorldObjectTransformed;
@@ -90,7 +86,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Serve
             _sessionAdapter.WorldObjectPropertiesUpdated += OnWorldObjectPropertiesUpdated;
         }
 
-        private void OnDestroy()
+        private void SessionClient_OnDisconnected(Exception obj)
         {
             _sessionAdapter.WorldObjectAdded -= OnWorldObjectAdded;
             _sessionAdapter.WorldObjectRemoved -= OnWorldObjectRemoved;

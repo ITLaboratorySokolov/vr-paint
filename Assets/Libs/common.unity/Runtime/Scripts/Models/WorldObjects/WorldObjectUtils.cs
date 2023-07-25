@@ -20,13 +20,11 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects
         /// <param name="scale">Scale.</param>
         public static void SetTransform(GameObject gameObject, RemoteVectorDto position, RemoteVectorDto rotation, RemoteVectorDto scale)
         {
-            gameObject.transform.SetPositionAndRotation(
-                new Vector3(position.X, position.Y, position.Z),
-                Quaternion.Euler(rotation.X, rotation.Y, rotation.Z));
-
-            gameObject.transform.localScale = new Vector3(scale.X, scale.Y, scale.Z);
-
-            gameObject.transform.hasChanged = false;
+            var transformReport = gameObject.GetComponent<ReportTransformChange>();
+            if (transformReport != null)
+            {
+                transformReport.SetTransform(new Vector3(position.X, position.Y, position.Z), Quaternion.Euler(rotation.X, rotation.Y, rotation.Z), new Vector3(scale.X, scale.Y, scale.Z));
+            }
         }
 
         /// <summary>

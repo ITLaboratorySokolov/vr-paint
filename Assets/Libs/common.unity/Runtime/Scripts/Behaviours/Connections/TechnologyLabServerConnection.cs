@@ -14,7 +14,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections
     {
         private const string ConnectionIdHeaderName = "ConnectionId";
 
-        [HelpBox("Rest Data Client and SignalR Session have to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [HelpBox("Rest Data Client and SignalR Session have to be assigned.", HelpBoxAttribute.MessageType.Warning)]
         [SerializeField]
         [FormerlySerializedAs("restDataClient")]
         private RestDataClientWrapper _restDataClient;
@@ -55,7 +55,6 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections
 
         private void SetConnectionIdToHeader()
         {
-            Debug.Log("Connection id:" + _signalRSession.ConnectionId);
             _restDataClient.SetHeader(ConnectionIdHeaderName, _signalRSession.ConnectionId);
         }
     }

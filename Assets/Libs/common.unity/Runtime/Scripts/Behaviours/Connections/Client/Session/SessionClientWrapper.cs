@@ -16,7 +16,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
     public abstract class SessionClientWrapper : MonoBehaviour, ISessionClient
     {
         public event Action Started;
-        public event Action StartFailed;
+        public event Action<Exception> StartFailed;
+        public event Action<Exception> StopFailed;
         public event Action<Exception> Disconnected;
         public event Action<Exception> Reconnecting;
         public event Action Reconnected;
@@ -29,7 +30,11 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
         [SerializeField]
         [Tooltip("Event called when session cannot be started.")]
         [FormerlySerializedAs("startFailed")]
-        private UnityEvent _startFailed = new();
+        private UnityEvent<Exception> _startFailed = new();
+        
+        [SerializeField]
+        [Tooltip("Event called when session cannot be stopped.")]
+        private UnityEvent<Exception> _stopFailed = new();
 
         [SerializeField]
         [Tooltip("Event called when session disconnects.")]
@@ -53,45 +58,62 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
 
         protected virtual void Awake()
         {
-            _sessionClient = CreateClient();
-            _sessionClient.Disconnected += SessionClient_Disconnected;
-            _sessionClient.Reconnecting += SessionClient_Reconnecting;
-            _sessionClient.Reconnected += SessionClient_Reconnected;
+            InitializeSession();
         }
         
         // Remove event handlers.
         protected virtual void OnDestroy()
         {
-            _sessionClient.Disconnected -= SessionClient_Disconnected;
-            _sessionClient.Reconnecting -= SessionClient_Reconnecting;
-            _sessionClient.Reconnected -= SessionClient_Reconnected;
+            RemoveEventHandlers();
+        }
+
+        protected void InitializeSession()
+        {
+            if (_sessionClient != null)
+            {
+                RemoveEventHandlers();
+            }
+
+            _sessionClient = CreateClient();
+            AssignEventHandlers();
         }
         
         protected abstract ISessionClient CreateClient();
 
-        /// <summary>
-        /// Starts a session.
-        /// This method should be used only for events. It cannot be awaited.
-        /// </summary>
-        public async void StartSession()
+        private void AssignEventHandlers()
         {
-            await StartSessionAsync();
+            _sessionClient.Disconnected += SessionClient_Disconnected;
+            _sessionClient.Reconnecting += SessionClient_Reconnecting;
+            _sessionClient.Reconnected += SessionClient_Reconnected;
         }
 
-        /// <summary>
-        /// Stops a session.
-        /// This method should be used only for events. It cannot be awaited.
-        /// </summary>
-        public async void StopSession()
+        private void RemoveEventHandlers()
         {
-            await StopSessionAsync();
+            _sessionClient.Disconnected -= SessionClient_Disconnected;
+            _sessionClient.Reconnecting -= SessionClient_Reconnecting;
+            _sessionClient.Reconnected -= SessionClient_Reconnected;
+        }
+
+        /// <inheritdoc/>
+        public Task InitializeAsync()
+        {
+            try
+            {
+                return _sessionClient.InitializeAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Cannot initialize session", this);
+                Debug.LogException(ex, this);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
         public async Task StartSessionAsync()
         {
             try
-            {                                
+            {
                 await _sessionClient.StartSessionAsync();
                 Debug.Log("Session started");
                 Started?.Invoke();
@@ -101,8 +123,9 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
             {
                 Debug.LogError("Cannot start session", this);
                 Debug.LogException(ex, this);
-                StartFailed?.Invoke();
-                _startFailed.Invoke();
+                StartFailed?.Invoke(ex);
+                _startFailed.Invoke(ex);
+                throw;
             }
         }
 
@@ -118,6 +141,9 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
             {
                 Debug.LogError("Cannot stop session", this);
                 Debug.LogException(ex, this);
+                StopFailed?.Invoke(ex);
+                _stopFailed?.Invoke(ex);
+                throw;
             }
         }
 
@@ -138,7 +164,9 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
         {
             return _sessionClient.SendMessageAsync(method, parameter);
         }
-        
+
+        #region Event Handlers
+
         private void SessionClient_Disconnected(Exception cause)
         {
             UnityDispatcher.ExecuteOnUnityThread(() =>
@@ -168,5 +196,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
                 _reconnected.Invoke();
             });
         }
+
+        #endregion
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Storage;
 
 namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Storage
@@ -9,13 +11,26 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Storage
     /// </summary>
     public abstract class WorldObjectStorageWrapper : MonoBehaviour, IWorldObjectStorage
     {
+        public event Action<GameObject> WorldObjectStored;
+        public event Action<GameObject> WorldObjectRemoved;
+        public event Action StorageCleared;
+
+        [SerializeField] private UnityEvent<GameObject> _worldObjectStored = new();
+        [SerializeField] private UnityEvent<GameObject> _worldObjectRemoved = new();
+        [SerializeField] private UnityEvent _storageCleared = new();
+        
         private IWorldObjectStorage _worldObjectStorage;
+
+        public int Count => _worldObjectStorage.Count;
         
         private void Awake()
         {
             _worldObjectStorage = CreateStorage();
+            _worldObjectStorage.WorldObjectStored += WorldObjectStorage_OnWorldObjectStored;
+            _worldObjectStorage.WorldObjectRemoved += WorldObjectStorage_OnWorldObjectRemoved;
+            _worldObjectStorage.StorageCleared += WorldObjectStorage_OnStorageCleared;
         }
-        
+
         protected abstract IWorldObjectStorage CreateStorage();
 
         public IEnumerable<GameObject> ClearStorage()
@@ -56,6 +71,24 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects.Storage
         public bool Store(GameObject worldObject)
         {
             return _worldObjectStorage.Store(worldObject);
+        }
+        
+        private void WorldObjectStorage_OnStorageCleared()
+        {
+            StorageCleared?.Invoke();
+            _storageCleared?.Invoke();
+        }
+
+        private void WorldObjectStorage_OnWorldObjectRemoved(GameObject obj)
+        {
+            WorldObjectRemoved?.Invoke(obj);
+            _worldObjectRemoved?.Invoke(obj);
+        }
+
+        private void WorldObjectStorage_OnWorldObjectStored(GameObject obj)
+        {
+            WorldObjectStored?.Invoke(obj);
+            _worldObjectStored?.Invoke(obj);
         }
     }
 }

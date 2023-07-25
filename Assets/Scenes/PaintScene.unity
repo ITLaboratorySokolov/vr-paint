@@ -620,6 +620,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19961750d21370349a3d5b11df719933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _worldObjectStored:
+    m_PersistentCalls:
+      m_Calls: []
+  _worldObjectRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+  _storageCleared:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &177192906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -772,6 +781,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _stopFailed:
+    m_PersistentCalls:
+      m_Calls: []
   _disconnected:
     m_PersistentCalls:
       m_Calls:
@@ -2025,19 +2037,6 @@ MonoBehaviour:
   actionStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 202293545}
-        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session.SessionClientWrapper,
-          zcu.technologylab.common.unity
-        m_MethodName: StartSession
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1879450159}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: SetConnection
@@ -2053,20 +2052,7 @@ MonoBehaviour:
         m_CallState: 2
   actionEnd:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 202293545}
-        m_TargetAssemblyTypeName: ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session.SessionClientWrapper,
-          zcu.technologylab.common.unity
-        m_MethodName: StopSession
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &615775428 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5776319298087616947, guid: 9e5e30eb289673142955a2525ac8bb98, type: 3}
@@ -4806,6 +4792,11 @@ MonoBehaviour:
   _serverDataAdapter: {fileID: 177192903}
   _worldObjectStorage: {fileID: 177192905}
   _prefabStorage: {fileID: 177192906}
+  _reactToAdd: 1
+  _reactToRemove: 1
+  _reactToUpdate: 1
+  _reactToPropertiesUpdate: 1
+  _reactToTransform: 1
   _worldObjectEventsHandler: {fileID: 177192902}
   _worldObjectAdded:
     m_PersistentCalls:

@@ -97,20 +97,19 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Properties
 
         public static void UpdateMeshToSize(Mesh mesh, int width, int height)
         {
-            var maxSize = width > height
-                ? new Vector2(1, (float)height / width)
-                : new Vector2((float)width / height, 1);
-            
+            var extents = width > height
+                ? new Vector2(0.5f, height / (2f * width))
+                : new Vector2(width / (2f * height), 0.5f);
+
             mesh.vertices = new Vector3[]
             {
-                new(0, 0, 0), new(0, maxSize.y, 0), new(maxSize.x, maxSize.y, 0), new(maxSize.x, 0, 0)
+                new(-extents.x, -extents.y, 0), new(-extents.x, extents.y, 0), new(extents.x, extents.y, 0), new(extents.x, -extents.y, 0)
             };
 
             mesh.uv = new Vector2[] { new(0, 0), new(0, 1), new(1, 1), new(1, 0) };
             mesh.triangles = new[] { 0, 1, 2, 0, 2, 3 };
-                
-            mesh.RecalculateNormals();
-            mesh.RecalculateBounds();
+
+            RecalculateMesh(mesh);
         }
 
         public static void UpdateMeshVerticesAndTriangles(Vector3[] vertices, int[] triangles, Mesh mesh)

@@ -52,6 +52,8 @@ public class ServerConectionController : MonoBehaviour
     void Start()
     {
         actionStart.Invoke();
+        StartCoroutine(InitAndStartSessionCoroutine());
+        
         serializer = new RawMeshSerializer();
     }
 
@@ -67,6 +69,26 @@ public class ServerConectionController : MonoBehaviour
         Debug.Log("Launching restart procedure");
 
         StartCoroutine(RestartConnection());
+    }
+
+    /// <summary>
+    /// Starting coroutine
+    /// - setting connection
+    /// - creates instances of needed local classes
+    /// - calls action actionStart
+    /// </summary>
+    /// <returns> IEnumerator </returns>
+    IEnumerator InitAndStartSessionCoroutine()
+    {
+        var task = session.InitializeAsync();
+
+        while (!task.IsCompleted)
+            yield return null;
+
+        task = session.StartSessionAsync();
+
+        while (!task.IsCompleted)
+            yield return null;
     }
 
     /// <summary>
@@ -122,6 +144,14 @@ public class ServerConectionController : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         actionStart.Invoke();
+        /*
+        var task = session.InitializeAsync();
+        while (!task.IsCompleted)
+            yield return null;
+        */
+        var task = session.StartSessionAsync();
+        while (!task.IsCompleted)
+            yield return null;
     }
 
     /// <summary>

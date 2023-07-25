@@ -18,13 +18,10 @@ namespace ZCU.TechnologyLab.Common.Unity.Models.Attributes
 
         public MessageType Type { get; }
 
-        public bool Slim { get; }
-
-        public HelpBoxAttribute(string text, MessageType type, bool slim = false)
+        public HelpBoxAttribute(string text, MessageType type)
         {
             Text = text;
             Type = type;
-            Slim = slim;
         }
     }
 }

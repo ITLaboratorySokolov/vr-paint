@@ -1,10 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ZCU.TechnologyLab.Common.Unity.Models.WorldObjects.Storage
 {
     public interface IWorldObjectStorage
     {
+        public event Action<GameObject> WorldObjectStored;
+        public event Action<GameObject> WorldObjectRemoved;
+        public event Action StorageCleared;
+        
+        public int Count { get; }
+        
         /// <summary>
         /// Deletes all stored objects.
         /// </summary>

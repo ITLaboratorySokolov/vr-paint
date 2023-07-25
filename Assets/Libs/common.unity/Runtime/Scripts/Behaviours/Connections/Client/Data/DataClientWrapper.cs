@@ -17,9 +17,9 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Data
         {
             _dataClient = CreateClient();
         }
-
+        
         protected abstract IDataClient CreateClient();
-
+        
         /// <inheritdoc/>
         public void SetHeader(string name, string value)
         {

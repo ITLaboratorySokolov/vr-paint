@@ -14,9 +14,21 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Data
     public class RestDataClientWrapper : DataClientWrapper
     {
         [SerializeField]
-        [HelpBox("Server Url has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [HelpBox("Server Url has to be assigned.", HelpBoxAttribute.MessageType.Warning)]
         [FormerlySerializedAs("serverUrl")]
         private StringVariable _serverUrl;
+
+        private RestDataClient _restDataClient;
+
+        private void Start()
+        {
+            _serverUrl.ValueChanged += OnServerUrlValueChanged;
+        }
+
+        private void OnServerUrlValueChanged(string newServerUrl)
+        {
+            _restDataClient.Url = newServerUrl;
+        }
 
         private void OnValidate()
         {
@@ -25,7 +37,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Data
 
         protected override IDataClient CreateClient()
         {
-            return new RestDataClient(_serverUrl.Value);
+            return _restDataClient = new RestDataClient(_serverUrl.Value);
         }
     }
 }

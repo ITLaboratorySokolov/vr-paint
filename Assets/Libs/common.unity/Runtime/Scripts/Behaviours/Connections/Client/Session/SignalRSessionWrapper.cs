@@ -13,7 +13,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
     /// </summary>
     public class SignalRSessionWrapper : SessionClientWrapper
     {
-        [HelpBox("Server Url and Hub have to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [HelpBox("Server Url and Hub have to be assigned.", HelpBoxAttribute.MessageType.Warning)]
         [SerializeField]
         [FormerlySerializedAs("serverUrl")]
         private StringVariable _serverUrl;
@@ -28,7 +28,17 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Client.Session
         /// Id which is used to map users to established connections.
         /// </summary>
         public string ConnectionId => _signalRSession.ConnectionId;
-        
+
+        private void Start()
+        {
+            _serverUrl.ValueChanged += OnServerUrlValueChanged;
+        }
+
+        private void OnServerUrlValueChanged(string newServerUrl)
+        {
+            InitializeSession();
+        }
+
         private void OnValidate()
         {
             Assert.IsNotNull(_serverUrl, "Server Url was null.");

@@ -15,7 +15,7 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.Connections.Repository.Serve
     /// </summary>
     public class ServerDataAdapterWrapper : MonoBehaviour, IServerDataAdapter
     {
-        [HelpBox("Data Client has to be assigned.", HelpBoxAttribute.MessageType.Warning, true)]
+        [HelpBox("Data Client has to be assigned.", HelpBoxAttribute.MessageType.Warning)]
         [SerializeField]
         [FormerlySerializedAs("dataClient")]
         private DataClientWrapper _dataClient;

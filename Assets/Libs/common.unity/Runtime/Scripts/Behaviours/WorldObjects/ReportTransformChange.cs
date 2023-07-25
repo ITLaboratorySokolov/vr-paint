@@ -27,6 +27,8 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
         /// </summary>
         public event Action<TransformChangedEventArgs> TransformChanged;
 
+        public event Action<TransformChangedEventArgs> TransformReceived;
+
         /// <summary>
         /// Should change be reported?
         /// </summary>
@@ -77,6 +79,14 @@ namespace ZCU.TechnologyLab.Common.Unity.Behaviours.WorldObjects
                 tempTransform.hasChanged = false;
                 TransformChanged?.Invoke(new TransformChangedEventArgs { Transform = tempTransform });
             }
+        }
+
+        public void SetTransform(Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            transform.SetPositionAndRotation(position, rotation);
+            transform.localScale = scale;
+            transform.hasChanged = false;
+            TransformReceived?.Invoke(new TransformChangedEventArgs {Transform = transform});
         }
     }
 }
